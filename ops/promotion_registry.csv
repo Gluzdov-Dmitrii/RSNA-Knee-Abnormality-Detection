@@ -1,0 +1,19 @@
+key,status,experiment_id,artifact_ref,evidence_ref,updated_at_utc,notes
+FOLDS_V1,missing,,,,,Locked study-level multilabel folds required
+DINO_CACHE_V1,missing,,,,,Shared frozen representation cache required
+LABEL_PILKWANG_V1,missing,,,,,Pin Pilkwang V1 report_labels_v2 and verify the specified SHA
+LABEL_STEVEN_V6,missing,,,,,Pin Steven V6 llm_labels_v2 and its SHA
+LABEL_LIXIN_V1,missing,,,,,Attach Lixin V1 labels_llm_gpt56sol and pin its SHA
+LABEL_ABLATIONS,waiting,,,,,S11-S14 must have OOF or terminal evidence
+LABEL_WINNER,waiting,,,,,Choose only by locked OOF promotion rule
+GEOMETRY_WINNER,waiting,,,,,Choose only by locked OOF promotion rule
+ARCHITECTURE_SET,waiting,,,,,S21-S24 must have OOF or terminal evidence
+GROUP_LIGAMENT,waiting,,,,,No promoted candidate yet
+GROUP_MENISCUS,waiting,,,,,No promoted candidate yet
+GROUP_OA,waiting,,,,,No promoted candidate yet
+GROUP_FLUID,waiting,,,,,No promoted candidate yet
+GROUP_BONE,waiting,,,,,No promoted candidate yet
+HIGHRES_BRANCH,waiting,,,,,No promoted candidate yet
+BEST_DINO,waiting,,,,,No promoted candidate yet
+BEST_INDEPENDENT,waiting,,,,,No promoted candidate yet
+ROBUST_SET,waiting,,,,,All viable S31-S33 must be evaluated or explicitly excluded
