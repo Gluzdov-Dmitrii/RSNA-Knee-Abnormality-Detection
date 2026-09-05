@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+kaggle.json
+*.log
+.ipynb_checkpoints/
+*_state.json
+tmp/evgen_v5_output/

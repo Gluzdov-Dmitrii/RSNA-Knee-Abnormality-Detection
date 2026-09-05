@@ -1,0 +1,31 @@
+{
+  "id": "dmitriigluzdov/rsna-open-sol-v6",
+  "title": "rsna-open-sol-v6",
+  "code_file": "rsna-baseline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "dreaddevelopment/raptor-knee-maxspan",
+    "dreaddevelopment/raptor-knee-widedense",
+    "dreaddevelopment/raptor-knee-arms",
+    "dreaddevelopment/raptor-knee-arms-x",
+    "tonylica/rsna-knee-bend-dinov3-0917-repro-assets",
+    "tonylica/rsna2026-models"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": [
+    "metaresearch/dinov2/PyTorch/small/1",
+    "metaresearch/dinov2/PyTorch/base/1"
+  ],
+  "machine_shape": "NvidiaTeslaT4"
+}

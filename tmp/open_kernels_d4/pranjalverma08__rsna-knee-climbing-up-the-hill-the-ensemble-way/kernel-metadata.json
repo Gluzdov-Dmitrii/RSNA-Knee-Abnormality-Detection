@@ -1,0 +1,36 @@
+{
+  "id": "pranjalverma08/rsna-knee-climbing-up-the-hill-the-ensemble-way",
+  "id_no": 131650072,
+  "title": "RSNA-KNEE : Climbing up the Hill (The Ensemble Way",
+  "code_file": "rsna-knee-climbing-up-the-hill-the-ensemble-way.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "dreaddevelopment/raptor-knee-maxspan",
+    "dreaddevelopment/raptor-knee-arms",
+    "dreaddevelopment/raptor-knee-arms-x",
+    "stevenleehans/rsna-knee-llm-report-labels"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": [
+    "",
+    "metaresearch/dinov2/PyTorch/base/1",
+    "metaresearch/dinov2/PyTorch/large/1",
+    "pranjalverma08/dinov3/Transformers/default/1",
+    "unmol03/dinov3-vit-large/PyTorch/default/1",
+    "dew389/radimagenet50/PyTorch/default/1",
+    "pranjalverma08/snarcy-radiodino-b16/Transformers/default/1"
+  ],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+  "machine_shape": "NvidiaTeslaT4"
+}

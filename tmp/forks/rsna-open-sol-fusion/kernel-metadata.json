@@ -1,0 +1,17 @@
+{
+  "id": "dmitriigluzdov/rsna-open-sol-fusion",
+  "title": "rsna-open-sol-fusion",
+  "code_file": "stub.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": []
+}
