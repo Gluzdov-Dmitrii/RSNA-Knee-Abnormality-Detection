@@ -74,14 +74,14 @@
   "submission": {
     "ref": "56034661",
     "submitted_at_utc": "2026-09-05T14:20:11Z",
-    "public_score": null,
+    "public_score": 0.937,
     "rank_before": 295,
-    "rank_after": null,
+    "rank_after": 183,
     "leader_score": 0.954,
     "top10_score": 0.949,
     "gold_cutoff_rank": 16,
-    "gold_cutoff_score": 0.948,
-    "team_count": 3089
+    "gold_cutoff_score": 0.949,
+    "team_count": 3169
   },
   "decision": "pending",
   "blocker": "",
@@ -90,6 +90,7 @@
     "Five named CSVs are produced by one internet-off T4x2 notebook.",
     "recipe_sha256=d3aa981b3331ba8f960dac5cc116f17d4eb1ca6ff12d345c023d10da54791dc7",
     "created_utc=2026-09-05T08:47:01Z",
-    "Kaggle CreateCodeSubmission returns 400 for named submission_Sxx.csv; each S-ID was submitted as submission.csv from a distinct pinned kernel version."
+    "Kaggle CreateCodeSubmission returns 400 for named submission_Sxx.csv; each S-ID was submitted as submission.csv from a distinct pinned kernel version.",
+    "Scored public 0.937 COMPLETE on 2026-09-06 poll; +0.001 vs prior 0.936 plateau is noise; A0 anchor unchanged."
   ]
 }

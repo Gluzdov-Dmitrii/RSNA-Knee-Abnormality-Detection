@@ -1,0 +1,21 @@
+{
+  "batch_cell_sha256": "0a46a1a14d88c9d9f5eefb3d1c4acc16d0e0109e0b138925af13e941c53b0bb7",
+  "code_file": "rsna-week1-a0-s01-s05.ipynb",
+  "default_raptor_outer_weight": 0.6,
+  "experiment_id": "S10",
+  "kernel": "dmitriigluzdov/rsna-week1-a0-s01-s05",
+  "medial_meniscus_route": {
+    "bag": 0.1,
+    "raptor": 0.6,
+    "transformer": 0.3
+  },
+  "metadata_sha256": "7ccaced7b7734fa8c4dc8ea2f63f14e908ca0209ec7fb4de1a9aafe2388cbf1b",
+  "notebook_sha256": "2badb2719d282abd29d17908919ca6a4131f5be65eb7a0c226867cf74dbdb3fe",
+  "output_filename": "submission_S10.csv",
+  "parent_graph": "A0",
+  "raptor_outer_weights": {
+    "Contusion": 0.8,
+    "Fracture": 0.8
+  },
+  "selected_submission_sid": "S10"
+}

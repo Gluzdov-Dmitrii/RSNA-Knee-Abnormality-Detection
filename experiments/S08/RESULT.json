@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
-  "experiment_id": "S03",
-  "hypothesis": "Isolating the ACL 0.80 Raptor bump shows whether that single V6 target moves public score.",
-  "only_intended_change": "ACL Raptor outer weight 0.80; all other targets exact A0",
+  "experiment_id": "S08",
+  "hypothesis": "Lowering only Medial OA Raptor outer weight from 0.60 to 0.35 tests an OA Transformer-leaning direction.",
+  "only_intended_change": "Medial OA Raptor outer weight 0.35; all other targets exact A0 including Medial Meniscus T30/R60/bag10",
   "parent_graph": "A0",
   "execution_mode": "unified_hidden_graph",
   "dependencies": [
     "S01@artifact"
   ],
   "recipe": {
-    "experiment_id": "S03",
+    "experiment_id": "S08",
     "parent_graph": "A0",
-    "output_filename": "submission_S03.csv",
+    "output_filename": "submission_S08.csv",
     "raptor_outer_weights": {
-      "ACL": 0.8
+      "Medial OA": 0.35
     },
     "default_raptor_outer_weight": 0.6,
     "medial_meniscus_route": {
@@ -23,9 +23,10 @@
     },
     "kernel": "dmitriigluzdov/rsna-week1-a0-s01-s05",
     "code_file": "rsna-week1-a0-s01-s05.ipynb",
-    "notebook_sha256": "7ad5d47c7a7ad1a2fb53c22f8b74d4ce78a39c00ee1070bdbeec136430efc6e8",
-    "batch_cell_sha256": "249d66e39da0b5a0d6bc3ca8153c7807005bfb75d46d6268269a620507c49b71",
-    "metadata_sha256": "7ccaced7b7734fa8c4dc8ea2f63f14e908ca0209ec7fb4de1a9aafe2388cbf1b"
+    "notebook_sha256": "2badb2719d282abd29d17908919ca6a4131f5be65eb7a0c226867cf74dbdb3fe",
+    "batch_cell_sha256": "0a46a1a14d88c9d9f5eefb3d1c4acc16d0e0109e0b138925af13e941c53b0bb7",
+    "metadata_sha256": "7ccaced7b7734fa8c4dc8ea2f63f14e908ca0209ec7fb4de1a9aafe2388cbf1b",
+    "selected_submission_sid": "S08"
   },
   "source_refs": [
     {
@@ -39,18 +40,23 @@
       "version": "6",
       "kernel_id": "133138832",
       "script_version_id": "347412699",
-      "note": "V6 overlay formula; exact version pull was 403 so latest public source was audited"
+      "note": "V6 overlay formula reused from Day 1"
+    },
+    {
+      "ref": "dmitriigluzdov/rsna-week1-a0-s01-s05",
+      "version": "8",
+      "note": "Kernel version 8; submission.csv is SELECTED S08"
     }
   ],
   "hashes": {
-    "code_config_sha256": "82adfc33c72b846e96eeb2666e72cfc5bfcc31f92129152c33f0b6b0d24c9aba",
+    "code_config_sha256": "18e35f7eb432fe6845a8d7fb3a907c0ef99b88671164411d80e3cc189d9c3351",
     "data_sha256": "",
     "labels_sha256": "",
     "cache_sha256": "",
     "folds_sha256": "",
     "model_sha256": "7ccaced7b7734fa8c4dc8ea2f63f14e908ca0209ec7fb4de1a9aafe2388cbf1b",
-    "visible_output_sha256": "46030cb9e24e0dd1da0335aeaf4649ea42a9e6227bf289ad432027a76af7e26f",
-    "batch_cell_sha256": "249d66e39da0b5a0d6bc3ca8153c7807005bfb75d46d6268269a620507c49b71"
+    "visible_output_sha256": "882aed80f3c7c5366cc04350adcde45f249f4e4c6f7d9e0e421a325cd30e2393",
+    "batch_cell_sha256": "0a46a1a14d88c9d9f5eefb3d1c4acc16d0e0109e0b138925af13e941c53b0bb7"
   },
   "validation": {
     "oof_macro_auc": null,
@@ -69,11 +75,11 @@
     "peak_vram_gb": 15.0
   },
   "submission": {
-    "ref": "56034555",
-    "submitted_at_utc": "2026-09-05T14:12:43Z",
-    "public_score": 0.937,
-    "rank_before": 295,
-    "rank_after": 183,
+    "ref": "56045503",
+    "submitted_at_utc": "2026-09-06T03:06:06Z",
+    "public_score": null,
+    "rank_before": 183,
+    "rank_after": null,
     "leader_score": 0.954,
     "top10_score": 0.949,
     "gold_cutoff_rank": 16,
@@ -84,10 +90,10 @@
   "blocker": "",
   "notes": [
     "Inference-only; public A0 has no leakage-free OOF.",
-    "Five named CSVs are produced by one internet-off T4x2 notebook.",
-    "recipe_sha256=5c91905d50f614748abad372f71e7f2c253afd56ee2c70299624d75ea5c201e0",
-    "created_utc=2026-09-05T08:47:01Z",
-    "Kaggle CreateCodeSubmission returns 400 for named submission_Sxx.csv; each S-ID was submitted as submission.csv from a distinct pinned kernel version.",
-    "Scored public 0.937 COMPLETE on 2026-09-06 poll; +0.001 vs prior 0.936 plateau is noise; A0 anchor unchanged."
+    "Cheap outer-weight overlay on the pinned A0 graph; Medial Meniscus bag route unchanged.",
+    "recipe_sha256=3b377e2d69c1316bce1b248fd6f2ff8262859a5c2bb8d3a83704eece7ac4187e",
+    "created_utc=2026-09-06T02:26:36Z",
+    "Named submission_Sxx.csv is 400 on this API; submit submission.csv from a distinct kernel version.",
+    "Submitted kernel v8 -f submission.csv; ref 56045503 PENDING."
   ]
 }

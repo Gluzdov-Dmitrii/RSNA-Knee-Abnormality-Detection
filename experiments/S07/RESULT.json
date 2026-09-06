@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S07",
+  "hypothesis": "Raising only Lateral Meniscus Raptor outer weight to 0.80 tests meniscus without changing the Medial specialist bag route.",
+  "only_intended_change": "Lateral Meniscus Raptor outer weight 0.80; Medial Meniscus stays A0 T30/R60/bag10; all other targets exact A0",
+  "parent_graph": "A0",
+  "execution_mode": "unified_hidden_graph",
+  "dependencies": [
+    "S01@artifact"
+  ],
+  "recipe": {
+    "experiment_id": "S07",
+    "parent_graph": "A0",
+    "output_filename": "submission_S07.csv",
+    "raptor_outer_weights": {
+      "Lateral Meniscus": 0.8
+    },
+    "default_raptor_outer_weight": 0.6,
+    "medial_meniscus_route": {
+      "transformer": 0.3,
+      "raptor": 0.6,
+      "bag": 0.1
+    },
+    "kernel": "dmitriigluzdov/rsna-week1-a0-s01-s05",
+    "code_file": "rsna-week1-a0-s01-s05.ipynb",
+    "notebook_sha256": "2badb2719d282abd29d17908919ca6a4131f5be65eb7a0c226867cf74dbdb3fe",
+    "batch_cell_sha256": "0a46a1a14d88c9d9f5eefb3d1c4acc16d0e0109e0b138925af13e941c53b0bb7",
+    "metadata_sha256": "7ccaced7b7734fa8c4dc8ea2f63f14e908ca0209ec7fb4de1a9aafe2388cbf1b",
+    "selected_submission_sid": "S07"
+  },
+  "source_refs": [
+    {
+      "ref": "renta0426/rsna-knee-0-937-weak-label-dinov2-meniscus-resid",
+      "version": "1",
+      "kernel_id": "133076816",
+      "script_version_id": "347142162"
+    },
+    {
+      "ref": "prvsiyan/the-bee-s-knees-final-rsna-push",
+      "version": "6",
+      "kernel_id": "133138832",
+      "script_version_id": "347412699",
+      "note": "V6 overlay formula reused from Day 1"
+    },
+    {
+      "ref": "dmitriigluzdov/rsna-week1-a0-s01-s05",
+      "version": "7",
+      "note": "Kernel version 7; submission.csv is SELECTED S07"
+    }
+  ],
+  "hashes": {
+    "code_config_sha256": "9b55d362ac1eb0aeda806d822c92dfeaa77824ea44791579643c89bb3dc69899",
+    "data_sha256": "",
+    "labels_sha256": "",
+    "cache_sha256": "",
+    "folds_sha256": "",
+    "model_sha256": "7ccaced7b7734fa8c4dc8ea2f63f14e908ca0209ec7fb4de1a9aafe2388cbf1b",
+    "visible_output_sha256": "66f1aacd7e7be1624e81a18261da598012165f639bfaccfab191758788f8723f",
+    "batch_cell_sha256": "0a46a1a14d88c9d9f5eefb3d1c4acc16d0e0109e0b138925af13e941c53b0bb7"
+  },
+  "validation": {
+    "oof_macro_auc": null,
+    "oof_reference": "inference_only_public_A0_has_no_leakage_free_oof",
+    "per_target_auc": {},
+    "fold_deltas": [],
+    "second_seed_delta": null,
+    "gold58_macro_auc": null,
+    "gold58_bootstrap_interval": [],
+    "oof_raw_correlations": {},
+    "oof_rank_correlations": {}
+  },
+  "runtime": {
+    "visible_minutes": 3.0,
+    "hidden_estimate_minutes": 420,
+    "peak_vram_gb": 15.0
+  },
+  "submission": {
+    "ref": "56045415",
+    "submitted_at_utc": "2026-09-06T03:01:50Z",
+    "public_score": null,
+    "rank_before": 183,
+    "rank_after": null,
+    "leader_score": 0.954,
+    "top10_score": 0.949,
+    "gold_cutoff_rank": 16,
+    "gold_cutoff_score": 0.949,
+    "team_count": 3169
+  },
+  "decision": "pending",
+  "blocker": "",
+  "notes": [
+    "Inference-only; public A0 has no leakage-free OOF.",
+    "Cheap outer-weight overlay on the pinned A0 graph; Medial Meniscus bag route unchanged.",
+    "recipe_sha256=b017da94a9d3d7120d83852c0a4c3ca4cef3d320daa974a8a3824ecfa0b7dbe7",
+    "created_utc=2026-09-06T02:26:36Z",
+    "Named submission_Sxx.csv is 400 on this API; submit submission.csv from a distinct kernel version.",
+    "Submitted kernel v7 -f submission.csv; ref 56045415 PENDING. Medial Meniscus untouched vs A0.",
+    "Submitted kernel v7 -f submission.csv; ref 56045415 PENDING."
+  ]
+}

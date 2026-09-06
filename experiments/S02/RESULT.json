@@ -75,14 +75,14 @@
   "submission": {
     "ref": "56034425",
     "submitted_at_utc": "2026-09-05T14:05:35Z",
-    "public_score": null,
+    "public_score": 0.937,
     "rank_before": 295,
-    "rank_after": null,
+    "rank_after": 183,
     "leader_score": 0.954,
     "top10_score": 0.949,
     "gold_cutoff_rank": 16,
-    "gold_cutoff_score": 0.948,
-    "team_count": 3089
+    "gold_cutoff_score": 0.949,
+    "team_count": 3169
   },
   "decision": "pending",
   "blocker": "",
@@ -92,6 +92,7 @@
     "recipe_sha256=a330284d24ede6427df3dd6556d1ef534751ce4338d3e4b477bae62970c89a36",
     "created_utc=2026-09-05T08:47:01Z",
     "Visible 3-row S02 and S05 SHA collide because 3-row percentile ranks collapse; hidden 1322-row outputs remain distinct recipes.",
-    "Kaggle CreateCodeSubmission returns 400 for named submission_Sxx.csv; each S-ID was submitted as submission.csv from a distinct pinned kernel version."
+    "Kaggle CreateCodeSubmission returns 400 for named submission_Sxx.csv; each S-ID was submitted as submission.csv from a distinct pinned kernel version.",
+    "Scored public 0.937 COMPLETE on 2026-09-06 poll; +0.001 vs prior 0.936 plateau is noise; A0 anchor unchanged."
   ]
 }
