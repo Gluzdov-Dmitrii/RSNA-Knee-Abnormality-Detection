@@ -1,5 +1,11 @@
 # Locked experiment specifications
 
+R2 (2026-09-07): обучение и все preprocessing/OOF выполняются по
+`../LOCAL_COMPUTE_PLAN.md` на НГУ; `../ops/compute_plan.json` задаёт приоритеты
+submission. Полезные local-only результаты фиксируются без обязательного сабмита.
+Frozen cache должен иметь encoder provenance без fold leakage. Все label variants
+оцениваются на одной фиксированной weak-label reference; expert-58 у S15 — crossfit.
+
 Этот файл снимает исследовательские развилки с ежедневного исполнителя. Менять
 семейство модели, label source, geometry или blend rule без решения старшей модели
 нельзя. Library/runtime версии, появившиеся при materialization, фиксируются в
@@ -21,8 +27,9 @@
 
 ## S11–S15: labels
 
-- `S11`: `LABEL_PILKWANG_V1`; общий DINOv2 ViT-S/14 frozen cache; один multilabel
-  linear/2-layer head, фиксированные folds/seed.
+- `S11`: `LABEL_PILKWANG_V1`; общий DINOv2 ViT-S/14 frozen cache; фиксированный
+  2-layer head: LayerNorm → Linear(D,256) → GELU → Dropout(0.1) → Linear(256,12).
+  Одинаковый head для S11–S15; seed 2026, locked FOLDS_V1.
 - `S12`: soft median consensus ровно трёх raw families: Pilkwang V1, Steven V6/v2,
   Lixin V1. Unknown/NaN не участвует в median/loss.
 - `S13`: arithmetic mean тех же трёх raw families; unknown/NaN исключается из

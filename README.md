@@ -1,9 +1,15 @@
 # RSNA Knee Abnormality Detection
 
+**Текущий план R2, 2026-09-07:** [LOCAL_COMPUTE_PLAN.md](LOCAL_COMPUTE_PLAN.md).
+Подготовка/обучение/OOF — на RTX 6000, RTX 3080 и A100 НГУ; Kaggle — финальные
+inference/submissions. S01–S10 завершены, best `0.937`; folds и labels готовы,
+следующий этап — storage/env/DINO cache для S11–S15. Общая GPU queue НГУ уже
+активирована. `ops/compute_plan.json` дополняет ledger приоритетами local/submit.
+
 Рабочий репозиторий для Kaggle competition
 [RSNA Knee Abnormality Detection](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection).
 
-Снимок leaderboard: **2026-09-05 07:50 UTC** (он динамический):
+Исторический снимок leaderboard: **2026-09-05 07:50 UTC** (не текущий):
 
 - `3 089` команд; наш best `0.936`, rank `295`;
 - лидер `0.954`, top-10 `0.949`, расчётная gold boundary — rank `16`, score `0.948`;

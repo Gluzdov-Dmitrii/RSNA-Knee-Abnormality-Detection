@@ -1,0 +1,488 @@
+{
+  "schema_version": 1,
+  "plan_revision": "R2-2026-09-07",
+  "authority": "LOCAL_COMPUTE_PLAN.md",
+  "historical_experiments_preserved": "S01-S10",
+  "status_source": "ops/experiment_ledger.csv",
+  "submission_cap_per_day": 5,
+  "target_selected_submissions_per_prepared_batch": [
+    2,
+    3
+  ],
+  "batch_is_not_calendar_day": true,
+  "kaggle_budget": {
+    "prepare_gpu_hours": 0,
+    "visible_validation_soft_cap_hours_until_reset": 1.5,
+    "review_after_visible_quota_hours": 0.5,
+    "reset_at_utc": "2026-09-12T00:00:00Z",
+    "observed_remaining_hours": 9.1,
+    "observed_at_utc_approx": "2026-09-07T12:10:00Z",
+    "hidden_billing": "unverified_do_not_assume_equal_to_runtime",
+    "account_other_projects_reserved_hours": null
+  },
+  "coordination": {
+    "canonical_alias": "nsu-quadro",
+    "control_root": "/home/scientists/gluz_d_s/kaggle/_control",
+    "script": "/home/scientists/gluz_d_s/kaggle/_control/resource_queue.py",
+    "mode_observed": "DIRECT_USER_AUTHORIZED",
+    "initialized_observed": true,
+    "observed_record_updated_at": "2026-09-07T12:07:18.987476+00:00",
+    "recheck_before_launch": true,
+    "max_gpu_jobs_under_contention": 1,
+    "checkpointable_chunk_minutes": 120
+  },
+  "preparation_tasks": [
+    {
+      "id": "M0_STORAGE",
+      "status": "planned",
+      "backend": "cpu",
+      "done_when": "registered storage budget and RSNA manifest allow selected private image staging; no credentials or raw reports"
+    },
+    {
+      "id": "M0_ENV_CODE",
+      "status": "planned",
+      "backend": "cpu",
+      "done_when": "isolated pinned ML env and shared preprocessing/inference modules pass import/schema smoke"
+    },
+    {
+      "id": "M0_DATA_PILOT",
+      "status": "planned",
+      "backend": "cpu",
+      "depends_on": [
+        "M0_STORAGE"
+      ],
+      "done_when": "32-study decode pilot and resumable transfer manifest verified"
+    },
+    {
+      "id": "M0_GPU_PILOT",
+      "status": "planned",
+      "backend": "nsu_quadro_or_compatible_allocated_gpu",
+      "depends_on": [
+        "M0_ENV_CODE",
+        "M0_DATA_PILOT"
+      ],
+      "done_when": "128-study throughput/VRAM/RAM estimate; allocation released"
+    },
+    {
+      "id": "M0_DINO_CACHE",
+      "status": "planned",
+      "backend": "nsu_quadro_or_one_a100",
+      "depends_on": [
+        "M0_GPU_PILOT"
+      ],
+      "done_when": "all train features and UID index verified with fold-safe encoder provenance"
+    },
+    {
+      "id": "M0_A0_EXPORT",
+      "status": "planned",
+      "backend": "nsu_cpu_and_allocated_gpu",
+      "depends_on": [
+        "M0_ENV_CODE",
+        "M0_DATA_PILOT"
+      ],
+      "done_when": "all train-dependent fitted artifacts exported; train mount absent; 32/128-case parity"
+    }
+  ],
+  "experiments": [
+    {
+      "experiment_id": "S11",
+      "batch": 3,
+      "prepare_backend": "nsu_cpu_or_rtx3080_shared_features",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 10,
+      "submit_policy": "first_control_after_cache",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S12",
+      "batch": 3,
+      "prepare_backend": "nsu_cpu_or_rtx3080_shared_features",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 20,
+      "submit_policy": "best_of_S12_S13_S14_then_extra_only_if_distinct_evidence",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S13",
+      "batch": 3,
+      "prepare_backend": "nsu_cpu_or_rtx3080_shared_features",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 21,
+      "submit_policy": "best_of_S12_S13_S14_then_extra_only_if_distinct_evidence",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S14",
+      "batch": 3,
+      "prepare_backend": "nsu_cpu_or_rtx3080_shared_features",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 22,
+      "submit_policy": "best_of_S12_S13_S14_then_extra_only_if_distinct_evidence",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S15",
+      "batch": 3,
+      "prepare_backend": "nsu_cpu_or_rtx3080_shared_features",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 30,
+      "submit_policy": "after_local_label_winner_and_expert_crossfit",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S16",
+      "batch": 4,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 40,
+      "submit_policy": "local_screen_all_full_oof_best_two_submit_up_to_three",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S17",
+      "batch": 4,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 41,
+      "submit_policy": "local_screen_all_full_oof_best_two_submit_up_to_three",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S18",
+      "batch": 4,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 42,
+      "submit_policy": "local_screen_all_full_oof_best_two_submit_up_to_three",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S19",
+      "batch": 4,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 43,
+      "submit_policy": "local_screen_all_full_oof_best_two_submit_up_to_three",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S20",
+      "batch": 4,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 44,
+      "submit_policy": "local_screen_all_full_oof_best_two_submit_up_to_three",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S21",
+      "batch": 5,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 50,
+      "submit_policy": "local_screen_all_submit_best_dino_and_independent",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S22",
+      "batch": 5,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 51,
+      "submit_policy": "local_screen_all_submit_best_dino_and_independent",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S23",
+      "batch": 5,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 52,
+      "submit_policy": "local_screen_all_submit_best_dino_and_independent",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S24",
+      "batch": 5,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 53,
+      "submit_policy": "local_screen_all_submit_best_dino_and_independent",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S25",
+      "batch": 5,
+      "prepare_backend": "nsu_quadro_or_one_a100",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 54,
+      "submit_policy": "ensemble_if_two_validated_branches",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S26",
+      "batch": 6,
+      "prepare_backend": "nsu_cpu_oof_then_chosen_gpu_inference",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 60,
+      "submit_policy": "local_oof_group_gate_before_any_submit",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S27",
+      "batch": 6,
+      "prepare_backend": "nsu_cpu_oof_then_chosen_gpu_inference",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 61,
+      "submit_policy": "local_oof_group_gate_before_any_submit",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S28",
+      "batch": 6,
+      "prepare_backend": "nsu_cpu_oof_then_chosen_gpu_inference",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 62,
+      "submit_policy": "local_oof_group_gate_before_any_submit",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S29",
+      "batch": 6,
+      "prepare_backend": "nsu_cpu_oof_then_chosen_gpu_inference",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 63,
+      "submit_policy": "local_oof_group_gate_before_any_submit",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S30",
+      "batch": 6,
+      "prepare_backend": "nsu_cpu_oof_then_chosen_gpu_inference",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 64,
+      "submit_policy": "local_oof_group_gate_before_any_submit",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S31",
+      "batch": 7,
+      "prepare_backend": "nsu_one_a100_or_quadro",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 70,
+      "submit_policy": "prioritize_robust_candidate_if_dependencies_ready",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S32",
+      "batch": 7,
+      "prepare_backend": "nsu_one_a100_or_quadro",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 80,
+      "submit_policy": "optional_only_if_auc_and_runtime_gain",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S33",
+      "batch": 7,
+      "prepare_backend": "nsu_one_a100_or_quadro",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 81,
+      "submit_policy": "optional_only_if_auc_and_runtime_gain",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S34",
+      "batch": 7,
+      "prepare_backend": "nsu_one_a100_or_quadro",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 71,
+      "submit_policy": "prioritize_robust_candidate_if_dependencies_ready",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    },
+    {
+      "experiment_id": "S35",
+      "batch": 7,
+      "prepare_backend": "nsu_one_a100_or_quadro",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 72,
+      "submit_policy": "prioritize_robust_candidate_if_dependencies_ready",
+      "requires": [
+        "local_evidence",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "not_evaluated"
+    }
+  ]
+}

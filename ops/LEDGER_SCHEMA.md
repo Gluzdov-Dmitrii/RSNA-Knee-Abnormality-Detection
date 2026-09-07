@@ -1,5 +1,9 @@
 # Experiment ledger contract
 
+R2 от 2026-09-07: `ops/compute_plan.json` содержит compute placement и submission
+priority/policy для S11–S35; ledger остаётся источником фактических статусов.
+Номер day — исследовательский пакет, а не обещанная календарная дата.
+
 `experiment_ledger.csv` — единственный источник **очереди, статуса, readiness и
 dependencies**. Полное доказательство результата хранится в машинно-читаемом
 `experiments/Sxx/RESULT.json`, путь на него обязателен в `evidence_path`.
@@ -9,6 +13,15 @@ dependencies**. Полное доказательство результата �
 Допустимые `status`:
 
 `planned → preparing → ready → submitted → scored → promoted|rejected`
+
+Дополнительный terminal для планировщика R2: `local_evaluated`. Candidate имеет
+валидный RESULT.json и local metrics, но не выбран для public submission. Его
+`submission_ref/public_score` пусты, `ready_to_run=no`, `decision=defer_submit`.
+Он закрывает `@oof/@evidence` при наличии соответствующих данных, но не `@scored`.
+Не превращать local score в Kaggle score. Повторное включение в submit queue —
+изменение dispatch plan с причиной; состояние сначала `preparing`, потом `ready`.
+Локально хороший кандидат может закрыть registry `@promoted` по формальному rule,
+сохранив ledger status `local_evaluated` и пустой submission ref.
 
 `blocked` допустим из любого незавершённого состояния; после устранения причины он
 возвращается в `preparing`. `excluded` — terminal status для заранее запланированного
@@ -23,7 +36,8 @@ poll-ить, но не resubmit. `scored` — что public score уже пол�
 `artifact_status`: `source_identified`, `source_pinned`, `recipe_defined`, `missing_training_assets`,
 `waiting_dependency`, `building`, `validated`, `runtime_failed` или `invalid`.
 
-Допустимые `decision`: `pending`, `needs_replication`, `promote`, `reject`, `exclude`.
+Допустимые `decision`: `pending`, `needs_replication`, `promote`, `reject`, `exclude`,
+`defer_submit`.
 `needs_replication` не является status: строка остаётся `scored`, пока старшая модель
 не примет terminal decision.
 
@@ -120,6 +134,15 @@ gate. Правила:
   "notes": []
 }
 ```
+
+Для новых S11+ R2 RESULT также содержит `plan_revision`, `compute` (host/GPU,
+queue request ID, job/PID+start identity, env lock, resource limits, GPU wall hours,
+resume path), `export` (bundle hash, weights/config refs, local parity evidence),
+`quota` (before/after UTC and remaining hours, visible wall minutes, concurrent
+jobs, billing attribution/unknown). Lease tokens и credentials не сохранять в Git.
+В validation указать `reference_label_hash`, `evaluation_mask_hash`,
+`metric_kind=weak_label_oof_proxy` и отдельный `expert58_evaluation_kind`.
+Existing S01–S10 receipts остаются в schema v1; их не backfill-ить выдуманными данными.
 
 Для inference-only экспериментов OOF-поля могут быть `null`, но это должно быть
 объяснено в `notes`. Для S11+ `folds`, `model`, OOF macro, 12 per-target AUC и OOF

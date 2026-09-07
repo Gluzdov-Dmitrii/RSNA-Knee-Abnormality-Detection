@@ -2,3 +2,5 @@ key,kind,reason,evidence_ref,added_at_utc
 renta-v1_equals_hyaku-v4,duplicate_graph,Renta V1 and Hyakumanben V4 are byte-identical prediction graphs,STRATEGY_WEEK_1.md,
 hidden-output-download,impossible_workflow,Kaggle does not expose full hidden prediction vectors,STRATEGY_WEEK_1.md,
 public-score-only-promotion,invalid_evidence,Public delta alone does not satisfy the promotion rule,STRATEGY_WEEK_1.md,
+named-submission-csv,confirmed_api_rejection,Named submission_Sxx.csv outputs returned HTTP 400; use submission.csv per immutable version,ops/reports/2026-09-06_day2.md,2026-09-07
+kaggle-training-r2,compute_policy,All preparation train cache OOF and search moved to NSU under R2,LOCAL_COMPUTE_PLAN.md,2026-09-07

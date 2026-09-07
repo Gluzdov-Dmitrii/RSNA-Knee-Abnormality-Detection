@@ -1,5 +1,11 @@
 # RSNA Knee Abnormality Detection: неделя 1
 
+**Актуализация R2 от 2026-09-07:** compute budget, календарь и порядок подачи
+оставшихся S11–S35 заменены [LOCAL_COMPUTE_PLAN.md](LOCAL_COMPUTE_PLAN.md).
+Подготовка/обучение/OOF выполняются на НГУ, Kaggle — только финальный inference.
+S01–S10 уже scored; лучший `0.937`. Ниже сохранена исходная стратегия и гипотезы;
+актуальные статусы — ledger, приоритеты подачи — `ops/compute_plan.json`.
+
 Снимок leaderboard сделан **2026-09-05 07:50 UTC**: `3 089` команд, наш best
 `0.936` / rank `295`, лидер `0.954`, top-10 `0.949`, расчётная gold boundary —
 rank `16` / `0.948`. Эти числа динамические; перед каждым пакетом нужен новый снимок.
@@ -132,18 +138,12 @@ submit Kaggle повторно выполняет notebook на скрытом t
 выбирает другой teacher/backbone «по ситуации»; отсутствующий approved label asset
 является blocker, а не разрешением импровизировать.
 
-Compute envelope подготовки на бесплатном Kaggle нужно переснимать из аккаунта:
-
-- дни 1–2: только один уже собранный inference graph и 10 recipe variants, без train;
-- день 3: один общий embedding cache (hard cap 8 GPU-h) и пять малых heads (вместе ≤4 GPU-h);
-- день 4: geometry/caches ≤12 GPU-h, сначала subset screening;
-- день 5: architecture screening ≤10 GPU-h; не пять full trainings;
-- дни 6–7: только уже готовые победители. `5 folds × 2 seeds` запускать лишь при
-  дополнительном cloud budget или заранее готовых weights.
-
-Если доступно около 30 GPU-h, реалистичная цель недели — 10 готовых inference-only
-сабмитов, 5–10 собственных gated candidates и готовая OOF-система. Полные 35 возможны
-только если required assets готовы вовремя и hidden reruns проходят очередь Kaggle.
+R2 compute envelope: **0 Kaggle GPU-h на train/cache/OOF**, все подготовительные
+стадии на НГУ. До reset 12 сентября soft cap RSNA — 1.5 h visible validation,
+пересмотр после первых 0.5 h; фактический расход измеряется через `kaggle quota`.
+35 S-ID остаются исследовательской очередью; после локального отбора подавать
+обычно 2–3, максимум 5 готовых кандидатов за день. Полный runtime/data/queue budget
+и правила `local_evaluated` указаны в R2.
 
 ### Неизменяемый anchor и promotion rule
 
@@ -193,11 +193,10 @@ control следующего этапа, но не `promoted` в Q. Исполн
   Baker's `.4875`; Medial Meniscus сохраняет `.30/.60/.10`.
 
 Контроль дублей: Renta и Hyakumanben byte-identical, поэтому второй exact fork не
-сабмитить. Для каждого варианта сохранять `recipe.json` и code/config SHA. Один
-batch notebook может вычислить тяжёлые Transformer/Raptor/bag компоненты один раз и
-записать пять именованных `submission_Sxx.csv`; каждый файл отправляется с тем же
-pinned kernel/version и своим `-f`, если Kaggle preflight подтверждает этот режим.
-Нельзя пересчитывать MRI-граф пять раз только из-за пяти дешёвых weight recipes.
+сабмитить. Для каждого варианта сохранять `recipe.json` и code/config SHA.
+Проверка Day 2: именованные `submission_Sxx.csv` получили HTTP 400. Для каждого
+кандидата нужна immutable kernel version с выходом `submission.csv`; локальные
+OOF/component caches можно переиспользовать, hidden outputs Kaggle — нельзя.
 
 ### День 2 — оставшиеся target-group directions в том же графе
 

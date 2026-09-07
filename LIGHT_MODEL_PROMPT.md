@@ -1,190 +1,155 @@
-# Промпт ежедневному исполнителю
+# Исполнитель RSNA — R2, локальная подготовка и экономные submissions
 
-Скопируйте блок ниже в задачу лёгкой модели один раз. Ежедневная команда после reset
-лимита: **«Выполни следующий пакет из плана: подготовь и засабмить до пяти готовых
-решений, дождись результатов и обнови журнал».**
+Скопируйте этот промпт в задачу исполнителя. Команды:
+
+- «Подготовь следующий пакет на НГУ по R2» — подготовка данных, env, cache, train,
+  OOF, export; Kaggle GPU и submissions не запускаются этой командой.
+- «Засабмить следующие решения по R2, до пяти» — отправить готовые отобранные
+  кандидаты в пределах квоты, дождаться scoring, обновить журнал. Если они не
+  готовы, продолжить внешнюю подготовку и указать реальный blocker.
 
 ---
 
-Ты — аккуратный исполнитель недельного плана Kaggle competition
-`rsna-knee-abnormality-detection`. Рабочая папка:
+Ты исполняешь план RSNA в
 `C:\Users\Dmitry\Desktop\Kaggle\RSNA Knee Abnormality Detection`.
+Competition: `rsna-knee-abnormality-detection`.
 
-На каждый запуск ты должен взять очередной незавершённый дневной пакет, разрешить его
-dependencies, подготовить distinct Kaggle Code submissions, отправить **не больше
-фактически доступной дневной квоты**, дождаться scoring и сохранить доказательства
-для недельного анализа старшей моделью. Пять сабмитов — максимум, не обязанность.
+Прочитай полностью перед работой:
 
-## Сначала прочитай
+1. `LOCAL_COMPUTE_PLAN.md` — действующая R2-стратегия; она заменяет прежний compute
+   budget/календарь/порядок подачи из `STRATEGY_WEEK_1.md`.
+2. `ops/compute_plan.json`, `ops/experiment_ledger.csv`, `ops/LEDGER_SCHEMA.md`.
+3. `ops/EXPERIMENT_SPECS.md`, `ops/promotion_registry.csv`, `ops/do_not_retry.csv`.
+4. Последний дневной отчёт, `ops/DAILY_REPORT_TEMPLATE.md`, правила проекта.
+5. Общий NSU-промпт
+   `C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md`
+   и перечисленные в нём README/SETUP_STATUS/ACCESS/WORKFLOW/RESOURCE_POLICY.
 
-1. `STRATEGY_WEEK_1.md` — неизменяемые гипотезы и рецепты.
-2. `ops/experiment_ledger.csv` — единственный источник очереди/status/readiness.
-3. `ops/LEDGER_SCHEMA.md` — lifecycle, dependencies и обязательный `RESULT.json`.
-4. `ops/EXPERIMENT_SPECS.md` — locked teacher/model/geometry choices; импровизировать нельзя.
-5. `ops/promotion_registry.csv` и `ops/do_not_retry.csv` — shared gates и запреты повторов.
-6. `ops/baseline_submissions_2026-09-05.csv` — receipts прошлых сабмитов; это не predictions.
-7. `ops/DAILY_REPORT_TEMPLATE.md` и `.cursor/rules/*.mdc`.
+User authorization на команду «до пяти» покрывает весь явно названный пакет; общие
+one-shot defaults не превращают его в один submission. Если текущая команда —
+только plan/review/prepare, не отправляй submissions. Не покупай ресурсы, не выбирай
+final submissions, не меняй команды и не публикуй private artifacts публично.
 
-Не заменяй S-ID случайным public fork. Техническая адаптация path/API допустима, но
-гипотеза, parent graph и единственное намеренное изменение должны сохраниться.
-Не выбирай сам teacher provider, public label source, альтернативный backbone или
-pretrained asset: если exact approved spec/registry key отсутствует, ставь blocker.
+## Проверка состояния
 
-## Непреложное ограничение Code Competition
+Сохраняй UTC, HEAD/status, последние receipts, `kaggle quota`, дневной
+`competitions submission-limits`, running/pending jobs аккаунта. CLI:
+`C:\Users\Dmitry\.venvs\kg\Scripts\kaggle.exe`.
+Исторические числа не выдавай за текущие. Ничего не выводи из credential store.
 
-Локальный/обычный Kaggle output содержит лишь 3 visible rows. После submit Kaggle
-сам запускает notebook на hidden test, но полный hidden prediction vector участнику
-не возвращает.
+S01–S10 уже scored, не повторяй. FOLDS_V1 и три label assets уже готовы; сверяй
+hashes, а не перестраивай их. Следующий пакет S11–S15 зависит от DINO cache/heads.
 
-Поэтому запрещено:
+SSH через существующий Windows-клиент пользователя и aliases `nsu-quadro`,
+`nsu-a100`, `nsu-pc`. Sandbox alias failure не означает, что сервера недоступны:
+используй штатный permissions flow для настроенного клиента, не копируй ключи.
+В 2026-09-07 12:07 UTC direct coordinator активирован; перепроверь живой
+`/home/scientists/gluz_d_s/kaggle/_control/COORDINATION_STATUS.json`.
+Не воспроизводи устаревший BLOCKED_COORDINATION/Slurm blocker из старых заметок.
 
-- пытаться скачать hidden CSV старых или новых сабмитов;
-- строить offline blend из прошлых submissions;
-- требовать hidden-output SHA или hidden correlations;
-- считать совпадение/различие трёх visible rows доказательством совпадения hidden.
+## Prepare mode — все тяжёлые расчёты вне Kaggle
 
-Каждый scored ensemble обязан **внутри одного internet-off notebook** загрузить все
-version-pinned weights, пересчитать все компоненты на mounted test и собрать
-выбранный submission CSV за `< 9 h`. До submit нужен rehearsal/estimate `< 8.5 h`. Если это
-невозможно, оставь S-ID `blocked`; standalone-модель не подставляй вместо заданного
-unified blend.
+Следуй M0 в R2. Проверить RSNA storage manifest/quota, согласовать data classes с
+переносом, передавать разрешённые train images и labels без credentials/raw reports.
+Не копировать полный архив, если peak disk budget не помещается. Linux root общий
+NFS для двух hosts, Windows root другой; читать точные пути из SETUP_STATUS.
+ML env создавай отдельно с pinned dependencies; stdlib-only env не готов к torch.
 
-Если пять S-ID отличаются только дешёвой финальной рецептурой одного графа, вычисли
-общие component predictions один раз в batch notebook и запиши пять файлов
-`submission_Sxx.csv`. После проверки отправляй каждый именованный файл через
-`kaggle competitions submit ... -f submission_Sxx.csv -k ... -v ...`. Сначала
-подтверди на visible run, что все файлы являются outputs одной pinned version.
+Вынеси train-dependent операции A0 из inference: train features, fitted heads,
+calibration, statistics должны стать weights/config artifacts. Препроцессинг
+train/inference должен использовать общие функции. Offline export не должен
+требовать train mount. Test-dependent ranks считаются на текущем test.
 
-## Выбор текущего пакета
+Начни с CPU decode 32 studies, затем GPU pilot 128; запиши throughput/VRAM/RAM/I/O.
+На основании pilot оцени duration/space полного cache. Выполняй resumable shards,
+проверяй hashes и UID index, не пересчитывай завершённые shards после разрыва SSH.
 
-- Отсортируй ledger по `day,sequence`.
-- Возьми самый ранний день с нетерминальными строками. Terminal: `scored`,
-  `promoted`, `rejected`, `excluded`. Пакет — его пять S-ID, включая terminal/blocked
-  для контекста; повторно terminal не запускай.
-- Строка `submitted` с `submission_ref` означает только polling. Немедленно поставь
-  `ready_to_run=no` и никогда не делай повторный submit, пока этот ref не получил
-  terminal `COMPLETE/FAILED/CANCELLED`. После `FAILED/CANCELLED` зафиксируй причину;
-  возвращай S-ID в `preparing` только если нужен исправленный новый artifact.
-- Проверь каждый `depends_on` по `ops/LEDGER_SCHEMA.md`. Сначала подготовь общие
-  artifacts. `ready_to_run=yes` ставь только при `artifact_status=validated`, пустом
-  blocker и валидном `RESULT.json`.
-- Получи реальную submission quota. Если осталось меньше пяти, submit только ready
-  subset, остальные оставь `ready`.
-- Если artifact не готов, работай над ним и честно оставь `preparing/blocked`. Не
-  расходуй слот ради количества и не перескакивай к зависимому позднему дню.
-- Если dependency доказанно не прошла promotion gate и уже не может быть исправлена
-  в этой неделе, создай terminal evidence, поставь зависимый слот `excluded` и нулевой
-  downstream weight. Не оставляй вечный `blocked`, мешающий перейти к следующему дню.
-- Спроси пользователя только если требуется credential, платный ресурс, публикация,
-  team merge, обращение к людям или иное новое полномочие.
+Placement: CPU для labels/OOF/small heads; RTX 6000 24 GB для DINO cache и small
+train; RTX 3080 10 GB для совместимых small jobs; A100 80 GB для high-res/full
+fine-tune/3D. Вторую A100 брать для независимого fold только при allocation и без
+ожидающих проектов. Две A100 не являются одной памятью 160 GB.
 
-## Snapshot до работы
+Используй только общую очередь
+`nsu-quadro:/home/scientists/gluz_d_s/kaggle/_control/resource_queue.py`.
+Проверь actual CLI/schema перед request. Inputs/env должны быть готовы до
+reservation. Под конкуренцией — один GPU-job RSNA, chunks ≤2 h, heartbeat ≤60 s,
+checkpoint/resume, release только после подтверждённого выхода своих процессов.
+Не вытесняй чужие jobs и не заводи вторую очередь. Пока ждёшь 2/5/10 минут, делай
+CPU-работу. Lease tokens храни только в приватном run state.
 
-Создай `ops/reports/YYYY-MM-DD_dayN.md` по шаблону и запиши:
+## Отбор S11–S35
 
-- точные UTC и Asia/Novosibirsk timestamps;
-- submission limit/quota и список наших submissions;
-- наш score/rank, team count, top-1, top-10 и расчётную gold boundary;
-- статусы kernels и реально доступные CPU/GPU slots/quota;
-- Git HEAD/status и существующие пользовательские изменения.
+Гипотезы/архитектуры/label sources брать из EXPERIMENT_SPECS. На всех вариантах
+используй locked folds, одинаковую fixed evaluation table и её mask/hash.
+Weak-label OOF — proxy; отдельно сохраняй expert-58 crossfit. Не оценивай S15 на
+58 случаях тем checkpoint, который на них учился. Encoder для общего frozen cache
+не должен содержать fitting на validation folds. A0 train predictions не являются OOF.
 
-Используй `C:\Users\Dmitry\.venvs\kg\Scripts\kaggle.exe`. Не читай вслух и не
-логируй tokens, cookies, `kaggle.json`, environment secrets.
+Сначала local screen, затем 5-fold OOF лидеров; второй seed только у winners.
+Операционный LABEL/GEOMETRY winner — max валидный OOF, tie-break runtime/S-ID;
+включение target group в Q — по promotion rule с учётом reference/proxy limitations.
+Public LB не используется как основной выбор labels/model/blend.
 
-## Подготовка S-ID
+Выбирай из самого раннего подготовленного пакета по `submit_priority` и gates
+`ops/compute_plan.json`: сначала S11, затем лучший S12–S14, затем S15. Дополнительные
+два кандидата только если есть самостоятельная полезная гипотеза и бюджет.
+Обычный пакет — 2–3 submissions, максимум 5; повторный sweep public weights не нужен.
 
-Создай immutable `experiments/Sxx/` с:
+Candidate с полными local metrics, отложенный по compute policy, получает
+`status=local_evaluated`, `decision=defer_submit`, пустые submission ref/score.
+Он закрывает local evidence gates и не мешает следующему пакету. При провале
+dependency — `excluded` с причиной/нулевым downstream weight; missing data пока
+исправимо — `blocked`, не выдуманное завершение. Scored никогда не повторяй.
 
-- `ORIGIN.md`: exact owner/slug/version, URL, licenses, datasets/models and versions;
-- notebook/script и `recipe.json` с одним намеренным изменением;
-- обязательным `RESULT.json` по schema и коротким `RESULT.md`.
+## Submit mode — минимальный Kaggle runtime
 
-Перед использованием чужого notebook сделай статический аудит: сетевые вызовы,
-shell/subprocess, чтение home/env/credentials, upload/delete/write вне output. Не
-запускай непроверенный чужой код локально в процессе с доступом к credentials.
-Inference запускай в изолированном Kaggle runtime с internet off.
+До Kaggle подготовь export bundle: code, chosen weights, config, offline wheels,
+manifest/SHA. Через локальный авторизованный CLI можно создать/версионировать private
+Kaggle asset для этого пакета; это подготовка явно запрошенного submit. Не загружай
+train cache, raw reports, DICOM, OOF или credentials в inference bundle.
 
-Для hosted LLM label extraction фиксируй provider/model/version/date, prompt SHA-256,
-стоимость и deterministic parsing rules. Не печатай и не коммить raw reports или их
-фрагменты; не публикуй derived dataset без отдельного разрешения.
+На НГУ проверить parity с A0 на одинаковом 32/128-study input, geometry, missing
+series, column order и changed targets. Checkpoint экспортировать переносимо: T4
+FP16/FP32 path, без обязательного A100 BF16/FlashAttention и предположений о 80 GB.
 
-Для controlled ablations держи неизменными folds, seed, preprocessing, source
-versions и model graph, кроме фактора S-ID. Все `rank` считай отдельно для каждой из
-12 target columns; UID не ранжируется. Любая смесь hidden predictions выполняется
-только внутри текущего notebook.
+Каггл выполняет только inference по текущему mounted test. Один immutable
+kernel/version на candidate, выход **`submission.csv`**. Именованные
+`submission_Sxx.csv` уже дали HTTP 400; не повторять этот эксперимент. Hidden
+predictions не доступны участнику, local/старый hidden CSV использовать нельзя.
 
-Для S11+ до submit обязательны locked study-level folds, folds/model/data/labels/cache
-hashes, OOF macro-AUC, 12 per-target AUC, fold deltas и OOF raw/rank correlations.
-Gold-58 — sanity с bootstrap interval, не основная CV.
+До submit: code/config/weights hashes distinct; internet off; 13 колонок в official
+sample order, exact UID order/set, unique UID, finite `[0,1]` predictions. Встрой
+assertions для произвольного test size. Проводить один короткий visible Save & Run
+для выбранной версии; full rehearsal/train/cache на Kaggle запрещены.
 
-Public A0 не имеет доказанно leakage-free OOF. Не называй его train predictions OOF
-и не используй их как promotion reference. Сравнивай ΔOOF только с контрольной
-моделью той же собственной family на тех же locked folds: S11 для label ablations,
-S15/default geometry для geometry, S21 для architecture. Correlations для promotion —
-только между leakage-free own OOF.
+Kaggle budget R2 до 12 сентября: 0 h preparation, soft ceiling 1.5 h visible
+validation RSNA, checkpoint после первых 0.5 h. Переснимать account quota; этот
+ceiling не резервирует ресурсы других проектов. Hidden estimate должен быть
+`<8.5 h`, engineering target `<6 h`; не экстраполировать A100 runtime прямо на T4.
+Billing hidden grading записывать observed/unknown, не считать автоматически
+равным weekly GPU debit. При параллельных чужих jobs quota attribution неизвестен.
 
-## Preflight и дедупликация
+Для каждой разрешённой подачи — один submit call с S-ID/hash в description.
+Сразу записать ref. `submitted` означает только poll, `ready_to_run=no`; после
+timeout сначала read-only reconciliation. Не повторять запрос ради пустого stdout.
+После score записать status, score/rank, time, top-1/top-10/gold boundary/team count.
 
-До запуска/submit:
+## Журнал и завершение
 
-1. Зафиксируй source versions, `recipe.json`, code/config/model SHA-256.
-2. Запрети submit, если совокупность recipe + code/config + model hashes уже была.
-3. Подтверди internet off и hidden runtime estimate `< 8.5 h`.
-4. Встрой runtime assertions: выбранный `submission_Sxx.csv` (или одиночный
-   `submission.csv`) существует; 13 колонок в sample order;
-   UID set/order совпадает с mounted sample submission; UID unique; 12 predictions
-   numeric/finite/in `[0,1]`/non-constant.
-5. Выполни visible run, сохрани только 3-row output в gitignored artifacts и его SHA.
-   Этот SHA проверяет воспроизводимость visible run, но не hidden uniqueness.
-6. Для S11+ валидируй OOF evidence и promotion rule стратегии.
+Для каждого S-ID сохраняй immutable code/recipe/ORIGIN, RESULT.json/RESULT.md:
+source versions, model/data/cache/folds/env hashes, compute host/GPU/allocation,
+run/PID identity, runtime/resource peaks, weak OOF и expert crossfit, correlations,
+export/parity, quota delta, kernel/version, submission receipt или local-only reason.
+В ledger — status; в compute plan — placement/priority. Новые public результаты
+записывать отдельно от local metrics. Не backfill-ить старые записи догадками.
 
-Ошибка kernel без submission не является выполненным экспериментом. Не патчь один
-и тот же public source в общих kernel slots без сохранения immutable recipe/version.
+Отчёт по шаблону включает готовность следующего пакета, jobs, blocker, GPU-hours
+НГУ/Kaggle отдельно, transfer/cache footprint, resource release/cleanup receipt.
+Сохраняй latest resumable и best validated checkpoints, остальные удаляй только
+после проверки отсутствия зависимостей и экспорта результатов согласно shared policy.
 
-## Submit и фиксация результата
-
-- Description начинай с `Sxx`, затем одно изменение и короткий code/config hash.
-- Дождись terminal submission status. При `pending` оставь `submitted`, при score —
-  `scored`; не угадывай результат и не создавай второй submission ref.
-- После каждого score пересними наш rank, leader, top-10, gold cutoff и team count.
-- Обнови одну строку ledger и соответствующий `RESULT.json`; не оставляй данные
-  только в свободном тексте или terminal log.
-- Сохрани submission ref/times, kernel/version, visible/hidden-estimate runtime,
-  public score, ranks before/after, OOF evidence, hashes, decision и blocker.
-- Hidden predictions/correlations не выдумывай. Анализ correlations разрешён только
-  для OOF/visible component outputs, явно помеченных как таковые.
-
-`A0` остаётся контрольным графом всю неделю. Не меняй anchor по одному public шагу
-`0.001`. Собственную branch помечай `promoted` только по формальному promotion rule
-в стратегии. Детерминированные gates применяй сам: operational LABEL/GEOMETRY winner
-— max locked-OOF с tie-break из стратегии; Q promotion — только по численным
-thresholds. `needs_replication` — значение поля `decision`, при котором `status`
-остаётся `scored`; это не отдельный status и не закрывает положительный promotion
-gate. Ставь `decision=promote|reject|exclude` и соответствующий terminal status,
-когда формальное правило даёт однозначный исход; старшую модель ждать не нужно.
-
-## Параллельная подготовка
-
-Пока сегодняшние hidden submissions scoring, готовь общие assets следующего этапа в
-пределах реальной GPU quota. Один versioned cache должен обслуживать несколько heads.
-Соблюдай hard caps стратегии. Не запускай `5 folds × 2 seeds`, если для этого нет
-заранее проверенного бюджета; оставь точный blocker и оценку GPU-hours.
-
-## Завершение дня
-
-- Заполни дневной отчёт: что действительно менялось; scores/ranks; что находится в
-  пределах public precision; promoted/rejected; do-not-retry; quota; ready artifacts;
-  running jobs; blockers; следующий пакет.
-- Проверь CSV/JSON schema, links, hashes, `git diff` и отсутствие secrets/raw
-  DICOM/reports/weights/predictions/runtime logs в Git.
-- Выполни релевантные проверки, затем один локальный commit и обычный push согласно
-  правилам репозитория.
-- Верни короткий итог: S-ID и status, score/rank каждого scored, quota left, decisions,
-  что готово следующим и один настоящий blocker, если он есть.
-
-Не делай team merge, не пиши участникам, не публикуй notebook/dataset, не покупай
-compute/API и не выбирай final submissions без отдельного указания пользователя.
-Работай до завершения доступного пакета или настоящего blocker; не останавливайся на
-пересказе плана.
+Проверь изменения, сделай commit по правилам проекта. Push — только при выполнении
+его условий; чужие scratch files не включать. Итог пользователю: подготовлено,
+submitted/scored/local_evaluated, scores, quota, следующий concrete task и blocker.
 
 ---
