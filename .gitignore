@@ -8,6 +8,7 @@ kaggle.json
 .ipynb_checkpoints/
 *_state.json
 tmp/evgen_v5_output/
+tmp/labels/
 artifacts/
 data/
 models/

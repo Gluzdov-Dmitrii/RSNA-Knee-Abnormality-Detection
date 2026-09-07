@@ -77,9 +77,9 @@
   "submission": {
     "ref": "56045415",
     "submitted_at_utc": "2026-09-06T03:01:50Z",
-    "public_score": null,
+    "public_score": 0.937,
     "rank_before": 183,
-    "rank_after": null,
+    "rank_after": 183,
     "leader_score": 0.954,
     "top10_score": 0.949,
     "gold_cutoff_rank": 16,
@@ -95,6 +95,8 @@
     "created_utc=2026-09-06T02:26:36Z",
     "Named submission_Sxx.csv is 400 on this API; submit submission.csv from a distinct kernel version.",
     "Submitted kernel v7 -f submission.csv; ref 56045415 PENDING. Medial Meniscus untouched vs A0.",
-    "Submitted kernel v7 -f submission.csv; ref 56045415 PENDING."
-  ]
+    "Submitted kernel v7 -f submission.csv; ref 56045415 PENDING.",
+    "Scored 2026-09-07T03:11:09Z: public 0.937, rank 183; A0 anchor unchanged (0.001 public delta is noise)."
+  ],
+  "status": "scored"
 }
