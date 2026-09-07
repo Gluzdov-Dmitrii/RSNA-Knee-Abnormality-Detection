@@ -9,6 +9,8 @@ kaggle.json
 *_state.json
 tmp/evgen_v5_output/
 tmp/labels/
+tmp/schema/train.csv
+tmp/schema/train_series.csv
 artifacts/
 data/
 models/
