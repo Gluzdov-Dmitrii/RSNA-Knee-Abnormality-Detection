@@ -1,0 +1,20 @@
+{
+  "id": "dmitriigluzdov/rsna-cache-budget-probe",
+  "title": "rsna-cache-budget-probe",
+  "code_file": "rsna-cache-budget-probe.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [
+    "pilkwang/rsna-knee-llm-labels"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": []
+}
