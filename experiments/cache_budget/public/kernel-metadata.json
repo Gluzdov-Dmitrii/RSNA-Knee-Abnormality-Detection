@@ -1,0 +1,22 @@
+{
+  "id": "dmitriigluzdov/rsna-knee-on-a-storage-budget",
+  "title": "RSNA Knee on a storage budget",
+  "code_file": "rsna-knee-on-a-storage-budget.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "eda"
+  ],
+  "dataset_sources": [
+    "pilkwang/rsna-knee-llm-labels"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": []
+}

@@ -39,6 +39,10 @@ Subset is 32 studies per `FOLDS_V1` fold (160 total), seed 2026. Slot scheme is 
 
 Tiny CNN did not train (≈0.49). Decision from GBDT + SSIM: materialise **224² × 9**, not 336 and not 160×3. Crop 130 vs 160 stays open for a DINO probe; default crop for encoder work remains 130 mm. Details: `ops/reports/2026-09-08_cache_budget.md`.
 
+### v2 measured (15 points, 200 studies, kernel v2 COMPLETE)
+
+Publication notebook: `dmitriigluzdov/rsna-knee-on-a-storage-budget`. Three families, bootstrap 95% CI. Resolution at 9 slices is **flat** (128²–336² inside one CI). Slice count cliffs at 3; 6–12 is the plateau. Crop 160 still leads GBDT at the same 11.12 GiB. Report: `ops/reports/2026-09-08_cache_budget_v2.md`.
+
 ## Secondary metric
 
 Fidelity to the **densest variant in this sweep** (336² × 9 slices, crop 130 mm), after resampling spatial and slice axes: mean SSIM. This is information loss vs a richer cache, not vs 570 GB.
@@ -51,4 +55,4 @@ Fidelity to the **densest variant in this sweep** (336² × 9 slices, crop 130 m
 
 ## Publication
 
-Do not publish a Dataset of derived MRI without a separate permission check (MIRA + competition data security). A **private** CPU kernel for this probe is allowed; a public notebook is a later decision.
+Do not publish a Dataset of derived MRI without a separate permission check (MIRA + competition data security). The methods notebook `dmitriigluzdov/rsna-knee-on-a-storage-budget` is intended for publication; it does not write a pixel Dataset.

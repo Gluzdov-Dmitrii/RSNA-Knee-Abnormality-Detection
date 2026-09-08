@@ -1,0 +1,25 @@
+{
+  "kernel": "dmitriigluzdov/rsna-knee-on-a-storage-budget",
+  "version_measured": 2,
+  "status": "COMPLETE",
+  "private_when_measured": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "submitted": false,
+  "n_subset": 200,
+  "n_per_fold": 40,
+  "n_points": 15,
+  "seed": 2026,
+  "folds": "FOLDS_V1",
+  "folds_sha256": "3086df3341333f44adb883292da386857c3230eaa2d501514ddf827a2da11b1a",
+  "labels": "LABEL_PILKWANG_V1",
+  "runtime_s_log": 1634,
+  "slots_decoded": 977,
+  "slots_possible": 1200,
+  "sha256": {
+    "cache_budget_v2_metrics.csv": "4089b8931ea161bac5b0b2cc2fd1d26d3b416219ee8037df7e4b8b508a583778",
+    "cache_budget_v2_spec.json": "ec4827cad519bc752dbeec5d84356b215c26b893de4beb0c4755fa333c69bbe9",
+    "cache_budget_v2_curve.png": "17efd0ec539f3e99bef43c4647ddb366ff9cb23623ee143d7ed3c12e50a7ff5e",
+    "cache_budget_v2_ssim.png": "4bddfef5e2c3e9e938c4ab1173045db4755ee525fd68ee5cc42b52f2720931ba"
+  }
+}
