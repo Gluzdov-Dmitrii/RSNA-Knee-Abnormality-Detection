@@ -16,3 +16,6 @@ data/
 models/
 outputs/
 ops/runtime/
+/tmp/cache_budget_deps/
+/tmp/cache_budget_remote_before/
+/experiments/cache_budget/recheck/private_kernel/

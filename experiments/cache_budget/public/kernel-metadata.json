@@ -1,6 +1,7 @@
 {
-  "id": "dmitriigluzdov/rsna-knee-on-a-storage-budget",
-  "title": "RSNA Knee on a storage budget",
+  "id": "dmitriigluzdov/knee-mri-in-11-gib",
+  "id_no": 133521917,
+  "title": "Knee MRI in 11 GiB",
   "code_file": "rsna-knee-on-a-storage-budget.ipynb",
   "language": "python",
   "kernel_type": "notebook",
@@ -8,15 +9,12 @@
   "enable_gpu": false,
   "enable_tpu": false,
   "enable_internet": false,
-  "keywords": [
-    "eda"
-  ],
   "dataset_sources": [
     "pilkwang/rsna-knee-llm-labels"
   ],
-  "kernel_sources": [],
   "competition_sources": [
     "rsna-knee-abnormality-detection"
   ],
+  "kernel_sources": [],
   "model_sources": []
 }

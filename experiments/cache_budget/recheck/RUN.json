@@ -1,0 +1,58 @@
+{
+  "kernel": "dmitriigluzdov/rsna-knee-private-cache-verifier",
+  "version": 1,
+  "status": "COMPLETE",
+  "cpu_only": true,
+  "internet": false,
+  "competition_submission": false,
+  "source_sha256": {
+    "pipeline.py": "7f00156db7993880ad7e5179c3ad1f2b170211f5051c58d653a918aaa59fdef9",
+    "PROTOCOL.md": "99bc9d6c80f26c622dc9cda96e8c6dc8147ccb8c647243f4373fdfdec341a9f8",
+    "private_kernel/build_cache.py": "267b16b87115068e13d284c6ef87f394938e28441206964c45c24796c5470200",
+    "private_kernel/kernel-metadata.json": "aa93e60ebc0ba3ab60cbe6cde7ea66e8180fbc2252ab4d9783102f6678df86e9"
+  },
+  "local_validation": {
+    "synthetic_geometry_and_shards": "PASS",
+    "paired_bootstrap_vs_sklearn": "PASS",
+    "fixed_subset": "200 studies; 40 per fold; original labels and folds SHA256 verified",
+    "diff_check": "PASS",
+    "all_shards_and_official_studies": "PASS",
+    "recomputed_15_oof_metrics": "PASS",
+    "published_source_and_figure_hashes": "PASS",
+    "live_page": "4 collapsed code cells, 2 figure images, correct Dataset link, 0 public output files"
+  },
+  "runtime_seconds": 5151,
+  "n_studies_cached": 4407,
+  "n_shards": 35,
+  "pixel_gib": 11.120721817016602,
+  "spec_sha256": "043485b6c0ea543a5f4061ce15b6fef868bb28aebc2af6d124adfd940c9aaf50",
+  "subset_sha256": "207359e564979a8ee4279cd9aae57458815968a8df5f27a6c74b993cb8b3baeb",
+  "publication_status": "published_and_verified",
+  "dataset_publication": {
+    "status": "ready",
+    "url": "https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130",
+    "is_private": true,
+    "dataset_id": 11946093,
+    "version": 1,
+    "verified_at_utc": "2026-09-08T12:31:39.074202+00:00",
+    "n_studies": 4407,
+    "pixel_gib": 11.120721817016602,
+    "total_bytes": 11941204980,
+    "n_files": 41,
+    "spec_sha256": "043485b6c0ea543a5f4061ce15b6fef868bb28aebc2af6d124adfd940c9aaf50",
+    "remote_files_and_bytes_verified": true
+  },
+  "notebook_publication": {
+    "url": "https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib",
+    "version": 5,
+    "kernel_id": 133521917,
+    "save_type": "QUICK_SAVE",
+    "measurements_run": "dmitriigluzdov/rsna-knee-private-cache-verifier/1",
+    "measurements_run_status": "COMPLETE",
+    "source_sha256": "ad86cc9d24ef2ea5f92a8f889fcf4b66bb8e777c9f25aed7a7ca3a9dd887d2ca",
+    "displayed_figures_from_verified_run": true,
+    "cpu_only": true,
+    "internet": false,
+    "competition_submission": false
+  }
+}
