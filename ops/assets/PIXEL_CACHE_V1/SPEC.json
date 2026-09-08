@@ -1,0 +1,323 @@
+{
+  "img": 224,
+  "n_slices": 9,
+  "group": 3,
+  "n_group": 3,
+  "crop_mm": 130,
+  "window": [
+    0.35,
+    0.65
+  ],
+  "slot_scheme": [
+    {
+      "name": "SAG_FLUID",
+      "plane": "Sagittal",
+      "Fluid_Sensitive": 1
+    },
+    {
+      "name": "COR_FLUID",
+      "plane": "Coronal",
+      "Fluid_Sensitive": 1
+    },
+    {
+      "name": "AX_FLUID",
+      "plane": "Axial",
+      "Fluid_Sensitive": 1
+    },
+    {
+      "name": "SAG_STRUCT",
+      "plane": "Sagittal",
+      "Fluid_Sensitive": 0
+    },
+    {
+      "name": "COR_STRUCT",
+      "plane": "Coronal",
+      "Fluid_Sensitive": 0
+    },
+    {
+      "name": "AX_STRUCT",
+      "plane": "Axial",
+      "Fluid_Sensitive": 0
+    }
+  ],
+  "dtype": "uint8",
+  "n_studies": 4407,
+  "shape_per_study": [
+    6,
+    9,
+    224,
+    224
+  ],
+  "pixel_bytes": 11940784128,
+  "pixel_gib": 11.120721817016602,
+  "shards": [
+    {
+      "file": "pixels-000.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "aa63be6b5b5b8f1b0e6a2ef9f1de6520217cf4211b84a50086b29180529f31cb"
+    },
+    {
+      "file": "pixels-001.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "01848b8edff66af699c9938a216360dfd26667d76eaf81b8054332b52150467b"
+    },
+    {
+      "file": "pixels-002.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "1ef0e75585f1e5ea661733cb6e89b94b405fcbc160b423a83e50e6aa7421a668"
+    },
+    {
+      "file": "pixels-003.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "658d0695f27c7e8eaca77966e227d0e5599519e67a558c312831672da58e32fd"
+    },
+    {
+      "file": "pixels-004.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "6ee309f9cb8a6a9b975671cd49fa94f324132e7a0a96071b60c484158d710eaf"
+    },
+    {
+      "file": "pixels-005.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "b4b288f1fa3b7d82f30194ef4f64d257125712d308c8467b908d03ee08595131"
+    },
+    {
+      "file": "pixels-006.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "33298a39a2ca0bf1de81b644c727693ac9a8c1a60064e36cdd13473730a38bf4"
+    },
+    {
+      "file": "pixels-007.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "e4cae2070f077b9ff2e2b3021388912873432d79d4ca7ac7ecbe6522129424b3"
+    },
+    {
+      "file": "pixels-008.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "c93d4bd897232e384dcfb2631a80e75b74bbf501f8dd02c7e0d7f272081b7e98"
+    },
+    {
+      "file": "pixels-009.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "63f0407ff8b4b77c11e34eccd7ad5310f63ea61da8bb550143443bfcf66fbb64"
+    },
+    {
+      "file": "pixels-010.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "357f110488309da5fd98a9db723da9ba8a3530b3cbb9e0ecdf9a810f8053c2ff"
+    },
+    {
+      "file": "pixels-011.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "0b03cb1456aa651e74bb9e46f1977d14e23c55e8c14585c9449b6edf7988dd8f"
+    },
+    {
+      "file": "pixels-012.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "a3af291412a99497d372a3298d41e2e106bfc1daa0bb15f59b1b6bc25d3bd0d2"
+    },
+    {
+      "file": "pixels-013.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "9c6186350c09b2e50b1f5521cdd672258a8187c8b5f83f9b08872ed0853237fe"
+    },
+    {
+      "file": "pixels-014.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "d24688a813899354294cb25a1d4850bed3c3aa45aba34e19ce88f034bf88b916"
+    },
+    {
+      "file": "pixels-015.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "c0fd222f93c65caf4ebc06f0f4b8fedac79ab47fa0759dd1c12f56d8b8050116"
+    },
+    {
+      "file": "pixels-016.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "49c9be520d0a965c3aa7596e9e528a7dbcf87058a9b235e6a5e02551c88fd8dc"
+    },
+    {
+      "file": "pixels-017.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "a572226d72f32950a7145654bb51e9f3a140c6272d0d2f1704ff1117a2a2a43d"
+    },
+    {
+      "file": "pixels-018.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "4daf6f4ef399a4c1e048caf90d50aa5f1eef07e0d383631c115d789643772032"
+    },
+    {
+      "file": "pixels-019.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "5b8482f064bae9fdb67e08d81926802712c60406bd8cfca09bda7a4f0b2683ed"
+    },
+    {
+      "file": "pixels-020.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "3a362fec793db400a599362b97a89583ab48f4419995607fe5dbbd8df5d749dc"
+    },
+    {
+      "file": "pixels-021.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "d7ca56041c9b5144a479f66990a638c11a8bec4f8ab1a5ce8095ce867a1bc43a"
+    },
+    {
+      "file": "pixels-022.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "2ae39f9994943e766376b4fabbcd35babd311d2e0b4ef9dcd67d252c04ce1ec1"
+    },
+    {
+      "file": "pixels-023.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "b9b5c3cc6f4069efe039bc460e033904bb5b26240f840e30c91fede3e2e03615"
+    },
+    {
+      "file": "pixels-024.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "34d48aa74896a8de53d197e950cd1a14803f2618a2ab0a5f2343e6d9399f9a82"
+    },
+    {
+      "file": "pixels-025.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "60a2ecc7dfc23e3df2e716886d660e7fb5b1354b3efb9422c9e71ea9c8ddb3e4"
+    },
+    {
+      "file": "pixels-026.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "6fc83c61f85339b2271af7259a517a5a576aa54e9b63d4366751b29508fd4389"
+    },
+    {
+      "file": "pixels-027.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "01a621072a69fa2b2f3aa01daf66a4fb8158867cd3eba5c33ec52842d04af3c4"
+    },
+    {
+      "file": "pixels-028.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "e4f6a94139d777587a726f69bc001d2bb42f79b017b4ef3e7f237ad55010fd27"
+    },
+    {
+      "file": "pixels-029.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "d612e63508472038d1dd5a7b1bc35dbbe8baa377f6764a7ea558aca367641964"
+    },
+    {
+      "file": "pixels-030.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "3b506405af1e8e8d6c3b4ba44d9906097685c82ddebe7f222c7ea13b8cf72037"
+    },
+    {
+      "file": "pixels-031.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "793a4f20ae2522380c90a917837be82fbdcea15e7540267046e322f3a2c41496"
+    },
+    {
+      "file": "pixels-032.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "3ba6365a4b4487e4d90f409b567249dd4d1ce0e8f22822e480367509a08942c0"
+    },
+    {
+      "file": "pixels-033.npy",
+      "n_studies": 128,
+      "bytes": 346816640,
+      "sha256": "841ab76a64d1a3e1949e90aef36d82861016994b2fa5bfd81c52aeac960f4db6"
+    },
+    {
+      "file": "pixels-034.npy",
+      "n_studies": 55,
+      "bytes": 149022848,
+      "sha256": "c7bf45be37cc61015e21bd8457aa41daa9d92b740cb0f57743b84e30a6d5b791"
+    }
+  ],
+  "sha256": {
+    "pixels-000.npy": "aa63be6b5b5b8f1b0e6a2ef9f1de6520217cf4211b84a50086b29180529f31cb",
+    "pixels-001.npy": "01848b8edff66af699c9938a216360dfd26667d76eaf81b8054332b52150467b",
+    "pixels-002.npy": "1ef0e75585f1e5ea661733cb6e89b94b405fcbc160b423a83e50e6aa7421a668",
+    "pixels-003.npy": "658d0695f27c7e8eaca77966e227d0e5599519e67a558c312831672da58e32fd",
+    "pixels-004.npy": "6ee309f9cb8a6a9b975671cd49fa94f324132e7a0a96071b60c484158d710eaf",
+    "pixels-005.npy": "b4b288f1fa3b7d82f30194ef4f64d257125712d308c8467b908d03ee08595131",
+    "pixels-006.npy": "33298a39a2ca0bf1de81b644c727693ac9a8c1a60064e36cdd13473730a38bf4",
+    "pixels-007.npy": "e4cae2070f077b9ff2e2b3021388912873432d79d4ca7ac7ecbe6522129424b3",
+    "pixels-008.npy": "c93d4bd897232e384dcfb2631a80e75b74bbf501f8dd02c7e0d7f272081b7e98",
+    "pixels-009.npy": "63f0407ff8b4b77c11e34eccd7ad5310f63ea61da8bb550143443bfcf66fbb64",
+    "pixels-010.npy": "357f110488309da5fd98a9db723da9ba8a3530b3cbb9e0ecdf9a810f8053c2ff",
+    "pixels-011.npy": "0b03cb1456aa651e74bb9e46f1977d14e23c55e8c14585c9449b6edf7988dd8f",
+    "pixels-012.npy": "a3af291412a99497d372a3298d41e2e106bfc1daa0bb15f59b1b6bc25d3bd0d2",
+    "pixels-013.npy": "9c6186350c09b2e50b1f5521cdd672258a8187c8b5f83f9b08872ed0853237fe",
+    "pixels-014.npy": "d24688a813899354294cb25a1d4850bed3c3aa45aba34e19ce88f034bf88b916",
+    "pixels-015.npy": "c0fd222f93c65caf4ebc06f0f4b8fedac79ab47fa0759dd1c12f56d8b8050116",
+    "pixels-016.npy": "49c9be520d0a965c3aa7596e9e528a7dbcf87058a9b235e6a5e02551c88fd8dc",
+    "pixels-017.npy": "a572226d72f32950a7145654bb51e9f3a140c6272d0d2f1704ff1117a2a2a43d",
+    "pixels-018.npy": "4daf6f4ef399a4c1e048caf90d50aa5f1eef07e0d383631c115d789643772032",
+    "pixels-019.npy": "5b8482f064bae9fdb67e08d81926802712c60406bd8cfca09bda7a4f0b2683ed",
+    "pixels-020.npy": "3a362fec793db400a599362b97a89583ab48f4419995607fe5dbbd8df5d749dc",
+    "pixels-021.npy": "d7ca56041c9b5144a479f66990a638c11a8bec4f8ab1a5ce8095ce867a1bc43a",
+    "pixels-022.npy": "2ae39f9994943e766376b4fabbcd35babd311d2e0b4ef9dcd67d252c04ce1ec1",
+    "pixels-023.npy": "b9b5c3cc6f4069efe039bc460e033904bb5b26240f840e30c91fede3e2e03615",
+    "pixels-024.npy": "34d48aa74896a8de53d197e950cd1a14803f2618a2ab0a5f2343e6d9399f9a82",
+    "pixels-025.npy": "60a2ecc7dfc23e3df2e716886d660e7fb5b1354b3efb9422c9e71ea9c8ddb3e4",
+    "pixels-026.npy": "6fc83c61f85339b2271af7259a517a5a576aa54e9b63d4366751b29508fd4389",
+    "pixels-027.npy": "01a621072a69fa2b2f3aa01daf66a4fb8158867cd3eba5c33ec52842d04af3c4",
+    "pixels-028.npy": "e4f6a94139d777587a726f69bc001d2bb42f79b017b4ef3e7f237ad55010fd27",
+    "pixels-029.npy": "d612e63508472038d1dd5a7b1bc35dbbe8baa377f6764a7ea558aca367641964",
+    "pixels-030.npy": "3b506405af1e8e8d6c3b4ba44d9906097685c82ddebe7f222c7ea13b8cf72037",
+    "pixels-031.npy": "793a4f20ae2522380c90a917837be82fbdcea15e7540267046e322f3a2c41496",
+    "pixels-032.npy": "3ba6365a4b4487e4d90f409b567249dd4d1ce0e8f22822e480367509a08942c0",
+    "pixels-033.npy": "841ab76a64d1a3e1949e90aef36d82861016994b2fa5bfd81c52aeac960f4db6",
+    "pixels-034.npy": "c7bf45be37cc61015e21bd8457aa41daa9d92b740cb0f57743b84e30a6d5b791",
+    "studies.csv": "e25753ebdf6a7de6c0689bd80fdb91276780d75743e4d96ec316dbf4e1df416a",
+    "slot_mask.npy": "4234176f0eb2847c4fc59653a10b7edeed43059035009750764ca48ad39fd791",
+    "AUDIT.json": "f4e610bc0b81c6a4b8ab1d752c00920b96aee7842e99e68a0143e5c9ddb51f0b"
+  },
+  "ordering": [
+    "ImagePositionPatient projected on orientation normal",
+    "SliceLocation",
+    "InstanceNumber"
+  ],
+  "unordered_policy": "fail",
+  "decode_error_policy": "fail; never substitute broken DICOM with zero",
+  "missing_slot_policy": "zero-filled with explicit slot_mask.npy; no series for public plane/Fluid_Sensitive slot",
+  "series_choice": "most DICOM files; CSV order breaks ties",
+  "percentile_scope": "1st-99th percentile over the sampled cropped volume, independently per series",
+  "crop_policy": "center crop using row PixelSpacing; skip if crop >= shorter FOV or spacing missing; no padding",
+  "interpolation": "scipy.ndimage.zoom(order=1, grid_mode=True, mode=nearest); round to uint8",
+  "photometric": "apply RescaleSlope/Intercept and invert MONOCHROME1",
+  "source": "rsna-knee-abnormality-detection official training MRI",
+  "data_license": "Competition rules + RSNA MIRA; private, participating users only",
+  "geometry_license": "Apache-2.0; Steven Lee; see NOTICE.md",
+  "lossless": false,
+  "dataset_url": "https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130"
+}

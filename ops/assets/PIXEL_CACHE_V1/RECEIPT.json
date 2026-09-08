@@ -1,0 +1,52 @@
+{
+  "key": "PIXEL_CACHE_V1",
+  "checked_at_utc": "2026-09-08T15:23:40Z",
+  "dataset": "dmitriigluzdov/rsna-knee-uint8-224-9-c130",
+  "local_root": "data/rsna-knee-uint8-224-9-c130",
+  "nsu_root": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/data/rsna-knee-uint8-224-9-c130",
+  "nsu_copy": {
+    "verified_at_utc": "2026-09-08T16:16:00Z",
+    "n_shards": 35,
+    "n_csv": 4407,
+    "sample_hashes_ok": ["studies.csv", "slot_mask.npy", "AUDIT.json", "pixels-000.npy", "pixels-034.npy"],
+    "all_shard_file_sizes_ok": true,
+    "scp_seconds": 3114
+  },
+  "verify": {
+    "n_studies": 4407,
+    "n_shards": 35,
+    "pixel_bytes": 11940784128,
+    "pixel_gib": 11.120721817016602,
+    "sample_uid": "1.2.826.0.1.3680043.8.498.10004873229099053869093324292195817260",
+    "sample_shape": [6, 9, 224, 224],
+    "sample_dtype": "uint8",
+    "sample_mask_sum": 5,
+    "present_slots": 21334,
+    "absent_slots": 5108,
+    "all_spec_sha256_verified": true,
+    "all_spec_sha256_seconds": 72.3,
+    "mmap_sizes_ok": true
+  },
+  "smoke": {
+    "n_studies": 4407,
+    "fold_sizes": {"0": 882, "1": 881, "2": 881, "3": 881, "4": 882},
+    "folds_csv_sha256": "3086df3341333f44adb883292da386857c3230eaa2d501514ddf827a2da11b1a",
+    "unlabeled_pilkwang": [
+      "1.2.826.0.1.3680043.8.498.73527530686853911124431549317032662220"
+    ],
+    "smoke_n": 32,
+    "first_study": {
+      "uid": "1.2.826.0.1.3680043.8.498.10004873229099053869093324292195817260",
+      "shape": [6, 9, 224, 224],
+      "dtype": "uint8",
+      "mask_sum": 5,
+      "mean_u8": 96.38735023089097
+    }
+  },
+  "notes": [
+    "Gitignored pixels live under data/rsna-knee-uint8-224-9-c130.",
+    "This is not DINO_CACHE_V1.",
+    "NSU copy is a single NFS tree; do not duplicate to ngpu01.",
+    "Apparent du size on ZFS may be below 11.12 GiB because of compression; logical file sizes match SPEC."
+  ]
+}

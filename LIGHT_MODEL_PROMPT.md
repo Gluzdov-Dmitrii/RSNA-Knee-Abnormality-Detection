@@ -37,8 +37,10 @@ final submissions, не меняй команды и не публикуй priva
 `C:\Users\Dmitry\.venvs\kg\Scripts\kaggle.exe`.
 Исторические числа не выдавай за текущие. Ничего не выводи из credential store.
 
-S01–S10 уже scored, не повторяй. FOLDS_V1 и три label assets уже готовы; сверяй
-hashes, а не перестраивай их. Следующий пакет S11–S15 зависит от DINO cache/heads.
+S01–S10 уже scored, не повторяй. FOLDS_V1, PIXEL_CACHE_V1 и три label assets уже
+готовы; сверяй hashes, а не перестраивай их. Следующий пакет S11–S15 зависит от
+DINO cache/heads. Pixel-path (S22 и др.) учится на 11.12 GiB uint8 cache, не на
+~500 GB DICOM. Не скачивай официальный train zip по умолчанию.
 
 SSH через существующий Windows-клиент пользователя и aliases `nsu-quadro`,
 `nsu-a100`, `nsu-pc`. Sandbox alias failure не означает, что сервера недоступны:

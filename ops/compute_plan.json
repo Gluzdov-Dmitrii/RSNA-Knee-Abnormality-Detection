@@ -34,9 +34,20 @@
   "preparation_tasks": [
     {
       "id": "M0_STORAGE",
-      "status": "planned",
+      "status": "done",
       "backend": "cpu",
-      "done_when": "registered storage budget and RSNA manifest allow selected private image staging; no credentials or raw reports"
+      "done_when": "registered storage budget and RSNA manifest allow selected private image staging; no credentials or raw reports",
+      "done_note": "2026-09-08: PIXEL_CACHE_V1 (~11.12 GiB derived uint8) is the default train-pixel corpus. Raw ~500 GB DICOM is not staged. NSU PROJECT_MANIFEST updated; reports/credentials still excluded."
+    },
+    {
+      "id": "M0_PIXEL_CACHE",
+      "status": "done",
+      "backend": "cpu",
+      "depends_on": [
+        "M0_STORAGE"
+      ],
+      "done_when": "PIXEL_CACHE_V1 downloaded, SPEC hashes verified, mmap reader joins FOLDS_V1, one NFS copy on NSU",
+      "done_note": "2026-09-08: local SHA-256 of all SPEC files; NSU NFS copy size+sample-hash verified; not duplicated to ngpu01."
     },
     {
       "id": "M0_ENV_CODE",
@@ -46,12 +57,13 @@
     },
     {
       "id": "M0_DATA_PILOT",
-      "status": "planned",
+      "status": "done",
       "backend": "cpu",
       "depends_on": [
         "M0_STORAGE"
       ],
-      "done_when": "32-study decode pilot and resumable transfer manifest verified"
+      "done_when": "32-study decode pilot and resumable transfer manifest verified",
+      "done_note": "2026-09-08: DICOM decode pilot skipped; PIXEL_CACHE_V1 full SHA-256 + mmap smoke on 32 studies replaces it for the pixel training path."
     },
     {
       "id": "M0_GPU_PILOT",

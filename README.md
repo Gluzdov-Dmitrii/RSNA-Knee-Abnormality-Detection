@@ -3,8 +3,9 @@
 **Текущий план R2, 2026-09-07:** [LOCAL_COMPUTE_PLAN.md](LOCAL_COMPUTE_PLAN.md).
 Подготовка/обучение/OOF — на RTX 6000, RTX 3080 и A100 НГУ; Kaggle — финальные
 inference/submissions. S01–S10 завершены, best `0.937`; folds и labels готовы,
-следующий этап — storage/env/DINO cache для S11–S15. Общая GPU queue НГУ уже
-активирована. `ops/compute_plan.json` дополняет ledger приоритетами local/submit.
+следующий этап — env/DINO cache для S11–S15; **PIXEL_CACHE_V1 готов** (11.12 GiB
+uint8, без скачивания ~500 GB DICOM). Общая GPU queue НГУ уже активирована.
+`ops/compute_plan.json` дополняет ledger приоритетами local/submit.
 
 Рабочий репозиторий для Kaggle competition
 [RSNA Knee Abnormality Detection](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection).
@@ -14,7 +15,7 @@ inference/submissions. S01–S10 завершены, best `0.937`; folds и labe
 - `3 089` команд; наш best `0.936`, rank `295`;
 - лидер `0.954`, top-10 `0.949`, расчётная gold boundary — rank `16`, score `0.948`;
 - сделано `20` сабмитов; почти все — проверки открытых inference notebooks;
-- локально нет полного датасета, собственных весов, OOF и training pipeline;
+- локально есть PIXEL_CACHE_V1 (11.12 GiB uint8 train pixels); нет DINO cache, собственных весов и OOF;
 - Kaggle CLI авторизован, пять приватных kernel slots и оркестраторы уже есть.
 
 Главное ограничение code competition: обычный kernel output содержит лишь
@@ -34,6 +35,7 @@ prediction vectors нельзя скачать, сравнить или смеш
 7. [`LIGHT_MODEL_PROMPT.md`](LIGHT_MODEL_PROMPT.md) — ежедневный промпт исполнителя.
 8. [`ops/baseline_submissions_2026-09-05.csv`](ops/baseline_submissions_2026-09-05.csv) — receipts 20 сабмитов, не hidden predictions.
 9. [`ops/DAILY_REPORT_TEMPLATE.md`](ops/DAILY_REPORT_TEMPLATE.md) — дневной отчёт.
+10. [`ops/assets/PIXEL_CACHE_V1/ORIGIN.md`](ops/assets/PIXEL_CACHE_V1/ORIGIN.md) — локальный 11.12 GiB uint8 train cache.
 
 `tmp/` — архив скачанных public notebooks и старых оркестраторов. Это полезная
 исходная база, но не собственная validation/training система.

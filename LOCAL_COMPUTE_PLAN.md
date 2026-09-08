@@ -12,7 +12,8 @@
   имеют низкий приоритет.
 - FOLDS_V1 и три teacher label sets готовы. Fold SHA:
   `3086df3341333f44adb883292da386857c3230eaa2d501514ddf827a2da11b1a`.
-- Не готовы: train DICOM staging, DINO cache, ML environment, собственные heads/OOF.
+- Готов PIXEL_CACHE_V1: 4407 studies, 11.12 GiB uint8, без сырого DICOM.
+- Не готовы: DINO cache, pinned ML/torch env, собственные heads/OOF. Raw ~500 GB DICOM по умолчанию не скачивается.
 - Свежий `kaggle quota` 2026-09-07 около 12:10 UTC: **20.90/30.00 h использовано,
   9.10 h осталось**, reset `2026-09-12T00:00:00Z`. Это общая квота аккаунта.
 - SSH identity подтверждены в этой сессии через Windows-клиент пользователя:
@@ -70,9 +71,10 @@ export, **не подтверждённая персональная квота*
   **1.3–1.5 TB**. Размер зависит от того, что скачивается/распаковывается;
 - bootstrap subset: 32 studies для correctness, затем 128 для timings, в пределах
   зафиксированного pilot budget; после успеха — полный train;
-- uint8 cache 4407×6 slots×9 slices×224² ≈11.1 GiB; 336² ≈25.0 GiB без metadata,
-  дополнительных series/contrasts/мasks. Это оценка для данной геометрии, не размер
-  существующего A0 cache; фактический cache строится по exact encoder contract;
+- uint8 cache PIXEL_CACHE_V1: 4407×6×9×224² = **11.12 GiB** pixels, downloaded
+  from `dmitriigluzdov/rsna-knee-uint8-224-9-c130`. Это default train-pixel corpus.
+  336² ≈25.0 GiB остаётся оценкой, не скачанным артефактом. Сырой DICOM ~500 GB
+  по умолчанию не скачивается.
 - pooled FP16 embeddings 4407×6×768×2 bytes ≈39 MiB. Slice/token-level features и
   несколько encoders могут занимать гигабайты. Сохранять нужный head layout;
 - на RTX 3080 передавать только требуемые shards/embeddings/weights; полный raw не нужен.
