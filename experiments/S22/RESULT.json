@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S22",
+  "hypothesis": "ImageNet ResNet-18 2.5D with three independent plane heads on PIXEL_CACHE_V1 can learn 12-target weak labels without DINO or raw DICOM.",
+  "only_intended_change": "architecture S22 on frozen 224x9 crop-130 uint8 cache; labels LABEL_PILKWANG_V1; folds FOLDS_V1",
+  "parent_graph": "A0",
+  "execution_mode": "local_oof",
+  "status": "local_evaluated",
+  "decision": "defer_submit",
+  "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
+  "recipe": {
+    "backbone": "torchvision resnet18 IMAGENET1K_V1",
+    "in_channels": 6,
+    "planes": 3,
+    "fusion": "Linear(3*512, 12)",
+    "img": 224,
+    "n_slices": 9,
+    "crop_mm": 130,
+    "seed": 2026,
+    "epochs": 16,
+    "batch_size": 16,
+    "lr": 1e-4,
+    "torch": "2.6.0+cu124",
+    "torchvision": "0.21.0+cu124"
+  },
+  "metrics": {
+    "oof_macro_auc": 0.7683307478993703,
+    "oof_per_target_auc": {
+      "ACL": 0.8009750736146592,
+      "MCL": 0.7164537945973524,
+      "Medial Meniscus": 0.7866866509135177,
+      "Lateral Meniscus": 0.7157362487559351,
+      "Medial OA": 0.8060264135546823,
+      "Lateral OA": 0.751617003713946,
+      "PF OA": 0.7654500115946189,
+      "Effusion": 0.8095826758413742,
+      "Synovitis": 0.817687059502136,
+      "Baker's": 0.7841853435017921,
+      "Contusion": 0.7456802731294947,
+      "Fracture": 0.7198884260729339
+    },
+    "fold_best_val_macro_auc": {
+      "0": 0.7726759624653482,
+      "1": 0.7761304691531596,
+      "2": 0.7831719103822992,
+      "3": 0.7693712277027139,
+      "4": 0.7596057117018461
+    }
+  },
+  "run": {
+    "host": "prepost",
+    "gpu": "Quadro RTX 6000",
+    "queue_id": "rsna-s22-cv-20260908T1635Z",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260908T1635Z-s22-resnet18-25d",
+    "checked_at_utc": "2026-09-08T17:17:26Z",
+    "n_params": 33576204
+  },
+  "notes": [
+    "Weak-label OOF proxy, not hidden-test AUC.",
+    "Not a Kaggle submission. Hidden test still requires live DICOM decode in a scoring notebook.",
+    "GEOMETRY_WINNER was not ready; trained on PIXEL_CACHE_V1 geometry (224x9 c130) by user request.",
+    "Checkpoints and oof.csv remain on NSU, not in git."
+  ]
+}

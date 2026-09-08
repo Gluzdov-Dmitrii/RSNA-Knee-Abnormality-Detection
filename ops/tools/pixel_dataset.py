@@ -2,6 +2,8 @@
 
 Pixels stay uint8 until the caller copies a batch. Convert to float32 in
 collate/on-device so the 11 GiB corpus is not inflated to ~44 GiB.
+
+Each plane is a 6-channel 2.5D image: fluid RGB (slices 1/4/7) then struct RGB.
 """
 from __future__ import annotations
 
@@ -17,7 +19,7 @@ if str(_TOOLS) not in sys.path:
 
 from pixel_cache_v1 import TARGETS, PixelCacheV1, default_folds_csv, default_pilkwang_csv
 
-PLANE_FLUID_SLOTS = (0, 1, 2)
+PLANE_SLOTS = ((0, 3), (1, 4), (2, 5))
 RGB_SLICE_IDX = (1, 4, 7)
 
 
@@ -41,21 +43,39 @@ def build_train_table(
     return table
 
 
-def plane_rgb_float(pixels: np.ndarray, mask: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Three plane images, each 3-channel from fluid-slot slices 1/4/7.
+def plane_rgb6(
+    pixels: np.ndarray,
+    mask: np.ndarray,
+    augment: bool = False,
+    rng: np.random.Generator | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Three plane images, each 6-channel (fluid RGB + struct RGB).
 
     Returns:
-      x: float32 (3, 3, 224, 224) in [0, 1]
-      plane_mask: float32 (3,) 1 if that fluid slot exists
+      x: float32 (3, 6, 224, 224) in [0, 1]
+      plane_mask: float32 (3,) 1 if that plane has at least one present slot
     """
     if pixels.shape != (6, 9, 224, 224):
         raise ValueError(f"unexpected pixels shape {pixels.shape}")
-    x = np.zeros((3, 3, 224, 224), dtype=np.float32)
+    x = np.zeros((3, 6, 224, 224), dtype=np.float32)
     plane_mask = np.zeros(3, dtype=np.float32)
-    for plane, slot in enumerate(PLANE_FLUID_SLOTS):
-        if mask[slot]:
-            x[plane] = pixels[slot, list(RGB_SLICE_IDX)].astype(np.float32) / 255.0
-            plane_mask[plane] = 1.0
+    for plane, (fluid, struct) in enumerate(PLANE_SLOTS):
+        present = False
+        if mask[fluid]:
+            x[plane, 0:3] = pixels[fluid, list(RGB_SLICE_IDX)].astype(np.float32) / 255.0
+            present = True
+        if mask[struct]:
+            x[plane, 3:6] = pixels[struct, list(RGB_SLICE_IDX)].astype(np.float32) / 255.0
+            present = True
+        plane_mask[plane] = 1.0 if present else 0.0
+    if augment:
+        if rng is None:
+            rng = np.random.default_rng()
+        if rng.random() < 0.5:
+            x = x[:, :, :, ::-1].copy()
+        scale = float(rng.uniform(0.85, 1.15))
+        shift = float(rng.uniform(-0.05, 0.05))
+        x = np.clip(x * scale + shift, 0.0, 1.0)
     return x, plane_mask
 
 
@@ -67,9 +87,14 @@ class KneePixelDataset:
         fold: int | None = None,
         holdout: bool = False,
         targets: list[str] | None = None,
+        augment: bool = False,
+        seed: int = 2026,
     ):
+        self.cache_root = str(cache.root)
         self.cache = cache
         self.targets = targets or TARGETS
+        self.augment = augment
+        self.seed = int(seed)
         selected = table
         if fold is not None:
             if holdout:
@@ -78,6 +103,23 @@ class KneePixelDataset:
                 selected = table.loc[table["fold"] != fold]
         self.table = selected.reset_index(drop=True)
 
+    def __getstate__(self) -> dict:
+        return {
+            "cache_root": self.cache_root,
+            "targets": self.targets,
+            "augment": self.augment,
+            "seed": self.seed,
+            "table": self.table,
+        }
+
+    def __setstate__(self, state: dict) -> None:
+        self.cache_root = state["cache_root"]
+        self.cache = PixelCacheV1(Path(self.cache_root))
+        self.targets = state["targets"]
+        self.augment = state["augment"]
+        self.seed = state["seed"]
+        self.table = state["table"]
+
     def __len__(self) -> int:
         return len(self.table)
 
@@ -85,13 +127,16 @@ class KneePixelDataset:
         row = self.table.iloc[index]
         uid = str(row["StudyInstanceUID"])
         pixels, mask = self.cache.get(uid)
-        x, plane_mask = plane_rgb_float(pixels, mask)
+        rng = None
+        if self.augment:
+            rng = np.random.default_rng(self.seed + index * 10007)
+        x, plane_mask = plane_rgb6(pixels, mask, augment=self.augment, rng=rng)
         y = row[self.targets].to_numpy(dtype=np.float32, copy=True)
         labeled = np.isfinite(y).astype(np.float32)
         y = np.nan_to_num(y, nan=0.0).astype(np.float32)
         return {
             "uid": uid,
-            "x": x,
+            "x": np.ascontiguousarray(x),
             "y": y,
             "labeled": labeled,
             "plane_mask": plane_mask,

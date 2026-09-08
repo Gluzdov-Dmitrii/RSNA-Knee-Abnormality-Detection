@@ -51,9 +51,10 @@
     },
     {
       "id": "M0_ENV_CODE",
-      "status": "planned",
+      "status": "done",
       "backend": "cpu",
-      "done_when": "isolated pinned ML env and shared preprocessing/inference modules pass import/schema smoke"
+      "done_when": "isolated pinned ML env and shared preprocessing/inference modules pass import/schema smoke",
+      "done_note": "2026-09-08: envs/prepost/py3.11-torch-cu124-v1 torch 2.6.0+cu124 torchvision 0.21.0; local kg venv also has torch 2.6.0+cu124. Stdlib env not mutated."
     },
     {
       "id": "M0_DATA_PILOT",
