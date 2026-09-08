@@ -91,3 +91,22 @@ The source retains precisely the original two inputs, CPU and internet off.
 Hidden Save & Run code rebuilds both verifier and full cache, placing rebuilt MRI
 in /kaggle/temp to avoid public saved pixels. The public Quick Save is not another
 full execution; the underlying private full execution completed in 5,151 seconds.
+
+## Reader clarification, version 6
+
+Clarified that 4,407 counts training studies, not unique people or train plus test.
+Added a short comparison of slice selection, bilinear resizing and physical crop;
+uint8 conversion is fixed across the sweep. Crop numbers now explicitly mean the
+side length retained, with the crop-skipping exception stated.
+
+Explained the context/detail tradeoff at fixed 224 pixels: a 10 mm structure is
+about 20 pixels wide for an applied 110 mm crop and 14 for 160 mm. This is a scale
+illustration, not a proven explanation for the measured AUC. The highest 110 mm
+mean differs from 130 mm by +0.009585 with paired CI [-0.007915, +0.025968], so it
+is not a confirmed winner. The prespecified cache stays unchanged.
+
+Replaced the plateau claim with diminishing returns and explicit uncertainty:
+224 to 336 costs 13.90 GiB for observed +0.004756 AUC, paired CI crossing zero.
+Both figures were relabelled and regenerated from the same saved measurements.
+AST comparison confirmed only the plotting function changed in pipeline.py;
+no model, data, folds, cache conversion or metrics changed. No new run or points.

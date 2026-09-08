@@ -44,15 +44,22 @@
   },
   "notebook_publication": {
     "url": "https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib",
-    "version": 5,
+    "version": 6,
     "kernel_id": 133521917,
     "save_type": "QUICK_SAVE",
     "measurements_run": "dmitriigluzdov/rsna-knee-private-cache-verifier/1",
     "measurements_run_status": "COMPLETE",
-    "source_sha256": "ad86cc9d24ef2ea5f92a8f889fcf4b66bb8e777c9f25aed7a7ca3a9dd887d2ca",
+    "source_sha256": "378c83d601f2eb228cff0e7e21731549a2e60f8ca3ddf597236d8e7333671981",
     "displayed_figures_from_verified_run": true,
     "cpu_only": true,
     "internet": false,
     "competition_submission": false
+  },
+  "presentation_revision": {
+    "version": 6,
+    "new_measurements": false,
+    "only_plot_function_changed_in_pipeline": true,
+    "remote_source_figures_and_live_text_verified": true,
+    "pipeline_sha256": "43786a51bdfee767226675a75fea7300ef3ce57fdb44dda71b6a058e33d21f42"
   }
 }

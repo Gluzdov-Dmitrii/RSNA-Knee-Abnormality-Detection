@@ -389,7 +389,7 @@ def plot_curve(metrics,out):
     import matplotlib.pyplot as plt
     plt.rcParams.update({"font.size":11,"axes.spines.top":False,"axes.spines.right":False})
     base = metrics[metrics.id==DEFAULT]
-    fig,ax = plt.subplots(figsize=(9,5))
+    fig,ax = plt.subplots(figsize=(9,5.8))
     for family,marker,color,label in [("resolution","o","#2364aa","Resolution · 9 slices"),
                                      ("slices","s","#d16b28","Slice count · 224 × 224")]:
         d = metrics[metrics.family==family]
@@ -408,16 +408,27 @@ def plot_curve(metrics,out):
     ax.set(xlabel="Estimated pixel storage for all 4,407 studies (GiB)",
            ylabel="Held-out macro AUC",title="A · Quality versus storage — crop 130 mm")
     ax.grid(alpha=.15); ax.legend(fontsize=9,loc="best")
-    fig.tight_layout(); fig.savefig(Path(out)/"figure_A.png",dpi=170); plt.show(); plt.close(fig)
-    fig,ax = plt.subplots(figsize=(7.5,4.4))
+    large = metrics[metrics.id=='res_336x9_c130'].iloc[0]
+    fig.text(.08,.035,
+        f"224 → 336 pixels: +{large.full_corpus_gib-GIB:.2f} GiB for observed {large.delta_auc:+.3f} AUC\n"
+        f"Paired 95% interval: {large.delta_ci95_lo:+.3f} to {large.delta_ci95_hi:+.3f} · gain uncertain; flat plateau not proven",
+        fontsize=10,color='.25')
+    fig.tight_layout(rect=(0,.13,1,1)); fig.savefig(Path(out)/"figure_A.png",dpi=170); plt.show(); plt.close(fig)
+    fig,ax = plt.subplots(figsize=(8,5.6))
     d = pd.concat([base,metrics[metrics.family=="crop"]]).sort_values("crop_mm")
     ax.errorbar(d.crop_mm,d.auc,yerr=np.maximum(0,np.array([d.auc-d.ci95_lo,d.ci95_hi-d.auc])),
                 fmt="o",color="#2364aa",capsize=5,markersize=8)
     for r in d.itertuples():
         ax.annotate(f"{r.auc:.3f}",(r.crop_mm,r.auc),xytext=(10,0),textcoords="offset points")
-    ax.set(xticks=[110,130,160],xlim=(100,175),xlabel="Requested center crop (mm)",
-           ylabel="Held-out macro AUC",title="B · Crop changes geometry — each cache is 11.12 GiB")
-    ax.grid(alpha=.15);fig.tight_layout();fig.savefig(Path(out)/"figure_B.png",dpi=170);plt.show();plt.close(fig)
+    ax.set(xticks=[110,130,160],xlim=(100,175),
+           xlabel="Requested side length KEPT (mm), then resized to 224 × 224\n← tighter view / larger anatomy in pixels     wider view / more context →",
+           ylabel="Held-out macro AUC",title="B · What to keep in frame — same 11.12 GiB")
+    tight = metrics[metrics.id=='crp_224x9_c110'].iloc[0]
+    fig.text(.09,.025,
+        f"110 mm scores highest; advantage over 130 mm is uncertain.\n"
+        f"Paired difference: {tight.delta_auc:+.3f} [{tight.delta_ci95_lo:+.3f}, {tight.delta_ci95_hi:+.3f}].\n"
+        "Crop is skipped when the source field of view is too small.",fontsize=10,color='.25')
+    ax.grid(alpha=.15);fig.tight_layout(rect=(0,.18,1,1));fig.savefig(Path(out)/"figure_B.png",dpi=170);plt.show();plt.close(fig)
 
 
 def materialize(root,out,study_limit=None):

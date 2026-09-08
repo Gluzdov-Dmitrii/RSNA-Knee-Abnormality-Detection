@@ -29,7 +29,7 @@ def conclusions(receipt):
     significant_resolution=any(r['delta_ci95_lo']>.01 and r['holm_p']<.05 for r in res)
     resolution=('This verifier finds a clear gain from extra resolution; the earlier plateau claim does not hold.'
                 if significant_resolution else
-                'Extra resolution beyond 224 pixels brought no clear gain in this probe; 336² costs another 13.90 GiB.')
+                '224² → 336²: 2.25× the storage for an observed +0.005 AUC; the gain is uncertain, not a proven flat plateau.')
     if three['delta_ci95_hi'] < -.01 and three['holm_p']<.05:
         slices='The cheap mistake was too few slices: three slices lost signal that more pixels did not recover.'
     elif three['delta_auc'] < 0:
@@ -63,12 +63,13 @@ def main():
     base,resolution,slices,crop_text,small_text=conclusions(receipt)
     by_id={r['id']:r for r in receipt['rows']}
     three=by_id['slc_224x3_c130'];large=by_id['res_336x9_c130'];crop160=by_id['crp_224x9_c160']
+    crop110=by_id['crp_224x9_c110']
     folds=(ROOT/'ops/assets/FOLDS_V1/folds.csv').read_bytes()
     payload=base64.b64encode(gzip.compress(folds)).decode()
     folds_code=f"import base64,gzip\nfrom pathlib import Path\n_ = Path('/kaggle/working/folds.csv').write_bytes(gzip.decompress(base64.b64decode({payload!r})))"
     summary=f"""# Knee MRI in 11 GiB
 
-**TL;DR.** You can work from a compact pixel cache without keeping roughly 500 GB of training DICOM resident. The primary download contains **all 4,407 training studies in 11.12 GiB of uint8 pixels**: six scan slots, nine slices per slot, 224 × 224 pixels, with a requested 130 mm center crop.
+**TL;DR.** Keep all training studies, store fewer pixels. The primary download contains **all 4,407 training studies in 11.12 GiB of uint8 pixels**, without keeping roughly 500 GB of DICOM resident: six scan slots, nine slices per slot, 224 × 224 pixels, keeping a central region about 130 × 130 mm when cropping applies. These are training studies, not a count of unique people or the combined train and test sets.
 
 - Independent image probe: **{base['auc']:.3f} held-out macro AUC** (95% interval {base['ci95_lo']:.3f}–{base['ci95_hi']:.3f}), on the same fixed 200 studies and five study folds.
 - {resolution}
@@ -80,6 +81,14 @@ def main():
     measured=f"""## What we measured
 
 We changed image resolution, slice count, or physical crop while keeping the study subset, labels, folds, and classifier fixed. A **slot** is one of six combinations of scan plane and the public `Fluid_Sensitive` flag. Nine slices means three groups of three neighboring images.
+
+| What changes | What it means | What stays fixed |
+| --- | --- | --- |
+| Resolution: 128² to 336² | Resize the selected image to that many pixels per side using bilinear interpolation. More pixels give a finer grid, not a higher JPEG quality setting. | Nine slices; requested 130 mm crop |
+| Slices: 3 to 15 per slot | Retain more or fewer images along the scan stack. | 224² pixels; requested 130 mm crop |
+| Crop: 110 / 130 / 160 mm | **Side length of the central square we keep**, not the amount removed. Crop first, then resize. | 224² pixels; nine slices; identical storage |
+
+All variants use the same eight-bit intensity conversion: clip the bottom/top 1% within each sampled, cropped series, then map to 0–255. We did not sweep bit depth or JPEG compression. Smaller resolution reduces the pixel count; smaller crop changes which anatomy those pixels cover.
 
 The verifier reads **spatial edge maps and small image grids**, then fits a regularized linear classifier—a model whose weights are constrained to limit overfitting. It uses every retained slice at its cache resolution. This replaces the old model that saw only eight summary numbers per slot; it is a fixed image descriptor, not a pretrained or learned image encoder.
 
@@ -93,15 +102,19 @@ Each of the 15 settings is now **built directly from sampled DICOM pixels**. The
 
 **A** separates resolution from slice count, with crop fixed at 130 mm. Storage is the full 4,407-study pixel payload, not the 200-study probe size or a compressed archive download. The vertical line marks the primary cache. Gray triangles are the original three-slice extras with a narrower sampling window; they are not connected to the controlled families.
 
-**B** compares 110, 130, and 160 mm crops at 224² × 9. Every point uses the same 11.12 GiB. Error-bar overlap alone does not prove equivalence.
+**B** compares the **width of the region kept**: 110, 130, or 160 mm, each resized to 224² × 9. Every point uses the same 11.12 GiB. Left means a tighter view; right means a wider view, not automatically better quality. Error bars show uncertainty in AUC, not image sharpness.
 """
-    interpretation=f"""{resolution} The 336² point changes AUC by **{large['delta_auc']:+.3f}**, with a paired 95% interval of **{large['delta_ci95_lo']:+.3f} to {large['delta_ci95_hi']:+.3f}**. Eleven GiB is a practical point near the plateau in this probe, not a proof of universal equivalence.
+    interpretation=f"""**How to read A: diminishing returns, not a proven plateau.** The resolution curve still rises: **{base['auc']:.3f} → {large['auc']:.3f} AUC**, while storage rises **11.12 → 25.02 GiB**. That is another **13.90 GiB** for an observed **{large['delta_auc']:+.3f} AUC**, with a paired 95% interval of **{large['delta_ci95_lo']:+.3f} to {large['delta_ci95_hi']:+.3f}**. The interval includes zero and a potentially useful gain: neither a reliable improvement nor strict equivalence is established. We keep 224² as a storage compromise. The existing 256² and 288² points already fill the gap; more resolution settings would not fix uncertainty from evaluating only 200 studies.
 
 {slices} Three slices change AUC by **{three['delta_auc']:+.3f}**, with a paired 95% interval of **{three['delta_ci95_lo']:+.3f} to {three['delta_ci95_hi']:+.3f}**. We keep nine slices, but do not present the old “only real quality cliff” claim as established by this model.
 
 {small_text} Only the primary 224² cache is published.
 
-{crop_text} At 160 mm, cropping was skipped for **{crop160.get('crop_skipped_fov',0)} of 977 available series** because of their field of view. The old 64² SSIM check—an image-similarity measure against a 130 mm reference—fell to about 0.20 at 160 mm. That measured a geometry change, not label-prediction quality. We do not join mixed crop and storage families into an SSIM line.
+**How to read B: more context competes with detail.** Both a 110 mm and a 160 mm square end up as 224 × 224 pixels. When the requested crop applies, a 10 mm structure spans roughly **20 pixels at 110 mm**, versus **14 pixels at 160 mm**. The tighter view spends more pixels on central anatomy but discards more of the periphery. The wider view keeps more context but represents the same structure with fewer pixels. Neither must win. Resizing cannot create detail absent from the original scan.
+
+**110 mm has the highest measured AUC, but is not a confirmed winner.** It scores **{crop110['auc']:.3f}**, versus **{base['auc']:.3f}** at 130 mm: difference **{crop110['delta_auc']:+.3f}**, paired 95% interval **{crop110['delta_ci95_lo']:+.3f} to {crop110['delta_ci95_hi']:+.3f}**. A tighter view may suit this edge-based verifier; sampling uncertainty may also explain the difference. This experiment does not identify the cause or establish the best crop for a trained image encoder. We retain the prespecified 130 mm compromise.
+
+{crop_text} If the source image is too small for the requested square, the crop is skipped and the original field of view is resized instead. This happened at 160 mm for **{crop160.get('crop_skipped_fov',0)} of 977 available series** in the probe. Thus 160 mm is often effectively “no crop,” not a uniform 160 mm view. The millimetre-to-pixel example above applies only when cropping actually occurs.
 """
     download=f"""## What to download
 

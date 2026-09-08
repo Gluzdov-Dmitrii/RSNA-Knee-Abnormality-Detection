@@ -46,7 +46,7 @@ equivalence margin is ±0.01 AUC, with Holm correction used when considering a
 clearly better setting. Cache selection stays at the user's primary recipe
 unless contrary evidence warrants a separately documented decision.
 
-Published and verified: [notebook version 5](https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib)
+Published and verified: [notebook version 6](https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib)
 and [private cache version 1](https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130).
 The notebook retains kernel ID 133521917; Kaggle changed its slug with the title.
 All 35 shards passed full local hash/shape/content validation. All 41 remote
