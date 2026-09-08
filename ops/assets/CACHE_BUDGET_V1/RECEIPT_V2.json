@@ -1,6 +1,7 @@
 {
   "kernel": "dmitriigluzdov/rsna-knee-on-a-storage-budget",
   "version_measured": 2,
+  "version_public": 3,
   "status": "COMPLETE",
   "private_when_measured": true,
   "enable_gpu": false,

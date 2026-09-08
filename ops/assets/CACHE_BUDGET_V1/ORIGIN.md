@@ -21,4 +21,4 @@ This asset does **not** vendor his report lexicon. Labels for the quality probe 
 
 Private probe kernel (CPU, internet off, no submit): `dmitriigluzdov/rsna-cache-budget-probe` **v1 COMPLETE** (~17 min compute). Receipt: `RECEIPT.json`. Curve: `cache_budget_curve.png`.
 
-Denser methods notebook: `dmitriigluzdov/rsna-knee-on-a-storage-budget` **v2 COMPLETE** (15 points, 200 studies). Receipt: `RECEIPT_V2.json`. Curves: `cache_budget_v2_curve.png`, `cache_budget_v2_ssim.png`.
+Denser methods notebook: `dmitriigluzdov/rsna-knee-on-a-storage-budget` **v2 COMPLETE** (private measurement, 15 points, 200 studies) and **v3 COMPLETE public** (same protocol, SSIM families split). Receipt: `RECEIPT_V2.json`. Curves: `cache_budget_v2_curve.png`, `cache_budget_v2_ssim.png`.
