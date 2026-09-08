@@ -56,7 +56,11 @@ def conclusions(receipt):
 def main():
     receipt=json.loads((EVIDENCE/'verifier_receipt.json').read_text())
     publication=json.loads(PUBLISHED.read_text())
-    assert publication['status']=='ready' and publication['is_private'] is True
+    assert publication['status']=='ready' and isinstance(publication['is_private'],bool)
+    visibility='private' if publication['is_private'] else 'public'
+    access_note=('Access requires authorization and acceptance of the competition terms. The link is not an unrestricted public download.'
+                 if publication['is_private'] else
+                 'Publicly listed derived competition MRI, intended for participants who accepted the competition rules and MIRA terms. Public visibility does not grant unrestricted data rights.')
     assert publication['n_studies']==4407
     url=publication['url']
     assert url=='https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130'
@@ -76,7 +80,7 @@ def main():
 - {slices}
 - **This is a storage and geometry result, not a medal.** It makes no leaderboard or foundation-model claim.
 
-**[Download the primary cache — private Dataset]({url})** · Access requires authorization and acceptance of the competition terms. The link is not an unrestricted public download.
+**[Download the primary cache — {visibility} Dataset]({url})** · {access_note}
 """
     measured=f"""## What we measured
 
@@ -118,11 +122,11 @@ Each of the 15 settings is now **built directly from sampled DICOM pixels**. The
 """
     download=f"""## What to download
 
-**[dmitriigluzdov/rsna-knee-uint8-224-9-c130]({url})** — private; **4,407 studies, 11.12072 GiB pixel payload**, plus small headers and metadata. Archive transfer size may differ.
+**[dmitriigluzdov/rsna-knee-uint8-224-9-c130]({url})** — {visibility}; **4,407 studies, 11.12072 GiB pixel payload**, plus small headers and metadata. Archive transfer size may differ. The Dataset card includes a quick start, file and column descriptions, slot order, provenance and data-use terms.
 
 The Dataset contains `pixels-000.npy` … `pixels-034.npy`, `studies.csv`, `slot_mask.npy`, `SPEC.json`, an audit, and licence notices. `SPEC.json` records the shape, geometry, exact byte counts, and SHA-256 checksums. **uint8** means one byte per pixel; **GiB** means 1,073,741,824 bytes. Each shard holds up to 128 studies. A zero slot with a zero mask means no matching public series, not a healthy knee.
 
-After attaching the private Dataset, read one study without loading a whole shard into memory:
+After attaching the Dataset with the required access, read one study without loading a whole shard into memory:
 
 ```python
 from pathlib import Path
@@ -141,7 +145,7 @@ print(study.shape, study.dtype)    # (6, 9, 224, 224), uint8
 
 Slot order: sagittal fluid, coronal fluid, axial fluid, sagittal structural, coronal structural, axial structural. The sampling window 0.35–0.65 refers to positions along the ordered slice stack, not an intensity window.
 
-**Save & Run rebuilds the measurements and the full primary cache on CPU with internet off.** In this public notebook, rebuilt MRI is stored in `/kaggle/temp/rsna-knee-cache`, an ephemeral session directory, so it is not exposed as public saved output. The linked private Dataset holds the persistent download. Expand hidden code to inspect implementation.
+**Save & Run rebuilds the measurements and the full primary cache on CPU with internet off.** In this public notebook, rebuilt MRI is stored in `/kaggle/temp/rsna-knee-cache`, an ephemeral session directory, so it is not exposed as public saved output. The linked Dataset holds the persistent download. Expand hidden code to inspect implementation.
 """
     caveats="""## Caveats and credit
 
@@ -149,7 +153,7 @@ This is a **lossy cache, not lossless DICOM**: it retains selected slices, crops
 
 The requested crop uses row pixel spacing and is skipped for short fields of view or missing spacing; the audit counts those cases and anisotropic spacing. We preserve this existing geometry instead of silently changing it. No filename ordering or broken-slice substitution is allowed. These limitations prevent a claim that 11 GiB is universally optimal.
 
-Derived MRI remains governed by the [competition rules](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/rules) and [RSNA MIRA licence](http://rsna.org/mira-license). The private cache is for participants who accepted those terms, is not for non-participants, and does not replace obtaining the official training data. No reports, report lexicon, or `train.csv` are shipped.
+Derived MRI remains governed by the [competition rules](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/rules) and [RSNA MIRA licence](http://rsna.org/mira-license). The cache is intended for participants who accepted those terms, is not for non-participants, and does not replace obtaining the official training data. Dataset visibility does not override these terms. No reports, report lexicon, or `train.csv` are shipped.
 
 Geometry credit: [Steven Lee's CPU pixel cache](https://www.kaggle.com/code/stevenleehans/rsna-knee-500gb-to-11gib-cpu-pixel-cache), Apache-2.0, reimplemented and modified here. No report or lexicon code was copied. Labels: [Pilkwang](https://www.kaggle.com/datasets/pilkwang/rsna-knee-llm-labels). The code licence does not override MRI access terms.
 """

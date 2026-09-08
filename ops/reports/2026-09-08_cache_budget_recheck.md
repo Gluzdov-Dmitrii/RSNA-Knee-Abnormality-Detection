@@ -110,3 +110,32 @@ Replaced the plateau claim with diminishing returns and explicit uncertainty:
 Both figures were relabelled and regenerated from the same saved measurements.
 AST comparison confirmed only the plotting function changed in pipeline.py;
 no model, data, folds, cache conversion or metrics changed. No new run or points.
+
+## Dataset usability and requested public access
+
+Verified public precedent: barun2104/rsna-knee-mri-processed-3d-volumes and
+alenic/rsna-knee-abnormality-detection-jpeg-224x224 contain derived MRI pixels.
+This demonstrates community practice, not organizer authorization. The live
+competition rules section 4.b explicitly restrict access by non-participants.
+
+The user requested public visibility. Automatic approval review rejected the
+visibility-changing command, citing exposure of competition MRI to non-participants
+and requiring explicit re-approval after that risk was identified. No bypass was
+attempted. Dataset remains private pending that confirmation.
+
+Completed all independent documentation changes: new DATA_CARD.md with quick-start
+NumPy reading, axes, slots, masking, processing, checksums, sources and limitations;
+five verified taxonomy tags; a cover containing no MRI; no scheduled updates;
+41 file descriptions including the three column definitions in the study-index
+description. The CLI metadata endpoint ignored file descriptions, so they were
+saved individually through the browser editor. Fresh-page checks confirmed audit,
+study index and sampled shard descriptions. API file listing still returns empty
+description fields; it cannot validate these UI-edited descriptions.
+
+Usability improved from 5.00 to 6.875 (displayed 6.88). Native per-column description
+fields were not populated by the API; definitions are present in the file/card
+documentation. The 41-file payload and cache hashes were not changed.
+
+Notebook version 7 references the improved data card and accurately retains
+private wording. Its generator now derives visibility wording from the verified
+publication receipt, ready for an approved public-access change.
