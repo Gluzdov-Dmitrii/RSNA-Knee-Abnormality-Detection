@@ -46,8 +46,8 @@ equivalence margin is ±0.01 AUC, with Holm correction used when considering a
 clearly better setting. Cache selection stays at the user's primary recipe
 unless contrary evidence warrants a separately documented decision.
 
-Published and verified: [notebook version 7](https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib)
-and [private cache version 1](https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130).
+Published and verified: [notebook version 8](https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib)
+and [cache version 1](https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130).
 The notebook retains kernel ID 133521917; Kaggle changed its slug with the title.
 All 35 shards passed full local hash/shape/content validation. All 41 remote
 Dataset files and byte sizes match, with privacy and readiness confirmed.
@@ -60,3 +60,8 @@ Column definitions are included in the index description and data card.
 Usability is 6.88. Public access was requested but blocked by automatic approval
 review pending explicit confirmation after the non-participant access risk;
 do not treat documentation completion as permission to bypass that rejection.
+
+The user subsequently changed Dataset visibility manually; a read-only check
+confirmed it is accessible as listed, with all 41 files unchanged. Notebook
+version 8 removes private/public wording from reader-facing text while retaining
+competition and MIRA terms. The assistant did not change Dataset visibility.

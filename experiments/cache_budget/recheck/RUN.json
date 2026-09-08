@@ -31,10 +31,10 @@
   "dataset_publication": {
     "status": "ready",
     "url": "https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130",
-    "is_private": true,
+    "is_private": false,
     "dataset_id": 11946093,
     "version": 1,
-    "verified_at_utc": "2026-09-08T12:31:39.074202+00:00",
+    "verified_at_utc": "2026-09-08T15:22:07.917573+00:00",
     "n_studies": 4407,
     "pixel_gib": 11.120721817016602,
     "total_bytes": 11941204980,
@@ -44,12 +44,12 @@
   },
   "notebook_publication": {
     "url": "https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib",
-    "version": 7,
+    "version": 8,
     "kernel_id": 133521917,
     "save_type": "QUICK_SAVE",
     "measurements_run": "dmitriigluzdov/rsna-knee-private-cache-verifier/1",
     "measurements_run_status": "COMPLETE",
-    "source_sha256": "5b28f3c6c4b8f38cb260fc0e7db48dbb507a8279ae11292a57fa41b7a9249979",
+    "source_sha256": "021923be6041888128ba62b9d845368064156964d8942ec42435c2e3dcf7f518",
     "displayed_figures_from_verified_run": true,
     "cpu_only": true,
     "internet": false,
@@ -69,7 +69,7 @@
     "file_descriptions_saved_in_ui": 41,
     "native_column_descriptions": false,
     "column_definitions_in_index_description": true,
-    "public_access": "blocked_by_auto_review_pending_explicit_confirmation",
-    "is_private": true
+    "public_access": "manually_changed_by_user_and_verified_read_only",
+    "is_private": false
   }
 }

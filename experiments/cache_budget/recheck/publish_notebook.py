@@ -12,7 +12,7 @@ PUBLIC=ROOT/'experiments/cache_budget/public'
 
 def main():
     publication=json.loads((OUT/'dataset_publication.json').read_text())
-    assert publication['status']=='ready' and publication['is_private'] is True
+    assert publication['status']=='ready' and isinstance(publication['is_private'],bool)
     api=KaggleApi();api.authenticate()
     status=api.kernels_status('dmitriigluzdov/rsna-knee-private-cache-verifier')
     assert str(status.status).endswith('COMPLETE'), f'Private source run not complete: {status.status}'

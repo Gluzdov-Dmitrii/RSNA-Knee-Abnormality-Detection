@@ -139,3 +139,11 @@ documentation. The 41-file payload and cache hashes were not changed.
 Notebook version 7 references the improved data card and accurately retains
 private wording. Its generator now derives visibility wording from the verified
 publication receipt, ready for an approved public-access change.
+
+## User visibility change and wording cleanup, version 8
+
+User reported changing the Dataset to public manually. Read-only verification
+confirmed is_private=false, version 1, all 41 files and byte sizes unchanged.
+No visibility-changing command was retried. Removed private/public from all
+reader-facing notebook Markdown, retaining the download link and data-use terms.
+Published as notebook version 8; measurements and figures are unchanged.

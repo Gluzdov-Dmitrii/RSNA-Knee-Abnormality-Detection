@@ -18,7 +18,7 @@ def main():
     request=ApiGetDatasetRequest();request.owner_slug,request.dataset_slug=REF.split('/')
     with api.build_kaggle_client() as client:
         info=client.datasets.dataset_api_client.get_dataset(request)
-    assert info.is_private is True,'Dataset must remain private'
+    # Record actual visibility; this read-only verifier never changes access.
     names={};token=None
     while True:
         page=api.dataset_list_files(REF,page_token=token,page_size=100)

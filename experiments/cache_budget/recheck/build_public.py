@@ -57,10 +57,6 @@ def main():
     receipt=json.loads((EVIDENCE/'verifier_receipt.json').read_text())
     publication=json.loads(PUBLISHED.read_text())
     assert publication['status']=='ready' and isinstance(publication['is_private'],bool)
-    visibility='private' if publication['is_private'] else 'public'
-    access_note=('Access requires authorization and acceptance of the competition terms. The link is not an unrestricted public download.'
-                 if publication['is_private'] else
-                 'Publicly listed derived competition MRI, intended for participants who accepted the competition rules and MIRA terms. Public visibility does not grant unrestricted data rights.')
     assert publication['n_studies']==4407
     url=publication['url']
     assert url=='https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130'
@@ -80,11 +76,11 @@ def main():
 - {slices}
 - **This is a storage and geometry result, not a medal.** It makes no leaderboard or foundation-model claim.
 
-**[Download the primary cache — {visibility} Dataset]({url})** · {access_note}
+**[Download the primary cache]({url})** · Derived competition MRI; use is subject to the competition rules and MIRA terms.
 """
     measured=f"""## What we measured
 
-We changed image resolution, slice count, or physical crop while keeping the study subset, labels, folds, and classifier fixed. A **slot** is one of six combinations of scan plane and the public `Fluid_Sensitive` flag. Nine slices means three groups of three neighboring images.
+We changed image resolution, slice count, or physical crop while keeping the study subset, labels, folds, and classifier fixed. A **slot** is one of six combinations of scan plane and the official `Fluid_Sensitive` flag. Nine slices means three groups of three neighboring images.
 
 | What changes | What it means | What stays fixed |
 | --- | --- | --- |
@@ -98,7 +94,7 @@ The verifier reads **spatial edge maps and small image grids**, then fits a regu
 
 **Protocol:** 200 studies, exactly 40 from each locked `FOLDS_V1` fold; study-level five-fold validation; seed 2026. Targets are the 12 Pilkwang `report_labels_v2.csv` scores, binarized at 0.5. Every study is predicted by a model trained on the other folds. **Macro AUC** is the equal-weight average of the 12 target ranking scores; 0.5 is chance ranking and 1.0 is perfect ranking.
 
-Error bars use 800 study resamples. Differences use the **same resampled studies** for both settings. These intervals do not include retraining or alternative-fold uncertainty. We call two settings practically equivalent only if their whole paired interval fits inside **±0.01 AUC**. A sanity check with randomly shuffled labels scored **{receipt['permutation_control_auc']:.3f}**. No settings were chosen using public leaderboard scores.
+Error bars use 800 study resamples. Differences use the **same resampled studies** for both settings. These intervals do not include retraining or alternative-fold uncertainty. We call two settings practically equivalent only if their whole paired interval fits inside **±0.01 AUC**. A sanity check with randomly shuffled labels scored **{receipt['permutation_control_auc']:.3f}**. No settings were chosen using leaderboard scores.
 
 Each of the 15 settings is now **built directly from sampled DICOM pixels**. The previous resolution sweep resized already converted eight-bit 336² images; this correction makes the 224² point match the downloadable cache. Within each sampled, cropped series, the lowest and highest 1% of intensities are clipped before scaling to one byte per pixel. Physical order uses image position along the slice stack, with `SliceLocation` and then `InstanceNumber` as fallbacks.
 """
@@ -122,9 +118,9 @@ Each of the 15 settings is now **built directly from sampled DICOM pixels**. The
 """
     download=f"""## What to download
 
-**[dmitriigluzdov/rsna-knee-uint8-224-9-c130]({url})** — {visibility}; **4,407 studies, 11.12072 GiB pixel payload**, plus small headers and metadata. Archive transfer size may differ. The Dataset card includes a quick start, file and column descriptions, slot order, provenance and data-use terms.
+**[dmitriigluzdov/rsna-knee-uint8-224-9-c130]({url})** — **4,407 studies, 11.12072 GiB pixel payload**, plus small headers and metadata. Archive transfer size may differ. The Dataset card includes a quick start, file and column descriptions, slot order, provenance and data-use terms.
 
-The Dataset contains `pixels-000.npy` … `pixels-034.npy`, `studies.csv`, `slot_mask.npy`, `SPEC.json`, an audit, and licence notices. `SPEC.json` records the shape, geometry, exact byte counts, and SHA-256 checksums. **uint8** means one byte per pixel; **GiB** means 1,073,741,824 bytes. Each shard holds up to 128 studies. A zero slot with a zero mask means no matching public series, not a healthy knee.
+The Dataset contains `pixels-000.npy` … `pixels-034.npy`, `studies.csv`, `slot_mask.npy`, `SPEC.json`, an audit, and licence notices. `SPEC.json` records the shape, geometry, exact byte counts, and SHA-256 checksums. **uint8** means one byte per pixel; **GiB** means 1,073,741,824 bytes. Each shard holds up to 128 studies. A zero slot with a zero mask means no matching series in the official metadata, not a healthy knee.
 
 After attaching the Dataset with the required access, read one study without loading a whole shard into memory:
 
@@ -145,15 +141,15 @@ print(study.shape, study.dtype)    # (6, 9, 224, 224), uint8
 
 Slot order: sagittal fluid, coronal fluid, axial fluid, sagittal structural, coronal structural, axial structural. The sampling window 0.35–0.65 refers to positions along the ordered slice stack, not an intensity window.
 
-**Save & Run rebuilds the measurements and the full primary cache on CPU with internet off.** In this public notebook, rebuilt MRI is stored in `/kaggle/temp/rsna-knee-cache`, an ephemeral session directory, so it is not exposed as public saved output. The linked Dataset holds the persistent download. Expand hidden code to inspect implementation.
+**Save & Run rebuilds the measurements and the full primary cache on CPU with internet off.** Rebuilt MRI is stored in `/kaggle/temp/rsna-knee-cache`, an ephemeral session directory, rather than saved notebook output. The linked Dataset holds the persistent download. Expand hidden code to inspect implementation.
 """
     caveats="""## Caveats and credit
 
-This is a **lossy cache, not lossless DICOM**: it retains selected slices, crops/resizes them, and compresses intensities to eight bits. It cannot recover discarded anatomy or scanner metadata. The full corpus is cached; only 200 studies were used for the quality probe. Weak labels come from report processing and may be wrong. The six public slots can be absent. Slice count and sampled anatomical coverage change together. A small fixed descriptor can miss benefits that a trained image encoder would find.
+This is a **lossy cache, not lossless DICOM**: it retains selected slices, crops/resizes them, and compresses intensities to eight bits. It cannot recover discarded anatomy or scanner metadata. The full corpus is cached; only 200 studies were used for the quality probe. Weak labels come from report processing and may be wrong. The six scan slots can be absent. Slice count and sampled anatomical coverage change together. A small fixed descriptor can miss benefits that a trained image encoder would find.
 
 The requested crop uses row pixel spacing and is skipped for short fields of view or missing spacing; the audit counts those cases and anisotropic spacing. We preserve this existing geometry instead of silently changing it. No filename ordering or broken-slice substitution is allowed. These limitations prevent a claim that 11 GiB is universally optimal.
 
-Derived MRI remains governed by the [competition rules](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/rules) and [RSNA MIRA licence](http://rsna.org/mira-license). The cache is intended for participants who accepted those terms, is not for non-participants, and does not replace obtaining the official training data. Dataset visibility does not override these terms. No reports, report lexicon, or `train.csv` are shipped.
+Derived MRI remains governed by the [competition rules](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/rules) and [RSNA MIRA licence](http://rsna.org/mira-license). The cache is intended for participants who accepted those terms, is not for non-participants, and does not replace obtaining the official training data. No reports, report lexicon, or `train.csv` are shipped.
 
 Geometry credit: [Steven Lee's CPU pixel cache](https://www.kaggle.com/code/stevenleehans/rsna-knee-500gb-to-11gib-cpu-pixel-cache), Apache-2.0, reimplemented and modified here. No report or lexicon code was copied. Labels: [Pilkwang](https://www.kaggle.com/datasets/pilkwang/rsna-knee-llm-labels). The code licence does not override MRI access terms.
 """
