@@ -27,6 +27,18 @@ Private CPU notebook `dmitriigluzdov/rsna-cache-budget-probe` (internet off, no 
 
 Subset is 32 studies per `FOLDS_V1` fold (160 total), seed 2026. Slot scheme is public `train_series` plane × `Fluid_Sensitive` (not Steven’s recovered FS/T1 mapping). The probe does **not** write a full-corpus cache.
 
+### v1 measured (kernel COMPLETE, 2026-09-08)
+
+| id | GiB | GBDT | tiny CNN | SSIM vs 336 |
+| --- | ---: | ---: | ---: | ---: |
+| tiny_160x3 | 1.891 | 0.572 | 0.469 | 0.504 |
+| steven_224x9_c130 | 11.121 | 0.604 | 0.493 | 0.994 |
+| steven_224x9_c160 | 11.121 | 0.639 | 0.486 | 0.199 |
+| wide_224x15 | 18.535 | 0.620 | 0.493 | 0.421 |
+| hi_336x9_c130 | 25.022 | 0.607 | 0.492 | 1.000 |
+
+Tiny CNN did not train (≈0.49). Decision from GBDT + SSIM: materialise **224² × 9**, not 336 and not 160×3. Crop 130 vs 160 stays open for a DINO probe; default crop for encoder work remains 130 mm. Details: `ops/reports/2026-09-08_cache_budget.md`.
+
 ## Secondary metric
 
 Fidelity to the **densest variant in this sweep** (336² × 9 slices, crop 130 mm), after resampling spatial and slice axes: mean SSIM. This is information loss vs a richer cache, not vs 570 GB.

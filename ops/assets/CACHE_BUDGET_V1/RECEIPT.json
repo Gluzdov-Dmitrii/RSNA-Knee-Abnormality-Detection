@@ -1,0 +1,25 @@
+{
+  "kernel": "dmitriigluzdov/rsna-cache-budget-probe",
+  "version": 1,
+  "status": "COMPLETE",
+  "private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "submitted": false,
+  "created_utc": "2026-09-08T05:55:00Z",
+  "runtime_s_log": 1020,
+  "n_subset": 160,
+  "n_per_fold": 32,
+  "seed": 2026,
+  "folds": "FOLDS_V1",
+  "folds_sha256": "3086df3341333f44adb883292da386857c3230eaa2d501514ddf827a2da11b1a",
+  "labels": "LABEL_PILKWANG_V1",
+  "slot_scheme": "public_train_series_flags",
+  "slots_decoded": 784,
+  "slots_possible": 960,
+  "sha256": {
+    "cache_budget_metrics.csv": "ad7e5d764977914218d5c0d56d3b6ad33c3670ce8e9e9bae283c997bcbca3935",
+    "cache_budget_spec.json": "4b13561d8845d5067ce00d87d21b84d568689d893aa53a4bdd09742439df14d6",
+    "cache_budget_curve.png": "b78cd9757cb414fff3bff12f78519ce66c73eef4fad8f4b916c1ce34b294177c"
+  }
+}

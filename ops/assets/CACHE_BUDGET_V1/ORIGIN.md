@@ -19,4 +19,4 @@ Credit inside that notebook: Pilkwang slot scheme, Karnakbayev 2.5D, Will physic
 
 This asset does **not** vendor his report lexicon. Labels for the quality probe are `LABEL_PILKWANG_V1`. Folds are `FOLDS_V1`.
 
-Private probe kernel (CPU, internet off, no submit): `dmitriigluzdov/rsna-cache-budget-probe`.
+Private probe kernel (CPU, internet off, no submit): `dmitriigluzdov/rsna-cache-budget-probe` **v1 COMPLETE** (~17 min compute). Receipt: `RECEIPT.json`. Curve: `cache_budget_curve.png`.
