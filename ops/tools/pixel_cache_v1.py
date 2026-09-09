@@ -44,35 +44,50 @@ def repo_root() -> Path:
 
 
 def default_folds_csv() -> Path:
-    local = repo_root() / "ops" / "assets" / "FOLDS_V1" / "folds.csv"
-    if local.is_file():
-        return local
-    nsu = repo_root() / "data" / "FOLDS_V1" / "folds.csv"
-    if nsu.is_file():
-        return nsu
+    candidates = [
+        repo_root() / "ops" / "assets" / "FOLDS_V1" / "folds.csv",
+        repo_root() / "data" / "FOLDS_V1" / "folds.csv",
+        Path(
+            r"C:\Users\User\kaggle\projects\rsna-knee-abnormality-detection"
+            r"\data\FOLDS_V1\folds.csv"
+        ),
+    ]
+    for path in candidates:
+        if path.is_file():
+            return path
     raise FileNotFoundError("FOLDS_V1 folds.csv not found")
 
 
 def default_pilkwang_csv() -> Path:
-    local = repo_root() / "tmp" / "labels" / "pilkwang" / "report_labels_v2.csv"
-    if local.is_file():
-        return local
-    nsu = repo_root() / "data" / "labels" / "pilkwang" / "report_labels_v2.csv"
-    if nsu.is_file():
-        return nsu
+    candidates = [
+        repo_root() / "tmp" / "labels" / "pilkwang" / "report_labels_v2.csv",
+        repo_root() / "data" / "labels" / "pilkwang" / "report_labels_v2.csv",
+        Path(
+            r"C:\Users\User\kaggle\projects\rsna-knee-abnormality-detection"
+            r"\data\labels\pilkwang\report_labels_v2.csv"
+        ),
+    ]
+    for path in candidates:
+        if path.is_file():
+            return path
     raise FileNotFoundError("LABEL_PILKWANG_V1 CSV not found")
 
 
 def default_cache_root() -> Path:
-    local = repo_root() / "data" / "rsna-knee-uint8-224-9-c130"
-    if (local / "studies.csv").is_file():
-        return local
-    nsu = Path(
-        "/home/scientists/gluz_d_s/kaggle/projects/"
-        "rsna-knee-abnormality-detection/data/rsna-knee-uint8-224-9-c130"
-    )
-    if (nsu / "studies.csv").is_file():
-        return nsu
+    candidates = [
+        repo_root() / "data" / "rsna-knee-uint8-224-9-c130",
+        Path(
+            "/home/scientists/gluz_d_s/kaggle/projects/"
+            "rsna-knee-abnormality-detection/data/rsna-knee-uint8-224-9-c130"
+        ),
+        Path(
+            r"C:\Users\User\kaggle\projects\rsna-knee-abnormality-detection"
+            r"\data\rsna-knee-uint8-224-9-c130"
+        ),
+    ]
+    for root in candidates:
+        if (root / "studies.csv").is_file():
+            return root
     raise FileNotFoundError(
         "PIXEL_CACHE_V1 not found; download dmitriigluzdov/rsna-knee-uint8-224-9-c130"
     )

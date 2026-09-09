@@ -66,10 +66,14 @@ train/inference должен использовать общие функции.
 На основании pilot оцени duration/space полного cache. Выполняй resumable shards,
 проверяй hashes и UID index, не пересчитывай завершённые shards после разрыва SSH.
 
-Placement: CPU для labels/OOF/small heads; RTX 6000 24 GB для DINO cache и small
-train; RTX 3080 10 GB для совместимых small jobs; A100 80 GB для high-res/full
-fine-tune/3D. Вторую A100 брать для независимого fold только при allocation и без
-ожидающих проектов. Две A100 не являются одной памятью 160 GB.
+Placement: HASEE RTX 2060 — только local smoke, не 5-fold OOF. CPU для labels и
+метрик по готовым предсказаниям. RTX 3080 10 GB — default small 2.5D/CNN, когда
+PIXEL_CACHE_V1 локален на `nsu-pc`. A100 — самый быстрый OOF при NFS cache (уже
+лежит на Linux) и для high-res/MIL/3D/live DINO. RTX 6000 24 GB — DINO cache,
+24 GB jobs, overflow. Не ставить small CNN на 2060 и не делать Quadro default,
+если 3080 или свободный A100 подходят. Вторую A100 брать для независимого fold
+только при allocation и без ожидающих проектов. Две A100 не являются одной
+памятью 160 GB. На Linux DataLoader: TMPDIR=/tmp, не длинный NFS path.
 
 Используй только общую очередь
 `nsu-quadro:/home/scientists/gluz_d_s/kaggle/_control/resource_queue.py`.

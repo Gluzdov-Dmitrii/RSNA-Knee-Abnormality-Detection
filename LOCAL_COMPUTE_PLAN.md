@@ -34,14 +34,21 @@
 
 ## Размещение задач
 
+Цикл «гипотеза → 5-fold OOF → отбор» идёт на NSU, не на ноутбуке.
+
 | Ресурс | Роль RSNA | Начальный предел одного job |
 |---|---|---|
-| CPU Linux, 56 cores / 112 threads, 251 GiB RAM | DICOM decode, physical sort/crop, shards, label merge, OOF metrics | 8 CPU threads, 32 GiB RAM; увеличивать после I/O pilot и проверки общей нагрузки |
-| Quadro RTX 6000 24 GB, `nsu-quadro` | основной frozen DINO cache; 224/336px small-model train | 1 GPU, 8 CPU threads, 32–64 GiB RAM, checkpointable chunk ≤2 h |
-| RTX 3080 10 GB, `nsu-pc` | небольшие heads/2.5D, smoke и fp16 portability checks | 1 GPU, 4–8 CPU threads, ≤20 GiB RAM; оставлять VRAM для Windows |
-| A100 80 GB, `nsu-a100` | full fine-tuning, high-res/MIL/3D, distillation | 1 GPU/job; число folds/seed jobs определяется общей очередью |
+| HASEE RTX 2060 6 GB | только local import/syntax smoke (batch крошечный). Не 5-fold, не OOF, не лестница | 1 GPU; если свободно <4 GB — CPU-only smoke |
+| CPU Linux, 56 cores / 112 threads, 251 GiB RAM | DICOM decode, physical sort/crop, shards, label merge, OOF metrics по готовым предсказаниям | 8 CPU threads, 32 GiB RAM; увеличивать после I/O pilot и проверки общей нагрузки |
+| RTX 3080 10 GB, `nsu-pc` | **default** для S16–S23 2.5D/small CNN, когда PIXEL_CACHE_V1 лежит на локальном диске PC | 1 GPU, 4–8 CPU threads, ≤20 GiB RAM; оставлять VRAM для Windows |
+| A100 80 GB, `nsu-a100` | **самый быстрый OOF**, пока кэш уже на Linux NFS; также high-res/MIL/3D, distillation, live DINO | 1 GPU/job; TMPDIR=/tmp и DataLoader workers>0 (NFS path ломает AF_UNIX) |
+| Quadro RTX 6000 24 GB, `nsu-quadro` | frozen DINO cache; jobs, которым нужны 24 GB; overflow если 3080/A100 заняты | 1 GPU, 8 CPU threads, 32–64 GiB RAM, chunk ≤2 h |
 | Вторая A100 80 GB | второй независимый fold/seed, если другие проекты не ждут | отдельная allocation; не считать две карты общей памятью 160 GB |
 | Kaggle GPU | короткий Save & Run финального notebook и hidden grading | 1 активная RSNA session; train/cache/search запрещены |
+
+S22 ResNet-18 2.5D на batch 16 занял ~1.6 GB VRAM (~29 s/epoch на Quadro, GPU ~40% из-за NFS и `workers=0`). Это **влезает в 3080** с запасом. 2060 (~5 GB свободно) для этого цикла не используем: мало памяти, слабый throughput, это не accelerator гипотез.
+
+Пока 11.12 GiB cache не скопирован на `nsu-pc`, следующий 2.5D OOF запускать на **A100** (тот же NFS cache, без второй копии 11 GiB). После локальной копии на PC — 3080, если job влезает в 10 GB; A100, если нужен более крупный batch, 3D, или свободная карта и очередь пуста. Quadro не является default для small CNN.
 
 Это предпочтения задач, а не постоянное закрепление GPU за проектом. Small heads
 сначала пробовать на CPU: 4 407 строк frozen embeddings могут не требовать GPU.

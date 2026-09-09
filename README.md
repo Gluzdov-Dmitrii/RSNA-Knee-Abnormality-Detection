@@ -1,7 +1,8 @@
 # RSNA Knee Abnormality Detection
 
 **Текущий план R2, 2026-09-07:** [LOCAL_COMPUTE_PLAN.md](LOCAL_COMPUTE_PLAN.md).
-Подготовка/обучение/OOF — на RTX 6000, RTX 3080 и A100 НГУ; Kaggle — финальные
+Подготовка/обучение/OOF — на RTX 3080 и A100 НГУ (быстрый цикл); Quadro 6000 для
+DINO/24 GB; локальная RTX 2060 только smoke. Kaggle — финальные
 inference/submissions. S01–S10 завершены, best `0.937`; folds и labels готовы,
 следующий этап — env/DINO cache для S11–S15; **PIXEL_CACHE_V1 готов** (11.12 GiB
 uint8, без скачивания ~500 GB DICOM). Общая GPU queue НГУ уже активирована.
