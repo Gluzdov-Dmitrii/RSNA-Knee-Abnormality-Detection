@@ -1,0 +1,25 @@
+{
+  "experiment_id": "S22",
+  "parent_graph": "A0",
+  "output_filename": "submission.csv",
+  "kernel": "dmitriigluzdov/rsna-s22-a0-rank-blend",
+  "code_file": "rsna-s22-a0-rank-blend.ipynb",
+  "kernel_version": 2,
+  "selected_submission_sid": "S01",
+  "replacement_share": 0.4,
+  "weight_rule": "transformer_component_replacement_share",
+  "default_raptor_outer_weight": 0.6,
+  "medial_meniscus_route": {
+    "transformer": 0.3,
+    "raptor": 0.6,
+    "bag": 0.1,
+    "transformer_is_mixed_with_s22": true
+  },
+  "weights_dataset": "dmitriigluzdov/rsna-s22-resnet18-25d-folds",
+  "source_run": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260908T1635Z-s22-resnet18-25d",
+  "export_run": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260909T0735Z-s22-export",
+  "notebook_sha256": "13fb27978aad7049aab95dd58c8515f4c24127b4f523fb0c74d0c2eda6a35152",
+  "overlay_cell_sha256": "2cbf9e086d4ad6946f794f597065e9769401443a5bc3a49525a52881aa7e97a5",
+  "metadata_sha256": "50c3292fb961fd8154457558dbfb485c65c355b3ae2bf66ce7d2d32ffeb63bc8",
+  "weight_manifest_sha256": "6196831428bef5b5c696782c5b72f7880991127bd7620b1b906cf8f873c48faa"
+}

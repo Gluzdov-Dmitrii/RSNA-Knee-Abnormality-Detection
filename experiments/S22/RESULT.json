@@ -1,64 +1,109 @@
 {
   "schema_version": 1,
   "experiment_id": "S22",
-  "hypothesis": "ImageNet ResNet-18 2.5D with three independent plane heads on PIXEL_CACHE_V1 can learn 12-target weak labels without DINO or raw DICOM.",
-  "only_intended_change": "architecture S22 on frozen 224x9 crop-130 uint8 cache; labels LABEL_PILKWANG_V1; folds FOLDS_V1",
+  "hypothesis": "ImageNet ResNet-18 2.5D with three independent plane heads on PIXEL_CACHE_V1 can replace 40% of the A0 transformer rank component without a second encoder.",
+  "only_intended_change": "40% transformer-rank mix of 5-fold ResNet-18 bag on live PIXEL_CACHE_V1 decode; raptor 0.60 and Medial Meniscus T30/R60/bag10 kept",
   "parent_graph": "A0",
-  "execution_mode": "local_oof",
-  "status": "local_evaluated",
-  "decision": "defer_submit",
-  "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
+  "execution_mode": "unified_hidden_graph",
+  "status": "submitted",
+  "decision": "pending",
+  "dependencies": [
+    "PIXEL_CACHE_V1@ready",
+    "FOLDS_V1@ready",
+    "LABEL_PILKWANG_V1@ready",
+    "S01@artifact"
+  ],
   "recipe": {
-    "backbone": "torchvision resnet18 IMAGENET1K_V1",
-    "in_channels": 6,
-    "planes": 3,
-    "fusion": "Linear(3*512, 12)",
-    "img": 224,
-    "n_slices": 9,
-    "crop_mm": 130,
-    "seed": 2026,
-    "epochs": 16,
-    "batch_size": 16,
-    "lr": 1e-4,
-    "torch": "2.6.0+cu124",
-    "torchvision": "0.21.0+cu124"
+    "experiment_id": "S22",
+    "parent_graph": "A0",
+    "output_filename": "submission.csv",
+    "replacement_share": 0.4,
+    "weight_rule": "transformer_component_replacement_share",
+    "default_raptor_outer_weight": 0.6,
+    "medial_meniscus_route": {
+      "transformer": 0.3,
+      "raptor": 0.6,
+      "bag": 0.1
+    },
+    "kernel": "dmitriigluzdov/rsna-s22-a0-rank-blend",
+    "code_file": "rsna-s22-a0-rank-blend.ipynb",
+    "notebook_sha256": "13fb27978aad7049aab95dd58c8515f4c24127b4f523fb0c74d0c2eda6a35152",
+    "overlay_cell_sha256": "2cbf9e086d4ad6946f794f597065e9769401443a5bc3a49525a52881aa7e97a5",
+    "metadata_sha256": "50c3292fb961fd8154457558dbfb485c65c355b3ae2bf66ce7d2d32ffeb63bc8",
+    "selected_submission_sid": "S01",
+    "weights_dataset": "dmitriigluzdov/rsna-s22-resnet18-25d-folds",
+    "weight_manifest_sha256": "6196831428bef5b5c696782c5b72f7880991127bd7620b1b906cf8f873c48faa"
   },
   "metrics": {
     "oof_macro_auc": 0.7683307478993703,
-    "oof_per_target_auc": {
-      "ACL": 0.8009750736146592,
-      "MCL": 0.7164537945973524,
-      "Medial Meniscus": 0.7866866509135177,
-      "Lateral Meniscus": 0.7157362487559351,
-      "Medial OA": 0.8060264135546823,
-      "Lateral OA": 0.751617003713946,
-      "PF OA": 0.7654500115946189,
-      "Effusion": 0.8095826758413742,
-      "Synovitis": 0.817687059502136,
-      "Baker's": 0.7841853435017921,
-      "Contusion": 0.7456802731294947,
-      "Fracture": 0.7198884260729339
+    "oof_reference": "weak_label_pilkwang_v1_proxy_not_hidden_test"
+  },
+  "source_refs": [
+    {
+      "ref": "renta0426/rsna-knee-0-937-weak-label-dinov2-meniscus-resid",
+      "version": "1",
+      "kernel_id": "133076816",
+      "script_version_id": "347142162"
     },
-    "fold_best_val_macro_auc": {
-      "0": 0.7726759624653482,
-      "1": 0.7761304691531596,
-      "2": 0.7831719103822992,
-      "3": 0.7693712277027139,
-      "4": 0.7596057117018461
+    {
+      "ref": "dmitriigluzdov/rsna-s22-a0-rank-blend",
+      "version": "2",
+      "note": "Visible COMPLETE; submission.csv is S22 overlay on S01/A0"
     }
+  ],
+  "hashes": {
+    "code_config_sha256": "13fb27978aad7049aab95dd58c8515f4c24127b4f523fb0c74d0c2eda6a35152",
+    "data_sha256": "",
+    "labels_sha256": "6f704a7bdb2f894cc49445b19ba7c4378c3f548d3449e00361e10044bee40920",
+    "cache_sha256": "",
+    "folds_sha256": "3086df3341333f44adb883292da386857c3230eaa2d501514ddf827a2da11b1a",
+    "model_sha256": "6196831428bef5b5c696782c5b72f7880991127bd7620b1b906cf8f873c48faa",
+    "visible_output_sha256": "5a2b3fb5894b7be8ae01ea9bbb6a15e7ae376d2713ce2b3cfebc5674a222d471",
+    "overlay_cell_sha256": "2cbf9e086d4ad6946f794f597065e9769401443a5bc3a49525a52881aa7e97a5"
+  },
+  "validation": {
+    "oof_macro_auc": 0.7683307478993703,
+    "oof_reference": "weak_label_pilkwang_v1_proxy_not_hidden_test",
+    "per_target_auc": {},
+    "fold_deltas": [],
+    "second_seed_delta": null,
+    "gold58_macro_auc": null,
+    "gold58_bootstrap_interval": [],
+    "oof_raw_correlations": {},
+    "oof_rank_correlations": {},
+    "visible_parent_a0_sha256": "11bb66f2bc7ca21d4282de3696f5ea5531f90c6c2958164b6ad6931811af2213",
+    "visible_present_studies": 3,
+    "visible_overlay_seconds": 7.9
+  },
+  "runtime": {
+    "visible_minutes": 4.0,
+    "hidden_estimate_minutes": 450,
+    "peak_vram_gb": 15.0,
+    "export_host": "ngpu01 A100",
+    "train_host": "prepost Quadro RTX 6000"
   },
   "run": {
-    "host": "prepost",
-    "gpu": "Quadro RTX 6000",
-    "queue_id": "rsna-s22-cv-20260908T1635Z",
-    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260908T1635Z-s22-resnet18-25d",
-    "checked_at_utc": "2026-09-08T17:17:26Z",
-    "n_params": 33576204
+    "train_path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260908T1635Z-s22-resnet18-25d",
+    "export_queue_id": "rsna-s22-export-20260909T0735Z",
+    "export_gpu": "GPU-61c0078d-a4a6-37a2-3aba-0378e7794c46"
   },
+  "submission": {
+    "ref": "56118771",
+    "submitted_at_utc": "2026-09-09T09:09:04Z",
+    "public_score": null,
+    "rank_before": 183,
+    "rank_after": null,
+    "leader_score": 0.954,
+    "top10_score": 0.949,
+    "gold_cutoff_rank": 16,
+    "gold_cutoff_score": 0.949,
+    "team_count": 3169
+  },
+  "blocker": "",
   "notes": [
-    "Weak-label OOF proxy, not hidden-test AUC.",
-    "Not a Kaggle submission. Hidden test still requires live DICOM decode in a scoring notebook.",
-    "GEOMETRY_WINNER was not ready; trained on PIXEL_CACHE_V1 geometry (224x9 c130) by user request.",
-    "Checkpoints and oof.csv remain on NSU, not in git."
+    "Visible v2 COMPLETE; overlay 7.9s; parent A0 SHA matched.",
+    "Kernel v1 failed: _blend_tr has no StudyInstanceUID; v2 reads UIDs from _blend_transformer/_blend_coatnet.",
+    "Submitted kernel v2 -f submission.csv once; ref 56118771 PENDING. Hidden scoring is A0 plus live 224x9 decode; do not retry.",
+    "S23 lost pixel-path control (OOF 0.713). S24/S25 not in this kernel."
   ]
 }

@@ -1,11 +1,13 @@
-# S22 — ResNet-18 2.5D on PIXEL_CACHE_V1
+# S22 — ResNet-18 2.5D transformer mix on A0
 
-- Status: `local_evaluated` (no Kaggle submit)
-- Device: NSU Quadro RTX 6000 (`prepost`)
-- Data: 11.12 GiB uint8 cache, FOLDS_V1, Pilkwang V1
-- OOF macro AUC: **0.768** (weak-label proxy)
-- Fold val AUC: 0.773 / 0.776 / 0.783 / 0.769 / 0.760
-- Stronger targets: Synovitis 0.818, Effusion 0.810, Medial OA 0.806, ACL 0.801
-- Weaker: MCL 0.716, Lateral Meniscus 0.716, Fracture 0.720
+- Status: `submitted` (public score pending hidden grading)
+- Local OOF macro AUC: **0.768** (Pilkwang weak-label proxy)
+- Kernel: `dmitriigluzdov/rsna-s22-a0-rank-blend` v2
+- Submission ref: `56118771` at 2026-09-09T09:09:04Z
+- Visible `submission.csv` SHA-256: `5a2b3fb5894b7be8ae01ea9bbb6a15e7ae376d2713ce2b3cfebc5674a222d471`
+- Visible overlay: 7.9 s, 3/3 studies decoded, parent A0 SHA matched
+- Recipe: 40% S22 rank into A0 transformer ranks, then raptor 0.60 / meniscus T30/R60/bag10
+- Weights: private `dmitriigluzdov/rsna-s22-resnet18-25d-folds` (A100-verified fp16)
+- Hidden estimate: ~450 min (A0 ~420 plus live 224×9 decode)
 
-This is local evidence only. Hidden test still needs a scoring notebook that decodes test DICOM live.
+Do not resubmit this kernel version. Poll `kaggle competitions submissions` only.
