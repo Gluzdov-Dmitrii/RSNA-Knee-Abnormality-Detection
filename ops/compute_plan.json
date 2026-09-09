@@ -310,7 +310,7 @@
         "kaggle_runtime_gate",
         "submission_authorization"
       ],
-      "local_selection_state": "not_evaluated"
+      "local_selection_state": "local_evaluated"
     },
     {
       "experiment_id": "S24",

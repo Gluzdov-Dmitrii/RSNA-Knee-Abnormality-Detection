@@ -236,9 +236,10 @@ def run_epoch(model, loader, device, optimizer=None, scaler=None, pos_weight=Non
     }
 
 
-def train_folds(args) -> dict:
+def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -> dict:
     import torch
 
+    model_fn = model_fn or build_model
     set_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() and not args.cpu else "cpu")
     cache = PixelCacheV1(Path(args.cache) if args.cache else None)
@@ -257,7 +258,7 @@ def train_folds(args) -> dict:
         val_ds = KneePixelDataset(cache, val_table, augment=False, seed=args.seed)
         train_loader = make_loader(train_ds, args.batch_size, True, args.workers)
         val_loader = make_loader(val_ds, args.batch_size, False, max(0, args.workers // 2))
-        model = build_model(pretrained=not args.no_pretrained).to(device)
+        model = model_fn(pretrained=not args.no_pretrained).to(device)
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(args.epochs, 1))
         scaler = torch.amp.GradScaler("cuda", enabled=device.type == "cuda")
@@ -343,7 +344,7 @@ def train_folds(args) -> dict:
     y = np.nan_to_num(y, nan=0.0)
     oof_scores = roc_auc(y, p, labeled)
     summary = {
-        "key": "S22_RESNET18_25D",
+        "key": experiment_key,
         "checked_at_utc": utc_now(),
         "device": str(device),
         "cuda": bool(torch.cuda.is_available()),
@@ -363,7 +364,7 @@ def train_folds(args) -> dict:
         ],
         "history": history,
         "oof_csv": str(oof_path),
-        "n_params": int(sum(p.numel() for p in build_model(pretrained=False).parameters())),
+        "n_params": int(sum(p.numel() for p in model_fn(pretrained=False).parameters())),
     }
     (out / "metrics.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     return summary

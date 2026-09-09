@@ -10,8 +10,9 @@ Private derived uint8 cache, **not** raw DICOM and not a DINO embedding cache.
 
 Shape: `4407 × 6 × 9 × 224 × 224` uint8 ≈ **11.12 GiB** pixels (`pixels-000.npy` … `pixels-034.npy`).
 
-Local path (gitignored): `data/rsna-knee-uint8-224-9-c130/`
+Local HASEE path is **not** kept: RTX 2060 is smoke-only, so the 11 GiB corpus is not stored on the laptop.
 NSU path (shared NFS, once): `/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/data/rsna-knee-uint8-224-9-c130/`
+Re-download if needed: `kaggle datasets download dmitriigluzdov/rsna-knee-uint8-224-9-c130`.
 
 Reader: `ops/tools/pixel_cache_v1.py`. Dataset join: `ops/tools/pixel_dataset.py`. Pixel-model skeleton: `training/s22_resnet18_25d.py`.
 

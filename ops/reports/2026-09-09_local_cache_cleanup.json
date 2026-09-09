@@ -1,0 +1,36 @@
+{
+  "checked_at_utc": "2026-09-09T06:40:00Z",
+  "reason": "HASEE RTX 2060 is smoke-only; PIXEL_CACHE_V1 is canonical on NSU NFS and on Kaggle dataset dmitriigluzdov/rsna-knee-uint8-224-9-c130",
+  "nsu_verified": {
+    "root": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/data/rsna-knee-uint8-224-9-c130",
+    "n_shards": 35,
+    "n_csv": 4407,
+    "sample_sha256_ok": ["studies.csv", "slot_mask.npy", "AUDIT.json", "pixels-000.npy", "pixels-034.npy"]
+  },
+  "deleted": [
+    {
+      "path": "data/rsna-knee-uint8-224-9-c130",
+      "host": "HASEE",
+      "approx_gib": 11.12
+    },
+    {
+      "path": "artifacts/cache_budget_recheck/cache",
+      "host": "HASEE",
+      "approx_gib": 11.12,
+      "kept": "json/evidence/metadata under artifacts/cache_budget_recheck"
+    },
+    {
+      "path": "C:\\Users\\User\\kaggle\\projects\\rsna-knee-abnormality-detection\\data\\rsna-knee-uint8-224-9-c130",
+      "host": "nsu-pc",
+      "approx_gib": 1.4,
+      "note": "incomplete tar copy after connection reset; not a valid cache"
+    }
+  ],
+  "approx_bytes_reclaimed_local": 23800000000,
+  "not_deleted": [
+    "NSU NFS PIXEL_CACHE_V1",
+    "ops/assets metadata",
+    "FOLDS_V1",
+    "tmp/labels"
+  ]
+}

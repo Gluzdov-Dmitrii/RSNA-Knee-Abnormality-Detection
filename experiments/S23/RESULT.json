@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S23",
+  "hypothesis": "timm ConvNeXt-Tiny 2.5D with three independent plane heads on PIXEL_CACHE_V1 can beat S22 ResNet-18 on locked weak-label OOF.",
+  "only_intended_change": "architecture S23 (timm convnext_tiny) on the same 224x9 crop-130 uint8 cache, labels, folds, and training recipe as S22",
+  "parent_graph": "A0",
+  "execution_mode": "local_oof",
+  "status": "local_evaluated",
+  "decision": "defer_submit",
+  "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
+  "recipe": {
+    "backbone": "timm convnext_tiny 1.0.19 ImageNet",
+    "in_channels": 6,
+    "planes": 3,
+    "fusion": "Linear(3*768, 12)",
+    "img": 224,
+    "n_slices": 9,
+    "crop_mm": 130,
+    "seed": 2026,
+    "epochs": 16,
+    "batch_size": 16,
+    "lr": 1e-4,
+    "workers": 4,
+    "torch": "2.6.0+cu124",
+    "timm": "1.0.19"
+  },
+  "metrics": {
+    "oof_macro_auc": 0.7129894245681364,
+    "delta_vs_s22_oof_macro_auc": -0.0553413233312339,
+    "oof_per_target_auc": {
+      "ACL": 0.6917528496824566,
+      "MCL": 0.7027331032459094,
+      "Medial Meniscus": 0.6940641985997645,
+      "Lateral Meniscus": 0.6868463822663229,
+      "Medial OA": 0.736618860220387,
+      "Lateral OA": 0.6849602786000039,
+      "PF OA": 0.6920779116791607,
+      "Effusion": 0.7591401083029378,
+      "Synovitis": 0.7826459613894046,
+      "Baker's": 0.730697316382024,
+      "Contusion": 0.7050725466121314,
+      "Fracture": 0.6892635778371344
+    },
+    "fold_best_val_macro_auc": {
+      "0": 0.7341945754360548,
+      "1": 0.666308997117243,
+      "2": 0.6693856817192465,
+      "3": 0.7305461457820958,
+      "4": 0.7699634636349632
+    }
+  },
+  "run": {
+    "host": "ngpu01",
+    "gpu": "NVIDIA A100 80GB PCIe",
+    "gpu_uuid": "GPU-04efb7bd-1f45-38cd-4a13-c79b6aeaa002",
+    "queue_id": "rsna-s23-cv-20260909T0635Z",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260909T0635Z-s23-convnext-tiny-25d",
+    "pid": 53478,
+    "checked_at_utc": "2026-09-09T07:15:05Z",
+    "n_params": 83501868,
+    "approx_seconds_per_epoch": 22
+  },
+  "notes": [
+    "Weak-label OOF proxy, not hidden-test AUC.",
+    "Not a Kaggle submission.",
+    "GEOMETRY_WINNER was not ready; trained on PIXEL_CACHE_V1 geometry by the same policy as S22.",
+    "Lost to S22 (0.768). Independent pixel branch so far is ResNet-18 2.5D.",
+    "Local HASEE PIXEL_CACHE_V1 copies were deleted after NSU NFS verification."
+  ]
+}
