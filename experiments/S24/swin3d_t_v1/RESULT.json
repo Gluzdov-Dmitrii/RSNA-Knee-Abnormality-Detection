@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S24",
+  "variant": "S24_SWIN3D_T_9SLICE",
+  "hypothesis": "torchvision swin3d_t on the same 9-slice volumes can beat r2plus1d 0.811 and move locked OOF toward 0.85.",
+  "only_intended_change": "backbone r2plus1d_18 to swin3d_t, same cache/labels/folds/recipe",
+  "parent_graph": "A0",
+  "execution_mode": "local_oof",
+  "status": "training",
+  "decision": "defer_submit",
+  "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
+  "recipe": {
+    "backbone": "torchvision swin3d_t Kinetics400",
+    "layout": "vol9",
+    "dropout": 0.25,
+    "mixup": 0.2,
+    "backbone_lr_mult": 0.3,
+    "batch_size": 4,
+    "seed": 2026
+  },
+  "metrics": {
+    "oof_macro_auc": null,
+    "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
+    "goal_oof_macro_auc": 0.85
+  },
+  "run": {
+    "host": "prepost",
+    "gpu": "Quadro RTX 6000",
+    "gpu_uuid": "GPU-a4b01714-3774-ca39-a9d9-2f30429e84ba",
+    "queue_id": "rsna-s24-swin-20260910T1644Z",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T1644Z-s24-swin3d-t",
+    "pid": 187205
+  },
+  "notes": [
+    "A100s were occupied by vLLM; first a100 reservation was released unused.",
+    "Running on Quadro RTX 6000, batch 4. Not a Kaggle submit until full OOF vs 0.811 is known.",
+    "Fold 0 epoch 1: train 0.655, val 0.745, 251 s/epoch. Weights download finished; first epoch JSON present."
+  ]
+}
