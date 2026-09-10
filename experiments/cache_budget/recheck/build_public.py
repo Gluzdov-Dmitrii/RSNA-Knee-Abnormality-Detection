@@ -1,4 +1,4 @@
-"""Human-facing notebook; requires measured evidence and a confirmed Dataset receipt."""
+"""Human-facing notebook; measured evidence and configurable private cache generation."""
 import base64
 import gzip
 import hashlib
@@ -9,7 +9,6 @@ HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
 PUBLIC=HERE.parent/'public'
 EVIDENCE=ROOT/'artifacts/cache_budget_recheck/evidence'
-PUBLISHED=ROOT/'artifacts/cache_budget_recheck/dataset_publication.json'
 
 def cell(kind,source,cid):
     value=dict(cell_type=kind,id=cid,source=source.strip()+'\n',metadata={})
@@ -55,11 +54,6 @@ def conclusions(receipt):
 
 def main():
     receipt=json.loads((EVIDENCE/'verifier_receipt.json').read_text())
-    publication=json.loads(PUBLISHED.read_text())
-    assert publication['status']=='ready' and isinstance(publication['is_private'],bool)
-    assert publication['n_studies']==4407
-    url=publication['url']
-    assert url=='https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130'
     base,resolution,slices,crop_text,small_text=conclusions(receipt)
     by_id={r['id']:r for r in receipt['rows']}
     three=by_id['slc_224x3_c130'];large=by_id['res_336x9_c130'];crop160=by_id['crp_224x9_c160']
@@ -69,14 +63,14 @@ def main():
     folds_code=f"import base64,gzip\nfrom pathlib import Path\n_ = Path('/kaggle/working/folds.csv').write_bytes(gzip.decompress(base64.b64decode({payload!r})))"
     summary=f"""# Knee MRI in 11 GiB
 
-**TL;DR.** Keep all training studies, store fewer pixels. The primary download contains **all 4,407 training studies in 11.12 GiB of uint8 pixels**, without keeping roughly 500 GB of DICOM resident: six scan slots, nine slices per slot, 224 × 224 pixels, keeping a central region about 130 × 130 mm when cropping applies. These are training studies, not a count of unique people or the combined train and test sets.
+**TL;DR.** Keep all training studies, store fewer pixels. The default recipe stores **all 4,407 training studies in 11.12 GiB of uint8 pixels**, without keeping roughly 500 GB of DICOM resident: six scan slots, nine slices per slot, 224 × 224 pixels, keeping a central region about 130 × 130 mm when cropping applies. These are training studies, not a count of unique people or the combined train and test sets.
 
 - Independent image probe: **{base['auc']:.3f} held-out macro AUC** (95% interval {base['ci95_lo']:.3f}–{base['ci95_hi']:.3f}), on the same fixed 200 studies and five study folds.
 - {resolution}
 - {slices}
 - **This is a storage and geometry result, not a medal.** It makes no leaderboard or foundation-model claim.
 
-**[Download the primary cache]({url})** · Derived competition MRI; use is subject to the competition rules and MIRA terms.
+**Build your own private cache using the settings below.** A public pixel download is not provided: competition rule **2.4.b.1** prohibits making competition data available to non-participants. Resizing MRI does not provide a stated exception. [Competition rules](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/rules).
 """
     measured=f"""## What we measured
 
@@ -96,7 +90,7 @@ The verifier reads **spatial edge maps and small image grids**, then fits a regu
 
 Error bars use 800 study resamples. Differences use the **same resampled studies** for both settings. These intervals do not include retraining or alternative-fold uncertainty. We call two settings practically equivalent only if their whole paired interval fits inside **±0.01 AUC**. A sanity check with randomly shuffled labels scored **{receipt['permutation_control_auc']:.3f}**. No settings were chosen using leaderboard scores.
 
-Each of the 15 settings is now **built directly from sampled DICOM pixels**. The previous resolution sweep resized already converted eight-bit 336² images; this correction makes the 224² point match the downloadable cache. Within each sampled, cropped series, the lowest and highest 1% of intensities are clipped before scaling to one byte per pixel. Physical order uses image position along the slice stack, with `SliceLocation` and then `InstanceNumber` as fallbacks.
+Each of the 15 settings is now **built directly from sampled DICOM pixels**. The previous resolution sweep resized already converted eight-bit 336² images; this correction makes the 224² point match the default cache recipe. Within each sampled, cropped series, the lowest and highest 1% of intensities are clipped before scaling to one byte per pixel. Physical order uses image position along the slice stack, with `SliceLocation` and then `InstanceNumber` as fallbacks.
 """
     plots=f"""## Plots
 
@@ -108,7 +102,7 @@ Each of the 15 settings is now **built directly from sampled DICOM pixels**. The
 
 {slices} Three slices change AUC by **{three['delta_auc']:+.3f}**, with a paired 95% interval of **{three['delta_ci95_lo']:+.3f} to {three['delta_ci95_hi']:+.3f}**. We keep nine slices, but do not present the old “only real quality cliff” claim as established by this model.
 
-{small_text} Only the primary 224² cache is published.
+{small_text} 224² remains the default; smaller settings are available for your own storage budget.
 
 **How to read B: more context competes with detail.** Both a 110 mm and a 160 mm square end up as 224 × 224 pixels. When the requested crop applies, a 10 mm structure spans roughly **20 pixels at 110 mm**, versus **14 pixels at 160 mm**. The tighter view spends more pixels on central anatomy but discards more of the periphery. The wider view keeps more context but represents the same structure with fewer pixels. Neither must win. Resizing cannot create detail absent from the original scan.
 
@@ -116,32 +110,33 @@ Each of the 15 settings is now **built directly from sampled DICOM pixels**. The
 
 {crop_text} If the source image is too small for the requested square, the crop is skipped and the original field of view is resized instead. This happened at 160 mm for **{crop160.get('crop_skipped_fov',0)} of 977 available series** in the probe. Thus 160 mm is often effectively “no crop,” not a uniform 160 mm view. The millimetre-to-pixel example above applies only when cropping actually occurs.
 """
-    download=f"""## What to download
+    download="""## Build a private Dataset
 
-**[dmitriigluzdov/rsna-knee-uint8-224-9-c130]({url})** — **4,407 studies, 11.12072 GiB pixel payload**, plus small headers and metadata. Archive transfer size may differ. The Dataset card includes a quick start, file and column descriptions, slot order, provenance and data-use terms.
+1. Join the competition and accept its rules and MIRA terms. Make your **own private copy of this notebook**; check its visibility before saving MRI outputs. Keep the official competition input and Pilkwang labels attached. Use CPU and leave internet off.
+2. Edit the settings near the top. For cache generation only, set `RUN_VERIFIER = False`. Set `SAVE_CACHE_OUTPUT = True` **only in your private copy**, then Save & Run. The conversion reads the official mounted DICOM files and writes all 4,407 studies to `/kaggle/working/rsna-knee-cache`. You do not need a separate 500 GB local download.
+3. After the run completes, use Kaggle's Dataset creation flow with your notebook outputs if available, selecting only the `rsna-knee-cache` folder. Alternatively, download that folder and upload its contents as a new Dataset. **Keep the new Dataset Private** and verify that setting. Do not publish the MRI outputs or share them outside the permissions in the competition rules. Creating the Dataset is a separate step; this notebook does not upload it automatically.
 
-The Dataset contains `pixels-000.npy` … `pixels-034.npy`, `studies.csv`, `slot_mask.npy`, `SPEC.json`, an audit, and licence notices. `SPEC.json` records the shape, geometry, exact byte counts, and SHA-256 checksums. **uint8** means one byte per pixel; **GiB** means 1,073,741,824 bytes. Each shard holds up to 128 studies. A zero slot with a zero mask means no matching series in the official metadata, not a healthy knee.
+The cache contains NumPy pixel shards, `studies.csv`, `slot_mask.npy`, `SPEC.json`, an audit and licence notices. `SPEC.json` records the chosen geometry, study count, exact byte counts and SHA-256 checksums. No reports, report lexicon, label scores or `train.csv` are included. **uint8** means one byte per pixel; **GiB** means 1,073,741,824 bytes. Shards contain up to 128 studies.
 
-After attaching the Dataset with the required access, read one study without loading a whole shard into memory:
+Read one study after building the cache (or replace `cache` with your attached private Dataset's mount path):
 
 ```python
 from pathlib import Path
 import numpy as np
 import pandas as pd
 
-# Use the mount path shown in your notebook's Input panel.
-cache = Path('/kaggle/input/rsna-knee-uint8-224-9-c130')
+cache = Path('/kaggle/working/rsna-knee-cache')
 index = pd.read_csv(cache / 'studies.csv')
-i = 0                             # index row of the study you want
+i = 0
 r = index.iloc[i]
 study = np.load(cache / r['shard'], mmap_mode='r', allow_pickle=False)[int(r['row'])]
 mask = np.load(cache / 'slot_mask.npy', allow_pickle=False)[i]
-print(study.shape, study.dtype)    # (6, 9, 224, 224), uint8
+print(study.shape, study.dtype)  # default: (6, 9, 224, 224), uint8
 ```
 
-Slot order: sagittal fluid, coronal fluid, axial fluid, sagittal structural, coronal structural, axial structural. The sampling window 0.35–0.65 refers to positions along the ordered slice stack, not an intensity window.
+Slot order: sagittal fluid, coronal fluid, axial fluid, sagittal structural, coronal structural, axial structural. A zero slot with a zero mask means a missing series, not a healthy knee.
 
-**Save & Run rebuilds the measurements and the full primary cache on CPU with internet off.** Rebuilt MRI is stored in `/kaggle/temp/rsna-knee-cache`, an ephemeral session directory, rather than saved notebook output. The linked Dataset holds the persistent download. Expand hidden code to inspect implementation.
+With the published settings, Save & Run rebuilds the measurements and cache, but MRI goes to `/kaggle/temp/rsna-knee-cache` and is **not retained in saved outputs**. Heavy implementation cells are hidden; expand them to inspect the code. Never publish a version saved with MRI outputs.
 """
     caveats="""## Caveats and credit
 
@@ -156,19 +151,44 @@ Geometry credit: [Steven Lee's CPU pixel cache](https://www.kaggle.com/code/stev
     code=(HERE/'pipeline.py').read_text(encoding='utf-8')
     # Figures are rendered in their own visible-output cell, after the hidden work.
     code=code.replace('    plot_curve(metrics,out)\n','    # Render separately in the public notebook.\n')
+    settings_intro="""## Choose your cache size
+
+These settings control **your cache**, not the locked 15-point experiment or the figures below. Default: 224² × 9 = **11.12 GiB**. 160² × 9 = **5.67 GiB**, with lower AUC in this probe; 224² × 6 = **7.41 GiB**. Crop changes the anatomy retained, not the array size. The printed estimate excludes small file headers.
+
+`CROP_MM` is the side length **kept** before resizing. `N_SLICES` must be a multiple of three. `WINDOW` selects positions along the ordered stack. Leave `SAVE_CACHE_OUTPUT` off here; enable it only after making your own notebook private. See **Build a private Dataset** below for the final upload step.
+"""
+    settings="""# Edit these values in your own copy.
+IMG = 224
+N_SLICES = 9
+CROP_MM = 130
+WINDOW = (0.35, 0.65)
+
+RUN_VERIFIER = True        # False skips the fixed 15-setting quality experiment.
+SAVE_CACHE_OUTPUT = False  # True ONLY in a PRIVATE notebook; retains MRI outputs.
+
+print(f"Pixel storage for 4,407 studies: {4407 * 6 * N_SLICES * IMG**2 / 1024**3:.2f} GiB")
+"""
     run="""from IPython.utils.capture import capture_output
+cache_config = dict(img=IMG, n_slices=N_SLICES, crop_mm=CROP_MM, window=list(WINDOW))
+cache_dir = Path('/kaggle/working/rsna-knee-cache' if SAVE_CACHE_OUTPUT else '/kaggle/temp/rsna-knee-cache')
 with capture_output() as build_log:
-    receipt,spec=run_all('/kaggle/working/folds.csv', '/kaggle/working/evidence', '/kaggle/temp/rsna-knee-cache')
-_ = Path('/kaggle/working/build.log').write_text(build_log.stdout,encoding='utf-8')
+    if RUN_VERIFIER:
+        receipt, spec = run_all('/kaggle/working/folds.csv', '/kaggle/working/evidence', cache_dir, cache_config=cache_config)
+    else:
+        spec = materialize(competition_root(), cache_dir, config=cache_config)
+_ = Path('/kaggle/working/build.log').write_text(build_log.stdout, encoding='utf-8')
+print(f"Built {spec['n_studies']} studies, {spec['pixel_gib']:.2f} GiB: {cache_dir}")
 """
     for filename in ['NOTICE.md','LICENSE-APACHE-2.0.txt']:
-        run+=f"_ = Path('/kaggle/temp/rsna-knee-cache/{filename}').write_text({(HERE/filename).read_text(encoding='utf-8')!r},encoding='utf-8')\n"
-    cells=[cell('markdown',summary,'tldr'),cell('markdown',measured,'measured'),
+        run+=f"_ = (cache_dir / {filename!r}).write_text({(HERE/filename).read_text(encoding='utf-8')!r},encoding='utf-8')\n"
+    cells=[cell('markdown',summary,'tldr'),cell('markdown',settings_intro,'settings-help'),
+           cell('code',settings,'settings'),cell('markdown',measured,'measured'),
            cell('code',folds_code,'folds'),cell('code',code,'implementation'),cell('code',run,'rebuild'),
            cell('markdown',plots,'plots'),
-           cell('code',"plot_curve(pd.read_csv('/kaggle/working/evidence/verifier_metrics.csv'),Path('/kaggle/working/evidence'))",'figures'),
+           cell('code',"if RUN_VERIFIER:\n    plot_curve(pd.read_csv('/kaggle/working/evidence/verifier_metrics.csv'),Path('/kaggle/working/evidence'))",'figures'),
            cell('markdown',interpretation,'interpretation'),cell('markdown',download,'download'),
            cell('markdown',caveats,'caveats')]
+    next(c for c in cells if c['id']=='settings')['metadata'] = {}
     # Kaggle Quick Save does not render supplied code outputs. Markdown attachments
     # preserve the verified figures; Save & Run also regenerates both PNG files.
     figure_cell=next(c for c in cells if c['id']=='figures')
@@ -198,7 +218,8 @@ _ = Path('/kaggle/working/build.log').write_text(build_log.stdout,encoding='utf-
     for c in cells:
         if c['cell_type']=='code':
             compile(c['source'],f"cell:{c['id']}",'exec')
-            assert c['metadata']['jupyter']['source_hidden'] is True
+            if c['id'] != 'settings':
+                assert c['metadata']['jupyter']['source_hidden'] is True
     assert sum(len(c.get('attachments',{})) for c in cells)==2
     print('Built',path,'with hidden runnable code and two measured figures')
 

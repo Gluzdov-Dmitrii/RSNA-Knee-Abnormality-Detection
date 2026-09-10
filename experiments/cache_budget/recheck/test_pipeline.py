@@ -63,6 +63,21 @@ def main():
         for filename,digest in spec['sha256'].items():assert p.sha256(root/'cache'/filename)==digest
         assert not any('Report' in file.name for file in (root/'cache').iterdir())
         del cache
+        custom = dict(img=160,n_slices=6,crop_mm=110,window=[.35,.65])
+        small_spec=p.materialize(root,root/'small',study_limit=2,config=custom)
+        small=np.load(root/'small/pixels-000.npy',mmap_mode='r',allow_pickle=False)
+        assert small.shape==(2,6,6,160,160) and small.dtype==np.uint8
+        assert small_spec['shape_per_study']==[6,6,160,160]
+        assert small_spec['pixel_bytes']==small.nbytes
+        assert small_spec['crop_mm']==110 and small_spec['n_group']==2
+        for filename,digest in small_spec['sha256'].items():assert p.sha256(root/'small'/filename)==digest
+        del small
+        try:p.materialize(root,root/'small',study_limit=2,config=custom)
+        except ValueError:pass
+        else:raise AssertionError('Must reject mixing cache recipes in a nonempty folder')
+        try:p.materialize(root,root/'invalid',study_limit=2,config={**custom,'n_slices':4})
+        except ValueError:pass
+        else:raise AssertionError('Must reject incomplete groups of three')
     print('PASS: ordered geometry, slice coverage, spatial features, paired bootstrap, cache round-trip and hashes')
 
 if __name__=='__main__':main()

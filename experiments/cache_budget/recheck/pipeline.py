@@ -30,7 +30,6 @@ SLOTS = [("SAG_FLUID", "Sagittal", 1), ("COR_FLUID", "Coronal", 1),
          ("AX_FLUID", "Axial", 1), ("SAG_STRUCT", "Sagittal", 0),
          ("COR_STRUCT", "Coronal", 0), ("AX_STRUCT", "Axial", 0)]
 DEFAULT = "res_224x9_c130"
-DATASET = "dmitriigluzdov/rsna-knee-uint8-224-9-c130"
 GIB = 4407 * 6 * 9 * 224 ** 2 / 1024 ** 3
 THREADS = min(8, os.cpu_count() or 2)
 START = time.time()
@@ -431,10 +430,22 @@ def plot_curve(metrics,out):
     ax.grid(alpha=.15);fig.tight_layout(rect=(0,.18,1,1));fig.savefig(Path(out)/"figure_B.png",dpi=170);plt.show();plt.close(fig)
 
 
-def materialize(root,out,study_limit=None):
+def materialize(root,out,study_limit=None,config=None):
     """One dense uint8 cache in ~323 MiB .npy shards; explicit absent-slot mask."""
-    out = Path(out);out.mkdir(parents=True,exist_ok=True)
-    cfg = next(c for c in variants() if c["id"]==DEFAULT)
+    cfg = dict(next(c for c in variants() if c["id"]==DEFAULT) if config is None else config)
+    img, slices = cfg['img'], cfg['n_slices']
+    if not isinstance(img,int) or img < 32 or img > 512:
+        raise ValueError('img must be an integer from 32 to 512')
+    if not isinstance(slices,int) or slices < 3 or slices > 30 or slices % 3:
+        raise ValueError('n_slices must be a multiple of three from 3 to 30')
+    if not 0 < cfg['crop_mm'] <= 300:
+        raise ValueError('crop_mm must be in (0, 300]')
+    if len(cfg['window']) != 2 or not 0 <= cfg['window'][0] < cfg['window'][1] <= 1:
+        raise ValueError('window must satisfy 0 <= start < end <= 1')
+    out = Path(out)
+    if out.exists() and any(out.iterdir()):
+        raise ValueError('Choose an empty cache directory to avoid mixing recipes')
+    out.mkdir(parents=True,exist_ok=True)
     studies = pd.read_csv(root/"train.csv",usecols=["StudyInstanceUID"])
     assert studies.StudyInstanceUID.is_unique and len(studies)==4407
     studies = studies.sort_values("StudyInstanceUID").reset_index(drop=True)
@@ -443,7 +454,7 @@ def materialize(root,out,study_limit=None):
     groups = {uid:g for uid,g in series.groupby("StudyInstanceUID",sort=False)}
     def one(uid):
         audit = Counter();records = load_series(root,groups[uid],audit,[cfg])
-        pixels = np.zeros((6,9,224,224),np.uint8)
+        pixels = np.zeros((6,slices,img,img),np.uint8)
         mask = np.zeros(6,np.uint8)
         for j,(name,_,_) in enumerate(SLOTS):
             if name in records:
@@ -455,14 +466,14 @@ def materialize(root,out,study_limit=None):
         ids = studies.StudyInstanceUID.iloc[start:start+128].tolist()
         filename=f"pixels-{start//128:03d}.npy"
         path=out/filename
-        array=np.lib.format.open_memmap(path,mode="w+",dtype=np.uint8,shape=(len(ids),6,9,224,224))
+        array=np.lib.format.open_memmap(path,mode="w+",dtype=np.uint8,shape=(len(ids),6,slices,img,img))
         with ThreadPoolExecutor(max_workers=THREADS) as pool:
             for row,(pixels,mask,counts) in enumerate(pool.map(one,ids)):
                 array[row]=pixels;masks.append(mask);audit.update(counts)
                 manifest.append(dict(StudyInstanceUID=ids[row],shard=filename,row=row))
         array.flush();del array
         check=np.load(path,mmap_mode="r",allow_pickle=False)
-        assert check.dtype==np.uint8 and check.shape==(len(ids),6,9,224,224)
+        assert check.dtype==np.uint8 and check.shape==(len(ids),6,slices,img,img)
         del check
         shards.append(dict(file=filename,n_studies=len(ids),bytes=path.stat().st_size,sha256=sha256(path)))
         log(f"Cache: {start+len(ids)}/{len(studies)} studies; {filename} verified")
@@ -470,10 +481,10 @@ def materialize(root,out,study_limit=None):
     np.save(out/"slot_mask.npy",np.stack(masks),allow_pickle=False)
     save_json(out/"AUDIT.json",dict(audit))
     aux={p.name:sha256(p) for p in [out/"studies.csv",out/"slot_mask.npy",out/"AUDIT.json"]}
-    spec=dict(img=224,n_slices=9,group=3,n_group=3,crop_mm=130,window=[.35,.65],
+    spec=dict(img=img,n_slices=slices,group=3,n_group=slices//3,crop_mm=cfg['crop_mm'],window=list(cfg['window']),
         slot_scheme=[dict(name=n,plane=p,Fluid_Sensitive=f) for n,p,f in SLOTS],
-        dtype="uint8",n_studies=len(studies),shape_per_study=[6,9,224,224],
-        pixel_bytes=len(studies)*6*9*224**2,pixel_gib=len(studies)*6*9*224**2/1024**3,
+        dtype="uint8",n_studies=len(studies),shape_per_study=[6,slices,img,img],
+        pixel_bytes=len(studies)*6*slices*img**2,pixel_gib=len(studies)*6*slices*img**2/1024**3,
         shards=shards,sha256={**{s["file"]:s["sha256"] for s in shards},**aux},
         ordering=["ImagePositionPatient projected on orientation normal","SliceLocation","InstanceNumber"],
         unordered_policy="fail",decode_error_policy="fail; never substitute broken DICOM with zero",
@@ -486,13 +497,13 @@ def materialize(root,out,study_limit=None):
         source="rsna-knee-abnormality-detection official training MRI",
         data_license="Competition rules + RSNA MIRA; private, participating users only",
         geometry_license="Apache-2.0; Steven Lee; see NOTICE.md",
-        lossless=False,dataset_url="https://www.kaggle.com/datasets/"+DATASET)
+        lossless=False)
     save_json(out/"SPEC.json",spec)
     assert len(manifest)==len(studies) and len(set(m["StudyInstanceUID"] for m in manifest))==len(studies)
     return spec
 
 
-def run_all(folds_path, evidence_dir, cache_dir):
+def run_all(folds_path, evidence_dir, cache_dir, cache_config=None):
     root=competition_root()
     hits=list(Path("/kaggle/input").glob("**/report_labels_v2.csv"))
     assert len(hits)==1, "Attach exactly one Pilkwang report_labels_v2.csv"
@@ -502,6 +513,6 @@ def run_all(folds_path, evidence_dir, cache_dir):
     contrary=[r["id"] for r in receipt["rows"] if r["delta_ci95_lo"]>.01 and r["holm_p"]<.05]
     if contrary: log("Review clearly better alternatives before publication: "+str(contrary))
     gc.collect()
-    spec=materialize(root,Path(cache_dir))
+    spec=materialize(root,Path(cache_dir),config=cache_config)
     log(f"Complete: {spec['n_studies']} studies, {spec['pixel_gib']:.5f} GiB of uint8 pixels")
     return receipt,spec

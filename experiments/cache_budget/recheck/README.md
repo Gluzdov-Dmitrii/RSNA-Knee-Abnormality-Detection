@@ -19,14 +19,14 @@ labels. Neither kernel enables internet, GPU, or competition submission.
    private. Do not pass `--public`.
 6. Inspect Dataset readiness, privacy and complete file listing; save the confirmed
    publication receipt as `artifacts/cache_budget_recheck/dataset_publication.json`.
-7. `python experiments/cache_budget/public/build_notebook.py` requires those
-   actual evidence/publication receipts. It generates the public notebook with
+7. `python experiments/cache_budget/public/build_notebook.py` requires the
+   actual measurement evidence. It generates the public notebook with
    two measured figures and hidden source cells. `publish_notebook.py` uses the
    SDK Quick Save type with Markdown image attachments for the verified figures.
    Kaggle-specific `_kg_hide-input` metadata collapses all implementation cells.
    It requires
    the private execution to be COMPLETE. Check the public rendering, hidden code,
-   inputs, private Dataset link, and absence of saved public MRI pixel shards.
+   inputs, private-build instructions, and absence of saved public MRI pixel shards.
    Save & Run remains a complete rebuild, using the same pipeline proven by the
    private execution. A Quick Save is not represented as a second execution.
 
@@ -46,8 +46,7 @@ equivalence margin is ±0.01 AUC, with Holm correction used when considering a
 clearly better setting. Cache selection stays at the user's primary recipe
 unless contrary evidence warrants a separately documented decision.
 
-Published and verified: [notebook version 8](https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib)
-and [cache version 1](https://www.kaggle.com/datasets/dmitriigluzdov/rsna-knee-uint8-224-9-c130).
+Published and verified: [notebook version 9](https://www.kaggle.com/code/dmitriigluzdov/knee-mri-in-11-gib).
 The notebook retains kernel ID 133521917; Kaggle changed its slug with the title.
 All 35 shards passed full local hash/shape/content validation. All 41 remote
 Dataset files and byte sizes match, with privacy and readiness confirmed.
@@ -65,3 +64,25 @@ The user subsequently changed Dataset visibility manually; a read-only check
 confirmed it is accessible as listed, with all 41 files unchanged. Notebook
 version 8 removes private/public wording from reader-facing text while retaining
 competition and MIRA terms. The assistant did not change Dataset visibility.
+
+## September 10: private cache workflow
+
+The owner requested a private replacement and deletion of the public pixel
+Dataset. `retire_public_cache.py` prepares replacement metadata and verifies
+private visibility, readiness, all remote file names/sizes and a downloaded
+SPEC.json before its explicit `delete-public` action. Local pixel hashes,
+shapes, study IDs and masks must first pass `validate_dataset.py`. Runtime
+receipts live under `artifacts/cache_budget_recheck/`.
+
+Version 9 removes the pixel Dataset link and explains competition rule 2.4.b.1.
+The short settings cell is visible immediately below the TL;DR; four heavy
+code cells remain hidden. IMG, N_SLICES, CROP_MM and WINDOW change only the
+generated cache, not the locked experiment or the historical figures.
+RUN_VERIFIER=False skips the probe for readers who only want the cache.
+SAVE_CACHE_OUTPUT defaults to False. Readers must make their notebook private
+before setting it True and saving MRI to `/kaggle/working/rsna-knee-cache`,
+then create a separate private Dataset from that folder. The public default
+still rebuilds into temporary storage. The builder rejects nonempty output
+directories to prevent mixed geometry from an earlier run.
+
+The retirement operation does not contact support or submit to the competition.

@@ -11,8 +11,6 @@ OUT=ROOT/'artifacts/cache_budget_recheck'
 PUBLIC=ROOT/'experiments/cache_budget/public'
 
 def main():
-    publication=json.loads((OUT/'dataset_publication.json').read_text())
-    assert publication['status']=='ready' and isinstance(publication['is_private'],bool)
     api=KaggleApi();api.authenticate()
     status=api.kernels_status('dmitriigluzdov/rsna-knee-private-cache-verifier')
     assert str(status.status).endswith('COMPLETE'), f'Private source run not complete: {status.status}'
@@ -22,8 +20,13 @@ def main():
     assert sum(len(c.get('attachments',{})) for c in nb['cells'])==2
     for c in nb['cells']:
         if c['cell_type']=='code':
-            assert c['metadata']['jupyter']['source_hidden'] is True
+            if c['id'] != 'settings':
+                assert c['metadata']['jupyter']['source_hidden'] is True
             compile(c['source'],f"cell:{c['id']}",'exec')
+    settings=next(c['source'] for c in nb['cells'] if c['id']=='settings')
+    assert 'SAVE_CACHE_OUTPUT = False' in settings
+    assert 'rsna-knee-uint8-224-9-c130' not in notebook
+    assert all(not c.get('outputs') for c in nb['cells'])
     request=ApiSaveKernelRequest()
     request.id=133521917
     request.slug=meta['id'];request.new_title=meta['title'];request.text=notebook
