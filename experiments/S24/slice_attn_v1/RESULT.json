@@ -6,8 +6,8 @@
   "only_intended_change": "temporal mixer: 3D conv to 2D ResNet-18 + slice attention on the same vol9 cache",
   "parent_graph": "A0",
   "execution_mode": "local_oof",
-  "status": "training",
-  "decision": "defer_submit",
+  "status": "local_evaluated",
+  "decision": "reject",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
   "recipe": {
     "backbone": "torchvision resnet18 ImageNet, slice attention pool",
@@ -19,9 +19,34 @@
     "seed": 2026
   },
   "metrics": {
-    "oof_macro_auc": null,
+    "oof_macro_auc": 0.8017455298655176,
+    "delta_vs_r2plus1d_oof_macro_auc": -0.0088655202292887,
+    "delta_vs_s24_r3d_oof_macro_auc": 0.0011044682926005,
     "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
-    "baseline_r3d_r2p_rankmean": 0.8223432215257809
+    "baseline_s24_r3d_oof_macro_auc": 0.8006410615729171,
+    "rankmean_r2p_attn": 0.8226683145710965,
+    "rankmean_r3d_r2p_attn": 0.827339585536465,
+    "oof_per_target_auc": {
+      "ACL": 0.8304317102198694,
+      "MCL": 0.7491228409598607,
+      "Medial Meniscus": 0.8091066416718727,
+      "Lateral Meniscus": 0.760492167653093,
+      "Medial OA": 0.8384208159608062,
+      "Lateral OA": 0.7842544930320895,
+      "PF OA": 0.80529494526612,
+      "Effusion": 0.8324022816048839,
+      "Synovitis": 0.8550097337635416,
+      "Baker's": 0.8132900933878113,
+      "Contusion": 0.7713646530219302,
+      "Fracture": 0.771755981844332
+    },
+    "fold_best_val_macro_auc": {
+      "0": 0.7995912620486316,
+      "1": 0.8069169957864987,
+      "2": 0.8180447741149051,
+      "3": 0.796855614326896,
+      "4": 0.803295864542236
+    }
   },
   "run": {
     "host": "ngpu01",
@@ -30,11 +55,14 @@
     "queue_id": "rsna-s24-attn-20260910T1108Z",
     "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T1108Z-s24-slice-attn",
     "pid": 72887,
-    "fold0_epoch1_val_macro_auc": 0.7708820849555353,
-    "approx_seconds_per_epoch": 36.5
+    "checked_at_utc": "2026-09-10T16:38:00Z",
+    "n_params": 33549519,
+    "approx_seconds_per_epoch": 36.0
   },
   "notes": [
-    "Toward 0.85 OOF. Not a Kaggle submit until full OOF vs r2plus1d 0.811 is known.",
-    "Fold 0 epoch 2 val 0.790 after ~36 s/epoch."
+    "Independent oof.csv recompute equals metrics.json 0.801746.",
+    "Lost to r2plus1d 0.811. Pixel-path single-model control stays r2plus1d.",
+    "Three-way rank-mean with both 3D models is 0.827, still short of 0.85.",
+    "Not a Kaggle submit."
   ]
 }
