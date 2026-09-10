@@ -4,3 +4,5 @@ hidden-output-download,impossible_workflow,Kaggle does not expose full hidden pr
 public-score-only-promotion,invalid_evidence,Public delta alone does not satisfy the promotion rule,STRATEGY_WEEK_1.md,
 named-submission-csv,confirmed_api_rejection,Named submission_Sxx.csv outputs returned HTTP 400; use submission.csv per immutable version,ops/reports/2026-09-06_day2.md,2026-09-07
 kaggle-training-r2,compute_policy,All preparation train cache OOF and search moved to NSU under R2,LOCAL_COMPUTE_PLAN.md,2026-09-07
+s22-overlay-0.40-resubmit,confirmed_hurt,S22 0.40 transformer mix public 0.931 vs A0 0.937; do not retune blend from public LB,experiments/S22/RESULT.json,2026-09-10
+s22-kernel-publish,not_notable,public 0.931 is not a writeup score; keep dmitriigluzdov/rsna-s22-a0-rank-blend private,experiments/S22/RESULT.json,2026-09-10

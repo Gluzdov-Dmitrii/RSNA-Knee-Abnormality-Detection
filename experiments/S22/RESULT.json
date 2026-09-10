@@ -5,8 +5,8 @@
   "only_intended_change": "40% transformer-rank mix of 5-fold ResNet-18 bag on live PIXEL_CACHE_V1 decode; raptor 0.60 and Medial Meniscus T30/R60/bag10 kept",
   "parent_graph": "A0",
   "execution_mode": "unified_hidden_graph",
-  "status": "submitted",
-  "decision": "pending",
+  "status": "scored",
+  "decision": "reject",
   "dependencies": [
     "PIXEL_CACHE_V1@ready",
     "FOLDS_V1@ready",
@@ -32,11 +32,14 @@
     "metadata_sha256": "50c3292fb961fd8154457558dbfb485c65c355b3ae2bf66ce7d2d32ffeb63bc8",
     "selected_submission_sid": "S01",
     "weights_dataset": "dmitriigluzdov/rsna-s22-resnet18-25d-folds",
-    "weight_manifest_sha256": "6196831428bef5b5c696782c5b72f7880991127bd7620b1b906cf8f873c48faa"
+    "weight_manifest_sha256": "6196831428bef5b5c696782c5b72f7880991127bd7620b1b906cf8f873c48faa",
+    "kernel_is_private": true
   },
   "metrics": {
     "oof_macro_auc": 0.7683307478993703,
-    "oof_reference": "weak_label_pilkwang_v1_proxy_not_hidden_test"
+    "oof_reference": "weak_label_pilkwang_v1_proxy_not_hidden_test",
+    "public_score": 0.931,
+    "delta_vs_a0_public": -0.006
   },
   "source_refs": [
     {
@@ -48,7 +51,7 @@
     {
       "ref": "dmitriigluzdov/rsna-s22-a0-rank-blend",
       "version": "2",
-      "note": "Visible COMPLETE; submission.csv is S22 overlay on S01/A0"
+      "note": "COMPLETE; public 0.931; kernel stays private"
     }
   ],
   "hashes": {
@@ -64,7 +67,20 @@
   "validation": {
     "oof_macro_auc": 0.7683307478993703,
     "oof_reference": "weak_label_pilkwang_v1_proxy_not_hidden_test",
-    "per_target_auc": {},
+    "per_target_auc": {
+      "ACL": 0.8009750736146592,
+      "MCL": 0.7164537945973524,
+      "Medial Meniscus": 0.7866866509135177,
+      "Lateral Meniscus": 0.7157362487559351,
+      "Medial OA": 0.8060264135546823,
+      "Lateral OA": 0.751617003713946,
+      "PF OA": 0.7654500115946189,
+      "Effusion": 0.8095826758413742,
+      "Synovitis": 0.817687059502136,
+      "Baker's": 0.7841853435017921,
+      "Contusion": 0.7456802731294947,
+      "Fracture": 0.7198884260729339
+    },
     "fold_deltas": [],
     "second_seed_delta": null,
     "gold58_macro_auc": null,
@@ -90,20 +106,31 @@
   "submission": {
     "ref": "56118771",
     "submitted_at_utc": "2026-09-09T09:09:04Z",
-    "public_score": null,
+    "public_score": 0.931,
     "rank_before": 183,
     "rank_after": null,
     "leader_score": 0.954,
     "top10_score": 0.949,
     "gold_cutoff_rank": 16,
     "gold_cutoff_score": 0.949,
-    "team_count": 3169
+    "team_count": 3169,
+    "delta_vs_a0_public": -0.006
+  },
+  "followup": {
+    "key": "S22_RESNET18_25D_REG",
+    "new_experiment_id": false,
+    "evidence_path": "experiments/S22/reg_v1/RESULT.json",
+    "oof_macro_auc": 0.756817672129717,
+    "delta_vs_s22_oof_macro_auc": -0.0115130757696533,
+    "outcome": "lost_to_s22_baseline"
   },
   "blocker": "",
   "notes": [
-    "Visible v2 COMPLETE; overlay 7.9s; parent A0 SHA matched.",
+    "Public 0.931 COMPLETE ref 56118771; delta vs A0 0.937 is -0.006. Overlay rejected.",
+    "Do not retune the 0.40 mix from public LB. Do not publish the kernel; 0.931 is not a writeup score.",
+    "Local OOF 0.768 remains a valid own-model pixel-path control. S22-reg reduced train AUC from ~0.999 to ~0.90 but lost 0.012 OOF.",
     "Kernel v1 failed: _blend_tr has no StudyInstanceUID; v2 reads UIDs from _blend_transformer/_blend_coatnet.",
-    "Submitted kernel v2 -f submission.csv once; ref 56118771 PENDING. Hidden scoring is A0 plus live 224x9 decode; do not retry.",
-    "S23 lost pixel-path control (OOF 0.713). S24/S25 not in this kernel."
+    "S23 lost pixel-path control (OOF 0.713). S24/S25 not in this kernel.",
+    "S22-reg (dropout 0.4, wd 1e-3, MixUp 0.4, backbone 0.1x LR) OOF 0.757; lost to baseline 0.768. Control unchanged."
   ]
 }

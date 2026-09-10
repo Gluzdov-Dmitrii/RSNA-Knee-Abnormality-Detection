@@ -25,6 +25,8 @@ Inference recipe (locked S21–S25 `transformer_component_replacement_share` = 0
 
 Kernel: `dmitriigluzdov/rsna-s22-a0-rank-blend` (new slot; does not mutate `rsna-week1-a0-s01-s05`).
 Internet off. `machine_shape` NvidiaTeslaT4. Submit `-f submission.csv` from this kernel version.
+Kernel stays private. Public score **0.931** (ref `56118771`); overlay **rejected** vs A0 0.937.
 
 Attached inputs: A0 Renta datasets/model plus private `dmitriigluzdov/rsna-s22-resnet18-25d-folds`.
 S23 lost the pixel-path control (OOF 0.713). S24/S25 are not in this kernel.
+Follow-up local training: `experiments/S22/reg_v1/` (no new S-ID) lost with OOF 0.757 vs baseline 0.768.

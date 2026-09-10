@@ -46,7 +46,7 @@ def set_seed(seed: int) -> None:
     torch.cuda.manual_seed_all(seed)
 
 
-def build_model(n_targets: int = 12, pretrained: bool = True):
+def build_model(n_targets: int = 12, pretrained: bool = True, dropout: float = 0.2):
     import torch
     from torch import nn
     from torchvision.models import ResNet18_Weights, resnet18
@@ -70,10 +70,10 @@ def build_model(n_targets: int = 12, pretrained: bool = True):
             return self.trunk(x)
 
     class S22ResNet18(nn.Module):
-        def __init__(self, n_targets: int = 12):
+        def __init__(self, n_targets: int = 12, dropout: float = 0.2):
             super().__init__()
             self.planes = nn.ModuleList([PlaneHead() for _ in range(3)])
-            self.dropout = nn.Dropout(0.2)
+            self.dropout = nn.Dropout(dropout)
             self.fusion = nn.Linear(3 * 512, n_targets)
 
         def forward(self, x, plane_mask):
@@ -83,7 +83,7 @@ def build_model(n_targets: int = 12, pretrained: bool = True):
                 feats.append(feat * plane_mask[:, plane].unsqueeze(1))
             return self.fusion(self.dropout(torch.cat(feats, dim=1)))
 
-    return S22ResNet18(n_targets=n_targets)
+    return S22ResNet18(n_targets=n_targets, dropout=dropout)
 
 
 def masked_bce_with_logits(logits, y, labeled, pos_weight=None):
@@ -190,7 +190,21 @@ def pos_weight_from_table(table: pd.DataFrame) -> np.ndarray:
     return np.asarray(weights, dtype=np.float32)
 
 
-def run_epoch(model, loader, device, optimizer=None, scaler=None, pos_weight=None):
+def apply_mixup(x, y, labeled, plane_mask, alpha: float):
+    import torch
+
+    if alpha <= 0 or x.size(0) < 2:
+        return x, y, labeled, plane_mask
+    lam = float(np.random.beta(alpha, alpha))
+    index = torch.randperm(x.size(0), device=x.device)
+    x = lam * x + (1.0 - lam) * x[index]
+    y = lam * y + (1.0 - lam) * y[index]
+    labeled = torch.maximum(labeled, labeled[index])
+    plane_mask = torch.maximum(plane_mask, plane_mask[index])
+    return x, y, labeled, plane_mask
+
+
+def run_epoch(model, loader, device, optimizer=None, scaler=None, pos_weight=None, mixup_alpha: float = 0.0):
     import torch
 
     train = optimizer is not None
@@ -205,6 +219,8 @@ def run_epoch(model, loader, device, optimizer=None, scaler=None, pos_weight=Non
         y = batch["y"].to(device, non_blocking=True)
         labeled = batch["labeled"].to(device, non_blocking=True)
         plane_mask = batch["plane_mask"].to(device, non_blocking=True)
+        if train:
+            x, y, labeled, plane_mask = apply_mixup(x, y, labeled, plane_mask, mixup_alpha)
         with torch.set_grad_enabled(train):
             with torch.autocast(device_type=device.type, enabled=device.type == "cuda"):
                 logits = model(x, plane_mask)
@@ -236,6 +252,14 @@ def run_epoch(model, loader, device, optimizer=None, scaler=None, pos_weight=Non
     }
 
 
+def make_model(model_fn, args, pretrained: bool):
+    dropout = float(getattr(args, "dropout", 0.2))
+    try:
+        return model_fn(pretrained=pretrained, dropout=dropout)
+    except TypeError:
+        return model_fn(pretrained=pretrained)
+
+
 def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -> dict:
     import torch
 
@@ -247,6 +271,9 @@ def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     folds = [int(part) for part in args.folds.split(",") if part != ""]
+    weight_decay = float(getattr(args, "weight_decay", 1e-4))
+    mixup_alpha = float(getattr(args, "mixup", 0.0))
+    backbone_lr_mult = float(getattr(args, "backbone_lr_mult", 1.0))
     history = []
     oof_rows = []
     for fold in folds:
@@ -258,8 +285,16 @@ def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -
         val_ds = KneePixelDataset(cache, val_table, augment=False, seed=args.seed)
         train_loader = make_loader(train_ds, args.batch_size, True, args.workers)
         val_loader = make_loader(val_ds, args.batch_size, False, max(0, args.workers // 2))
-        model = model_fn(pretrained=not args.no_pretrained).to(device)
-        optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
+        model = make_model(model_fn, args, pretrained=not args.no_pretrained).to(device)
+        backbone_params = [p for name, p in model.named_parameters() if not name.startswith("fusion")]
+        head_params = list(model.fusion.parameters())
+        optimizer = torch.optim.AdamW(
+            [
+                {"params": backbone_params, "lr": args.lr * backbone_lr_mult},
+                {"params": head_params, "lr": args.lr},
+            ],
+            weight_decay=weight_decay,
+        )
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(args.epochs, 1))
         scaler = torch.amp.GradScaler("cuda", enabled=device.type == "cuda")
         pos_w = torch.from_numpy(pos_weight_from_table(train_table)).to(device)
@@ -269,7 +304,9 @@ def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -
         fold_hist = []
         for epoch in range(1, args.epochs + 1):
             t0 = time.time()
-            train_stats = run_epoch(model, train_loader, device, optimizer, scaler, pos_w)
+            train_stats = run_epoch(
+                model, train_loader, device, optimizer, scaler, pos_w, mixup_alpha=mixup_alpha
+            )
             scheduler.step()
             val_stats = run_epoch(model, val_loader, device)
             val_auc = val_stats["macro_auc"] if val_stats["macro_auc"] is not None else -1.0
@@ -353,6 +390,10 @@ def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -
         "epochs": args.epochs,
         "batch_size": args.batch_size,
         "lr": args.lr,
+        "weight_decay": weight_decay,
+        "dropout": float(getattr(args, "dropout", 0.2)),
+        "mixup": mixup_alpha,
+        "backbone_lr_mult": backbone_lr_mult,
         "pretrained": not args.no_pretrained,
         "in_channels": 6,
         "folds": folds,
@@ -364,7 +405,7 @@ def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -
         ],
         "history": history,
         "oof_csv": str(oof_path),
-        "n_params": int(sum(p.numel() for p in model_fn(pretrained=False).parameters())),
+        "n_params": int(sum(p.numel() for p in make_model(model_fn, args, pretrained=False).parameters())),
     }
     (out / "metrics.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     return summary
@@ -424,13 +465,21 @@ def main() -> None:
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--patience", type=int, default=5)
+    parser.add_argument("--dropout", type=float, default=0.2)
+    parser.add_argument("--weight-decay", type=float, default=1e-4)
+    parser.add_argument("--mixup", type=float, default=0.0)
+    parser.add_argument("--backbone-lr-mult", type=float, default=1.0)
+    parser.add_argument("--experiment-key", type=str, default="S22_RESNET18_25D")
     parser.add_argument("--folds", type=str, default="0,1,2,3,4")
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument("--cache", type=str, default="")
     parser.add_argument("--out", type=str, default="")
     parser.add_argument("--queue-id", type=str, default="")
     parser.add_argument("--queue-token", type=str, default="")
+    parser.add_argument("--queue-token-file", type=str, default="")
     args = parser.parse_args()
+    if args.queue_token_file and not args.queue_token:
+        args.queue_token = Path(args.queue_token_file).read_text(encoding="utf-8").strip()
     if args.train:
         if not args.out:
             raise SystemExit("--out is required for --train")
@@ -439,7 +488,7 @@ def main() -> None:
             hb = Heartbeat(args.queue_id, args.queue_token)
             hb.start()
         try:
-            result = train_folds(args)
+            result = train_folds(args, experiment_key=args.experiment_key)
         finally:
             if hb is not None:
                 hb.close()
