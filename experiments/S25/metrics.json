@@ -1,0 +1,28 @@
+{
+  "key": "S25_RANKMEAN_S22_S24",
+  "checked_at_utc": "2026-09-10T07:48:43Z",
+  "members": [
+    "S22_RESNET18_25D",
+    "S24_R3D18_9SLICE"
+  ],
+  "n": 4406,
+  "oof_macro_auc": 0.8059723703441856,
+  "oof_per_target_auc": {
+    "ACL": 0.8404579242205054,
+    "MCL": 0.7535776946329296,
+    "Medial Meniscus": 0.8151954496176181,
+    "Lateral Meniscus": 0.7520420313999922,
+    "Medial OA": 0.842435196678836,
+    "Lateral OA": 0.7861885223295497,
+    "PF OA": 0.8020284863667041,
+    "Effusion": 0.8366728535582171,
+    "Synovitis": 0.8647443985795915,
+    "Baker's": 0.8277817286234406,
+    "Contusion": 0.774717393455417,
+    "Fracture": 0.7758267646674264
+  },
+  "oof_csv": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T0745Z-s25-rankmean/checkpoints/oof.csv",
+  "s22_oof": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260908T1635Z-s22-resnet18-25d/checkpoints/oof.csv",
+  "s24_oof": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T0545Z-s24-r3d18-9slice/checkpoints/oof.csv",
+  "seed_note": "same-seed 2026 rank-mean; seed 2027 not trained"
+}

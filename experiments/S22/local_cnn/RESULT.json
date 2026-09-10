@@ -6,8 +6,8 @@
   "only_intended_change": "submission.csv is rank of S22 bag only; no transformer/raptor overlay",
   "parent_graph": "none_local_cnn",
   "execution_mode": "unified_hidden_graph",
-  "status": "submitted",
-  "decision": "pending",
+  "status": "scored",
+  "decision": "keep_as_own_model_lb_baseline",
   "recipe": {
     "kernel": "dmitriigluzdov/rsna-s22-local-cnn",
     "code_file": "rsna-s22-local-cnn.ipynb",
@@ -19,12 +19,13 @@
   },
   "metrics": {
     "oof_macro_auc": 0.7683307478993703,
+    "public_score": 0.825,
     "oof_reference": "weak_label_pilkwang_v1_proxy_not_hidden_test"
   },
   "submission": {
     "ref": "56138090",
     "submitted_at_utc": "2026-09-10T05:44:14Z",
-    "public_score": null,
+    "public_score": 0.825,
     "kernel_version": 1
   },
   "validation": {
@@ -34,8 +35,9 @@
     "visible_output_sha256": "c1ff21f28672a7425649d4540f26d9d9ab8f4daeafb5ca55989e38686f7533da"
   },
   "notes": [
-    "Authorized standalone local CNN submit. Not the 0.40 A0 overlay.",
-    "Visible COMPLETE 3/3. Hidden scoring PENDING; do not retry this kernel version.",
+    "Standalone local CNN, not the 0.40 A0 overlay.",
+    "Public 0.825 vs team-best A0 0.937. Own-model LB baseline.",
+    "Do not retry this kernel version. Next standalone candidate is S24 r3d_18 (local OOF 0.801).",
     "Kernel stays private."
   ]
 }

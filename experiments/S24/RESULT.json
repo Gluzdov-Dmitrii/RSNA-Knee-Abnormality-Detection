@@ -5,8 +5,8 @@
   "only_intended_change": "architecture S24 r3d_18 T=9 on the same cache/labels/folds as S22",
   "parent_graph": "A0",
   "execution_mode": "local_oof",
-  "status": "preparing",
-  "decision": "defer_submit",
+  "status": "local_evaluated",
+  "decision": "promote_export",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
   "recipe": {
     "backbone": "torchvision r3d_18 Kinetics400",
@@ -17,20 +17,54 @@
     "mixup": 0.2,
     "backbone_lr_mult": 0.3,
     "batch_size": 8,
-    "seed": 2026
+    "seed": 2026,
+    "epochs": 16,
+    "patience": 5,
+    "lr": 0.0001
   },
-  "metrics": {"oof_macro_auc": null, "baseline_s22_oof_macro_auc": 0.7683307478993703},
+  "metrics": {
+    "oof_macro_auc": 0.8006410615729171,
+    "delta_vs_s22_oof_macro_auc": 0.0323103136735468,
+    "baseline_s22_oof_macro_auc": 0.7683307478993703,
+    "oof_per_target_auc": {
+      "ACL": 0.833550329855233,
+      "MCL": 0.7454216292926872,
+      "Medial Meniscus": 0.8042157710969104,
+      "Lateral Meniscus": 0.7420493226720543,
+      "Medial OA": 0.8411746011272224,
+      "Lateral OA": 0.7834429075382932,
+      "PF OA": 0.7959411554895581,
+      "Effusion": 0.8356848910503488,
+      "Synovitis": 0.8549955386917101,
+      "Baker's": 0.8314503796811159,
+      "Contusion": 0.7608146617388818,
+      "Fracture": 0.7789515506409896
+    },
+    "fold_best_val_macro_auc": {
+      "0": 0.8081262322389194,
+      "1": 0.8073220404857668,
+      "2": 0.8212440771106858,
+      "3": 0.795719427833531,
+      "4": 0.8040709034149827
+    }
+  },
   "run": {
     "host": "ngpu01",
+    "gpu": "NVIDIA A100 80GB PCIe",
     "gpu_uuid": "GPU-61c0078d-a4a6-37a2-3aba-0378e7794c46",
     "queue_id": "rsna-s24-20260910T0545Z",
     "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T0545Z-s24-r3d18-9slice",
     "pid": 63551,
-    "fold0_epoch1_val_macro_auc": 0.7790414197015633,
-    "approx_seconds_per_epoch": 91.3
+    "checked_at_utc": "2026-09-10T07:43:00Z",
+    "n_params": 99517260,
+    "approx_seconds_per_epoch": 90.6
   },
   "notes": [
-    "Training running. Fold 0 epoch 1 val 0.779. Not a Kaggle submit until full OOF vs S22 0.768 is known.",
-    "Submit only if OOF clearly beats S22."
+    "Independent oof.csv recompute equals metrics.json 0.800641.",
+    "New local pixel-path control. Goal 0.80 OOF is met.",
+    "Do not mix into A0. Standalone submit after export + visible gate.",
+    "S25 same-seed rank-mean with S22 is 0.806.",
+    "fp16 export verified on CPU: export/s24-r3d18-9slice-folds, manifest SHA 9c88c6362df87dd6d56c5c486b702360876a648d8d8aba0077a5eadb2cedb365.",
+    "S22 standalone public 0.825 is the own-model LB baseline to beat."
   ]
 }

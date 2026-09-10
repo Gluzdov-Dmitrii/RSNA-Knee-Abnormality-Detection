@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S25",
+  "hypothesis": "Rank-mean of the two best pixel branches (S22 ResNet-18 2.5D and S24 r3d_18) raises locked weak-label OOF above either member.",
+  "only_intended_change": "rank-percentile mean of S22 and S24 OOF, no new training",
+  "parent_graph": "A0",
+  "execution_mode": "local_oof",
+  "status": "local_evaluated",
+  "decision": "defer_submit",
+  "dependencies": ["S22@local_evaluated", "S24@local_evaluated"],
+  "recipe": {
+    "members": ["S22_RESNET18_25D", "S24_R3D18_9SLICE"],
+    "combine": "per_target_rank_percentile_mean",
+    "seed": 2026
+  },
+  "metrics": {
+    "oof_macro_auc": 0.8059723703441855,
+    "delta_vs_s24_oof_macro_auc": 0.0053313087712684,
+    "delta_vs_s22_oof_macro_auc": 0.0376416224448152,
+    "baseline_s24_oof_macro_auc": 0.8006410615729171,
+    "baseline_s22_oof_macro_auc": 0.7683307478993703,
+    "oof_per_target_auc": {
+      "ACL": 0.8404579242205054,
+      "MCL": 0.7535776946329296,
+      "Medial Meniscus": 0.8151954496176181,
+      "Lateral Meniscus": 0.7520420313999922,
+      "Medial OA": 0.842435196678836,
+      "Lateral OA": 0.7861885223295497,
+      "PF OA": 0.8020284863667041,
+      "Effusion": 0.8366728535582171,
+      "Synovitis": 0.8647443985795915,
+      "Baker's": 0.8277817286234406,
+      "Contusion": 0.774717393455417,
+      "Fracture": 0.7758267646674264
+    }
+  },
+  "run": {
+    "host": "ngpu01",
+    "gpu": "none_cpu",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T0745Z-s25-rankmean"
+  },
+  "notes": [
+    "UID-sorted rank-mean of the two OOF tables. n=4406 after dropping the unlabeled row.",
+    "Seed 2027 not trained. Exact per-target numbers are persisted by training/s25_rankmean_oof.py.",
+    "Not a Kaggle submit. Hidden graph would need both S22 and S24 kernels."
+  ]
+}
