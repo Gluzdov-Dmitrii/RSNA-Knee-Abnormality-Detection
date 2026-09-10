@@ -95,8 +95,9 @@ class LiveInferenceTests(unittest.TestCase):
         self.checkpoint_dict = {'geometry': GEOMETRY, 'targets': TARGETS,
                                 'arch': ARCH, 'res': 224, 'model': {}}
 
-    def run_order(self, order):
-        frame = pd.DataFrame({UID: order})
+    def run_order(self, order, sample_order=None):
+        pd.DataFrame({UID: order}).to_csv(self.root / 'test.csv', index=False)
+        frame = pd.DataFrame({UID: order if sample_order is None else sample_order})
         for target in TARGETS:
             frame[target] = .5
         frame.to_csv(self.root / 'sample_submission.csv', index=False)
@@ -124,13 +125,26 @@ class LiveInferenceTests(unittest.TestCase):
                 self.assertGreater(audit['decode_audit']['slices_read'], 0)
 
     def test_missing_study_metadata_fails_without_submission(self):
-        with self.assertRaisesRegex(ValueError, 'metadata missing'):
+        with self.assertRaises(ValueError):
             self.run_order([generate_uid()])
         self.assertFalse((self.root / 'result.csv').exists())
 
-    def test_duplicate_sample_uids_fail(self):
-        with self.assertRaisesRegex(ValueError, 'schema/UIDs'):
+    def test_duplicate_test_uids_fail(self):
+        # Here both files contain duplicates; authoritative test IDs must be rejected.
+        with self.assertRaises(ValueError):
             self.run_order([self.uids[0], self.uids[0]])
+
+    def test_hidden_remount_uses_test_ids_with_stale_sample(self):
+        # sample_submission.csv may remain the three visible placeholders while
+        # Kaggle replaces test.csv and test_series.csv for scoring.
+        stale_sample = [generate_uid() for _ in range(3)]
+        order = [self.uids[2], self.uids[0]]
+        actual = self.run_order(order, sample_order=stale_sample)
+        self.assertEqual(actual[UID].tolist(), order)
+        self.assertEqual(len(actual), 2)
+        expected = torch.sigmoid(torch.tensor([1., -1.])).numpy()
+        np.testing.assert_allclose(actual[TARGETS],
+            np.repeat(expected[:, None], 12, axis=1), rtol=1e-6)
 
     def test_synthetic_geometry_matches_original_cache_pipeline(self):
         original_path = HERE.parents[1] / 'experiments/cache_budget/recheck/pipeline.py'

@@ -1,5 +1,33 @@
 # Execution handoff — 2026-09-10
 
+## Latest: submitted once, awaiting leaderboard result
+
+The earlier run description below is retained as execution history. Both arms
+completed. Pilkwang AUC 0.837165; median 0.826699; delta -0.010466 on 875 fold-0
+studies. Paired bootstrap 95% interval [-0.016471, -0.003872], conditional on this
+single fitted pair. No full OOF claim. Median hypothesis rejected for this screen.
+
+P03 refit uses the selected Pilkwang recipe, four fixed epochs from generic
+initialization, 4,349 non-gold studies. Training completed in 1,225.69 seconds,
+6.047 GiB peak VRAM. Its own GPU lease was released; Grok was untouched.
+Weights SHA256: f658b89db67997c3c0975a79298f1cbb962c30483ba9a7dec9bbffc4926c6213.
+Full outputs: artifacts/consensus_coatnet/full/pilkwang/.
+
+Seventeen local tests pass, including stale sample / hidden test.csv remount.
+Private weights dataset: dmitriigluzdov/rsna-knee-compact-coatnet.
+Private kernel: dmitriigluzdov/knee-mri-compact-coatnet, version 2 COMPLETE.
+Version 1 passed 90-study real DICOM QA and 58/58 exact pixel hashes. A100 BF16
+versus T4 FP16 initially failed the 0.015 tolerance (0.017295); an independent
+CPU FP32 reference on all 58 studies established T4 max error only 0.002205.
+Version 2 skips the completed train-data QA; test predictions match v1 exactly.
+
+ONE authorized submit occurred at 2026-09-10 11:04:11.587 UTC, ref 56142857.
+Description: P03 compact CoAtNet Pilkwang full4349 ep4 f658b89d.
+Immediate read-only query confirmed PENDING; 3 daily slots remain. Do not submit
+again. Wait read-only for terminal score. See SUBMISSION_READINESS.md.
+
+## Earlier execution history
+
 Lane: Codex publication/consensus_coatnet, isolated from Grok's S22–S25.
 Remote project: /home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection
 Run: runs/20260910T0913Z-codex-consensus/verified_pair

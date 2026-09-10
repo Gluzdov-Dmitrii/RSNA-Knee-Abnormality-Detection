@@ -42,6 +42,7 @@ def main():
     parser.add_argument('--batch-size',type=int,default=4); parser.add_argument('--accum',type=int,default=2)
     parser.add_argument('--workers',type=int,default=0); parser.add_argument('--seed',type=int,default=2026)
     parser.add_argument('--smoke-steps',type=int,default=0)
+    parser.add_argument('--full-data',action='store_true',help='Refit selected recipe on all non-gold studies; no CV metrics')
     parser.add_argument('--resume',action='store_true')
     a=parser.parse_args(); out=Path(a.out)
     if out.exists() and any(out.iterdir()) and not a.resume: raise FileExistsError(f'Output not empty: {out}')
@@ -52,8 +53,8 @@ def main():
     gold=pd.read_csv(a.gold_uids,dtype={UID:str})
     if len(gold)!=58 or gold[UID].duplicated().any() or not set(gold[UID])<=set(table[UID]): raise ValueError('Gold UIDs differ')
     eligible=np.isfinite(reference).any(axis=1)&~table[UID].isin(gold[UID]).to_numpy()
-    train_idx=np.flatnonzero(eligible&(table.fold.to_numpy()!=a.fold))
-    val_idx=np.flatnonzero(eligible&(table.fold.to_numpy()==a.fold))
+    train_idx=np.flatnonzero(eligible if a.full_data else eligible&(table.fold.to_numpy()!=a.fold))
+    val_idx=np.array([],dtype=int) if a.full_data else np.flatnonzero(eligible&(table.fold.to_numpy()==a.fold))
     if set(train_idx)&set(val_idx): raise ValueError('Training/validation overlap')
     init=torch.load(a.initialization,map_location='cpu',weights_only=True)
     if init['geometry']!=GEOMETRY or init['targets']!=TARGETS or init['arch']!=ARCH: raise ValueError('Initialization contract differs')
@@ -79,7 +80,7 @@ def main():
         source_hashes={p.name:sha256(p) for p in Path(__file__).parent.glob('*.py')})
     if a.resume:
         old=json.loads((out/'config.json').read_text())
-        for key in ['arm','fold','epochs','seed','batch_size','accum','workers','initialization_sha256',
+        for key in ['arm','fold','epochs','seed','full_data','batch_size','accum','workers','initialization_sha256',
                     'label_hashes','source_hashes','folds_sha256','gold_uids_sha256','cache_spec_sha256']:
             if old[key]!=config[key]: raise ValueError(f'Resume config changed: {key}')
     else: save_json(out/'config.json',config)
@@ -122,8 +123,11 @@ def main():
                     elapsed_s=time.monotonic()-start,peak_vram_gib=torch.cuda.max_memory_allocated()/2**30,
                     checkpoint_reload_max_error=float((pred-again).abs().max()))
                 save_json(out/'result.json',report); print(json.dumps(report),flush=True); return
-        predictions,indices=predict(model,val_loader,device)
-        metrics=auc_metrics(reference[indices],predictions)
+        if a.full_data:
+            metrics={'validation':'disabled_for_full_data'}
+        else:
+            predictions,indices=predict(model,val_loader,device)
+            metrics=auc_metrics(reference[indices],predictions)
         record=dict(epoch=epoch+1,train_loss=loss_sum/seen,epoch_seconds=time.monotonic()-epoch_start,**metrics)
         history.append(record); print(json.dumps(record),flush=True)
         save_json(out/'history.json',history)
@@ -131,15 +135,21 @@ def main():
                 scheduler=scheduler.state_dict(),epoch=epoch+1,history=history,generator=generator.get_state(),
                 torch_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all())
         torch.save(ck,out/'latest.tmp'); (out/'latest.tmp').replace(out/'latest.pt'); del ck
-    if start_epoch>=a.epochs:
+    if start_epoch>=a.epochs and not a.full_data:
         predictions,indices=predict(model,val_loader,device)
         metrics=auc_metrics(reference[indices],predictions)
-    result=dict(status='COMPLETE_SCREENING' if a.fold==0 else 'COMPLETE_FOLD',arm=a.arm,fold=a.fold,
+    if a.full_data:
+        metrics={'validation':'disabled_for_full_data'}
+        gold_idx=np.flatnonzero(table[UID].isin(gold[UID]).to_numpy())
+        gold_loader=DataLoader(Studies(cache,gold_idx,reference),batch_size=a.batch_size,shuffle=False,num_workers=0)
+        predictions,indices=predict(model,gold_loader,device)
+    result=dict(status='COMPLETE_FULL_DATA' if a.full_data else 'COMPLETE_SCREENING' if a.fold==0 else 'COMPLETE_FOLD',arm=a.arm,fold=a.fold,
         elapsed_s=time.monotonic()-start,peak_vram_gib=torch.cuda.max_memory_allocated()/2**30,**metrics)
     pred_frame=pd.DataFrame(predictions,columns=TARGETS); pred_frame.insert(0,UID,table.iloc[indices][UID].to_numpy())
-    pred_frame.to_csv(out/'validation_predictions.csv',index=False)
+    pred_frame.to_csv(out/('gold_predictions.csv' if a.full_data else 'validation_predictions.csv'),index=False)
     torch.save(dict(model={k:v.detach().cpu() for k,v in model.state_dict().items()},arch=ARCH,res=224,
-        targets=TARGETS,geometry=GEOMETRY,epoch=a.epochs,arm=a.arm,seed=a.seed,fold=a.fold,
+        targets=TARGETS,geometry=GEOMETRY,epoch=a.epochs,arm=a.arm,seed=a.seed,fold=None if a.full_data else a.fold,
+        full_data=a.full_data,n_train=len(train_idx),
         initialization_sha256=config['initialization_sha256']),out/'weights.pt')
     result['weights_sha256']=sha256(out/'weights.pt'); save_json(out/'result.json',result)
     print(json.dumps(result),flush=True)

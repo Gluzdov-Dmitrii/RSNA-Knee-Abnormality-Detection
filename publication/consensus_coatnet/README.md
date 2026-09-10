@@ -50,7 +50,7 @@ python infer.py --competition /kaggle/input/rsna-knee-abnormality-detection \
   --weights weights.pt --out /kaggle/working/submission.csv
 ```
 
-Inference builds pixels from the current test mount, preserves sample UID order,
+Inference builds pixels from the current test mount, preserves live test.csv UID order,
 uses an explicit missing-slot mask, and runs without internet. The package needs
 common.py,model.py,geometry.py,infer.py plus pinned dependencies and weights.
 Actual Kaggle remount/runtime validation is still required before release.

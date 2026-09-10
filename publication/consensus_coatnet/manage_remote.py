@@ -12,7 +12,7 @@ PROJECT='/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detecti
 RUN=PROJECT+'/runs/20260910T0913Z-codex-consensus'
 QUEUE='/home/scientists/gluz_d_s/kaggle/_control/resource_queue.py'
 PY=PROJECT+'/envs/ngpu01/py3.11-torch-cu124-v1/bin/python'
-JOB=PROJECT+'/code/consensus-coatnet-v3/remote_job.py'
+JOB=PROJECT+'/code/consensus-coatnet-v4/remote_job.py'
 
 def ssh(host,args,ok=(0,)):
     r=subprocess.run(['ssh','-o','BatchMode=yes','-o','ConnectTimeout=10',host,shlex.join(args)],capture_output=True,text=True,timeout=45)
@@ -21,7 +21,7 @@ def ssh(host,args,ok=(0,)):
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('action',choices=['request','launch','status','release'])
-    p.add_argument('--mode',choices=['smoke','smoke2','pair','verified_pair'],required=True); a=p.parse_args()
+    p.add_argument('--mode',choices=['smoke','smoke2','pair','verified_pair','full'],required=True); a=p.parse_args()
     ART.mkdir(parents=True,exist_ok=True); lease_path=ART/f'{a.mode}_lease.json'
     if lease_path.exists(): lease=json.loads(lease_path.read_text())
     else:
@@ -51,7 +51,7 @@ def main():
         lease['process']=job; lease_path.write_text(json.dumps(lease))
         result=queue('started',['--pid',str(job['pid']),'--process-start',job['start']])
         print(json.dumps(job)); return
-    version='v1' if a.mode=='smoke' else 'v2' if a.mode in ['smoke2','pair'] else 'v3'
+    version='v1' if a.mode=='smoke' else 'v2' if a.mode in ['smoke2','pair'] else 'v3' if a.mode=='verified_pair' else 'v4'
     job_path=PROJECT+f'/code/consensus-coatnet-{version}/remote_job.py'
     status=ssh('nsu-a100',[PY,job_path,'status','--mode',a.mode])
     if status['alive']:

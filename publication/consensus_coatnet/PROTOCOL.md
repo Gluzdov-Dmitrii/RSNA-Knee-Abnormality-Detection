@@ -11,8 +11,8 @@ Official metric: mean ROC AUC over twelve findings. Local reference: Pilkwang
 report_labels_v2 scores >= 0.5, finite entries only, unchanged FOLDS_V1, seed2026.
 Study is the independent unit, not series/slice. Gold labels, if evaluated later,
 must be excluded from training of their predicting fold; never tune on gold58.
-No submissions authorized in this work. Check current deadline/quota and schema
-before requesting permission for a concrete, verified submission.
+The user's subsequent instruction authorizes one standalone LB submission after
+runtime and schema checks. See LB_PLAN.md for the frozen selection and refit.
 
 Hypothesis: replacing one source of soft targets with the median of three raw
 sources improves an otherwise identical model. P01=Pilkwang; P02=median of

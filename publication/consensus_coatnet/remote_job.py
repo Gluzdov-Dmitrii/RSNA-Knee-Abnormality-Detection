@@ -23,7 +23,7 @@ def identity(pid):
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('action',choices=['launch','work','status'])
-    p.add_argument('--mode',choices=['smoke','smoke2','pair','verified_pair'],required=True); p.add_argument('--gpu')
+    p.add_argument('--mode',choices=['smoke','smoke2','pair','verified_pair','full'],required=True); p.add_argument('--gpu')
     a=p.parse_args(); assert socket.gethostname()=='ngpu01'
     base=RUN/a.mode; base.mkdir(parents=True,exist_ok=True); process_path=base/'process.json'
     if a.action=='status':
@@ -53,7 +53,7 @@ def main():
         if _: raise SystemExit(143)
     signal.signal(signal.SIGTERM,stop_child); signal.signal(signal.SIGINT,stop_child)
     frozen=json.loads((CODE/'source_manifest.json').read_text())
-    arms=['pilkwang'] if a.mode.startswith('smoke') else ['smoke','pilkwang','median']
+    arms=['pilkwang'] if a.mode.startswith('smoke') or a.mode=='full' else ['smoke','pilkwang','median']
     for arm in arms:
         for name,digest in frozen.items():
             if hashlib.sha256((CODE/name).read_bytes()).hexdigest()!=digest:
@@ -63,6 +63,7 @@ def main():
             '--gold-uids',str(RUN/'inputs/gold_uids.csv'),'--initialization',str(RUN/'prepared_correctnorm/initialization.pt'),
             '--arm','pilkwang' if arm=='smoke' else arm,'--fold','0','--epochs','4','--batch-size','4','--workers','0','--out',str(base/arm)]
         if a.mode.startswith('smoke') or arm=='smoke': cmd+=['--smoke-steps','8']
+        if a.mode=='full': cmd+=['--full-data']
         with (base/f'{arm}.log').open('a') as log:
             child=subprocess.Popen(cmd,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
             try: code=child.wait(timeout=max(1,(10 if a.mode.startswith('smoke') else 110)*60-(time.monotonic()-started)))
