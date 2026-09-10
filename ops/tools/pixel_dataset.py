@@ -79,6 +79,44 @@ def plane_rgb6(
     return x, plane_mask
 
 
+def plane_vol9(
+    pixels: np.ndarray,
+    mask: np.ndarray,
+    augment: bool = False,
+    rng: np.random.Generator | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Three plane volumes: channels = fluid, struct, mean; time = 9 slices.
+
+    Returns:
+      x: float32 (3, 3, 9, 224, 224) in [0, 1]
+      plane_mask: float32 (3,)
+    """
+    if pixels.shape != (6, 9, 224, 224):
+        raise ValueError(f"unexpected pixels shape {pixels.shape}")
+    x = np.zeros((3, 3, 9, 224, 224), dtype=np.float32)
+    plane_mask = np.zeros(3, dtype=np.float32)
+    for plane, (fluid, struct) in enumerate(PLANE_SLOTS):
+        present = False
+        if mask[fluid]:
+            x[plane, 0] = pixels[fluid].astype(np.float32) / 255.0
+            present = True
+        if mask[struct]:
+            x[plane, 1] = pixels[struct].astype(np.float32) / 255.0
+            present = True
+        if present:
+            x[plane, 2] = 0.5 * (x[plane, 0] + x[plane, 1])
+            plane_mask[plane] = 1.0
+    if augment:
+        if rng is None:
+            rng = np.random.default_rng()
+        if rng.random() < 0.5:
+            x = x[:, :, :, :, ::-1].copy()
+        scale = float(rng.uniform(0.85, 1.15))
+        shift = float(rng.uniform(-0.05, 0.05))
+        x = np.clip(x * scale + shift, 0.0, 1.0)
+    return x, plane_mask
+
+
 class KneePixelDataset:
     def __init__(
         self,
@@ -89,12 +127,16 @@ class KneePixelDataset:
         targets: list[str] | None = None,
         augment: bool = False,
         seed: int = 2026,
+        layout: str = "rgb6",
     ):
         self.cache_root = str(cache.root)
         self.cache = cache
         self.targets = targets or TARGETS
         self.augment = augment
         self.seed = int(seed)
+        if layout not in {"rgb6", "vol9"}:
+            raise ValueError(f"unknown layout {layout}")
+        self.layout = layout
         selected = table
         if fold is not None:
             if holdout:
@@ -109,6 +151,7 @@ class KneePixelDataset:
             "targets": self.targets,
             "augment": self.augment,
             "seed": self.seed,
+            "layout": self.layout,
             "table": self.table,
         }
 
@@ -118,6 +161,7 @@ class KneePixelDataset:
         self.targets = state["targets"]
         self.augment = state["augment"]
         self.seed = state["seed"]
+        self.layout = state.get("layout", "rgb6")
         self.table = state["table"]
 
     def __len__(self) -> int:
@@ -130,7 +174,10 @@ class KneePixelDataset:
         rng = None
         if self.augment:
             rng = np.random.default_rng(self.seed + index * 10007)
-        x, plane_mask = plane_rgb6(pixels, mask, augment=self.augment, rng=rng)
+        if self.layout == "vol9":
+            x, plane_mask = plane_vol9(pixels, mask, augment=self.augment, rng=rng)
+        else:
+            x, plane_mask = plane_rgb6(pixels, mask, augment=self.augment, rng=rng)
         y = row[self.targets].to_numpy(dtype=np.float32, copy=True)
         labeled = np.isfinite(y).astype(np.float32)
         y = np.nan_to_num(y, nan=0.0).astype(np.float32)

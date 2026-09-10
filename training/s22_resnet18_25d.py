@@ -300,8 +300,12 @@ def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -
         fold_dir.mkdir(parents=True, exist_ok=True)
         train_table = table.loc[table["fold"] != fold].reset_index(drop=True)
         val_table = table.loc[table["fold"] == fold].reset_index(drop=True)
-        train_ds = KneePixelDataset(cache, train_table, augment=True, seed=args.seed + fold)
-        val_ds = KneePixelDataset(cache, val_table, augment=False, seed=args.seed)
+        train_ds = KneePixelDataset(
+            cache, train_table, augment=True, seed=args.seed + fold, layout=getattr(args, "layout", "rgb6")
+        )
+        val_ds = KneePixelDataset(
+            cache, val_table, augment=False, seed=args.seed, layout=getattr(args, "layout", "rgb6")
+        )
         train_loader = make_loader(train_ds, args.batch_size, True, args.workers)
         val_loader = make_loader(val_ds, args.batch_size, False, max(0, args.workers // 2))
         model = make_model(model_fn, args, pretrained=not args.no_pretrained).to(device)
@@ -491,6 +495,7 @@ def main() -> None:
     parser.add_argument("--mixup", type=float, default=0.0)
     parser.add_argument("--backbone-lr-mult", type=float, default=1.0)
     parser.add_argument("--experiment-key", type=str, default="S22_RESNET18_25D")
+    parser.add_argument("--layout", type=str, default="rgb6")
     parser.add_argument("--folds", type=str, default="0,1,2,3,4")
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument("--cache", type=str, default="")

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S24",
+  "hypothesis": "torchvision r3d_18 9-slice 3D plane heads on PIXEL_CACHE_V1 can beat S22 ResNet-18 2.5D on locked weak-label OOF.",
+  "only_intended_change": "architecture S24 r3d_18 T=9 on the same cache/labels/folds as S22",
+  "parent_graph": "A0",
+  "execution_mode": "local_oof",
+  "status": "preparing",
+  "decision": "defer_submit",
+  "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
+  "recipe": {
+    "backbone": "torchvision r3d_18 Kinetics400",
+    "layout": "vol9",
+    "in_channels": 3,
+    "n_slices": 9,
+    "dropout": 0.25,
+    "mixup": 0.2,
+    "backbone_lr_mult": 0.3,
+    "batch_size": 8,
+    "seed": 2026
+  },
+  "metrics": {"oof_macro_auc": null, "baseline_s22_oof_macro_auc": 0.7683307478993703},
+  "run": {
+    "host": "ngpu01",
+    "gpu_uuid": "GPU-61c0078d-a4a6-37a2-3aba-0378e7794c46",
+    "queue_id": "rsna-s24-20260910T0545Z",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T0545Z-s24-r3d18-9slice",
+    "pid": 63551,
+    "fold0_epoch1_val_macro_auc": 0.7790414197015633,
+    "approx_seconds_per_epoch": 91.3
+  },
+  "notes": [
+    "Training running. Fold 0 epoch 1 val 0.779. Not a Kaggle submit until full OOF vs S22 0.768 is known.",
+    "Submit only if OOF clearly beats S22."
+  ]
+}

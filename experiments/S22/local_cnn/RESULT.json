@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S22",
+  "variant": "S22_LOCAL_CNN_BAG",
+  "hypothesis": "Standalone 5-fold ResNet-18 2.5D bag on live PIXEL_CACHE_V1 decode, without A0 mix.",
+  "only_intended_change": "submission.csv is rank of S22 bag only; no transformer/raptor overlay",
+  "parent_graph": "none_local_cnn",
+  "execution_mode": "unified_hidden_graph",
+  "status": "submitted",
+  "decision": "pending",
+  "recipe": {
+    "kernel": "dmitriigluzdov/rsna-s22-local-cnn",
+    "code_file": "rsna-s22-local-cnn.ipynb",
+    "kernel_version": 1,
+    "notebook_sha256": "66fb24e99bb2055ba16350796c232b10547eecc9963e71b922c8a93e80b682a9",
+    "cell_sha256": "6328edbb19ebc68bd81e454b9d3742bdb8b0366b47c56f4cd9189d62bdd334a2",
+    "weights_dataset": "dmitriigluzdov/rsna-s22-resnet18-25d-folds",
+    "weight_manifest_sha256": "6196831428bef5b5c696782c5b72f7880991127bd7620b1b906cf8f873c48faa"
+  },
+  "metrics": {
+    "oof_macro_auc": 0.7683307478993703,
+    "oof_reference": "weak_label_pilkwang_v1_proxy_not_hidden_test"
+  },
+  "submission": {
+    "ref": "56138090",
+    "submitted_at_utc": "2026-09-10T05:44:14Z",
+    "public_score": null,
+    "kernel_version": 1
+  },
+  "validation": {
+    "visible_rows": 3,
+    "present_studies": 3,
+    "visible_seconds": 13.4,
+    "visible_output_sha256": "c1ff21f28672a7425649d4540f26d9d9ab8f4daeafb5ca55989e38686f7533da"
+  },
+  "notes": [
+    "Authorized standalone local CNN submit. Not the 0.40 A0 overlay.",
+    "Visible COMPLETE 3/3. Hidden scoring PENDING; do not retry this kernel version.",
+    "Kernel stays private."
+  ]
+}
