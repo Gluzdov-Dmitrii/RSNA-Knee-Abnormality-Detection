@@ -10,3 +10,6 @@
 Same cache/labels/folds as S22. Hidden test still needs a live-decode 3D notebook.
 Promote to a standalone Kaggle submit after fp16 export and a visible runtime gate.
 Do not mix into A0 at 0.40.
+
+Superseded as the single-model control by `r2plus1d_v1/` OOF **0.811**.
+

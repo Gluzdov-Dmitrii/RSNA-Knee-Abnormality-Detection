@@ -6,8 +6,8 @@
   "only_intended_change": "backbone r3d_18 to r2plus1d_18, same cache/labels/folds/recipe",
   "parent_graph": "A0",
   "execution_mode": "local_oof",
-  "status": "training",
-  "decision": "defer_submit",
+  "status": "local_evaluated",
+  "decision": "promote_control",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready", "S24@local_evaluated"],
   "recipe": {
     "backbone": "torchvision r2plus1d_18 Kinetics400",
@@ -19,8 +19,30 @@
     "seed": 2026
   },
   "metrics": {
-    "oof_macro_auc": null,
-    "baseline_s24_oof_macro_auc": 0.8006410615729171
+    "oof_macro_auc": 0.8106110500948063,
+    "delta_vs_s24_r3d_oof_macro_auc": 0.0099699885218891,
+    "baseline_s24_oof_macro_auc": 0.8006410615729171,
+    "oof_per_target_auc": {
+      "ACL": 0.8336298439471821,
+      "MCL": 0.7613584616602769,
+      "Medial Meniscus": 0.8175746662216219,
+      "Lateral Meniscus": 0.7622392216125795,
+      "Medial OA": 0.8407179455129291,
+      "Lateral OA": 0.7971424318682571,
+      "PF OA": 0.7960237216542765,
+      "Effusion": 0.8404431926947253,
+      "Synovitis": 0.8537292481568939,
+      "Baker's": 0.8535874466363155,
+      "Contusion": 0.7758451413100922,
+      "Fracture": 0.795041279862525
+    },
+    "fold_best_val_macro_auc": {
+      "0": 0.8141665900452909,
+      "1": 0.8137746995604394,
+      "2": 0.8280216618447019,
+      "3": 0.8097985811807669,
+      "4": 0.8210815207293249
+    }
   },
   "run": {
     "host": "ngpu01",
@@ -29,12 +51,14 @@
     "queue_id": "rsna-s24-r2p-20260910T0745Z",
     "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T0745Z-s24-r2plus1d-9slice",
     "pid": 65638,
-    "fold0_epoch1_val_macro_auc": 0.7717615575251929,
-    "approx_seconds_per_epoch": 211.3
+    "checked_at_utc": "2026-09-10T11:07:21Z",
+    "n_params": 93918819,
+    "approx_seconds_per_epoch": 211.4
   },
   "notes": [
-    "S24 r3d_18 already met the 0.80 OOF goal. This run tries to go past 0.801.",
-    "Fold 0 epoch 1 val 0.772 vs r3d_18 0.779 at the same point. Epoch is ~211 s, so five folds may take ~4–5 h.",
-    "Not a Kaggle submit until full OOF vs S24 0.801 is known."
+    "Independent oof.csv recompute equals metrics.json 0.810611.",
+    "New single-model pixel-path control. Goal 0.85 not yet met.",
+    "Rank-mean with S24 r3d_18 is 0.822. Complementary despite both being 3D.",
+    "Not a Kaggle submit until a 3D kernel exists."
   ]
 }

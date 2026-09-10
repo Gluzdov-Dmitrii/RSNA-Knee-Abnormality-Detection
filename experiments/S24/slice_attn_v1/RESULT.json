@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S24",
+  "variant": "S24_SLICE_ATTN",
+  "hypothesis": "ImageNet ResNet-18 per slice with attention over T=9 can beat r2plus1d 0.811 and move locked OOF toward 0.85.",
+  "only_intended_change": "temporal mixer: 3D conv to 2D ResNet-18 + slice attention on the same vol9 cache",
+  "parent_graph": "A0",
+  "execution_mode": "local_oof",
+  "status": "training",
+  "decision": "defer_submit",
+  "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
+  "recipe": {
+    "backbone": "torchvision resnet18 ImageNet, slice attention pool",
+    "layout": "vol9",
+    "dropout": 0.25,
+    "mixup": 0.2,
+    "backbone_lr_mult": 0.3,
+    "batch_size": 16,
+    "seed": 2026
+  },
+  "metrics": {
+    "oof_macro_auc": null,
+    "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
+    "baseline_r3d_r2p_rankmean": 0.8223432215257809
+  },
+  "run": {
+    "host": "ngpu01",
+    "gpu": "NVIDIA A100 80GB PCIe",
+    "gpu_uuid": "GPU-61c0078d-a4a6-37a2-3aba-0378e7794c46",
+    "queue_id": "rsna-s24-attn-20260910T1108Z",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T1108Z-s24-slice-attn",
+    "pid": 72887,
+    "fold0_epoch1_val_macro_auc": 0.7708820849555353,
+    "approx_seconds_per_epoch": 36.5
+  },
+  "notes": [
+    "Toward 0.85 OOF. Not a Kaggle submit until full OOF vs r2plus1d 0.811 is known.",
+    "Fold 0 epoch 2 val 0.790 after ~36 s/epoch."
+  ]
+}

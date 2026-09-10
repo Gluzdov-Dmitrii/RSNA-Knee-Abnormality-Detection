@@ -64,17 +64,26 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--s22", type=str, default=str(DEFAULT_S22))
     parser.add_argument("--s24", type=str, default=str(DEFAULT_S24))
+    parser.add_argument("--oof", action="append", nargs=2, metavar=("NAME", "PATH"), default=None)
+    parser.add_argument("--key", type=str, default="")
     parser.add_argument("--labels", type=str, default=str(DEFAULT_LABELS))
     parser.add_argument("--out", type=str, required=True)
     args = parser.parse_args()
     labels = pd.read_csv(args.labels)
     labels["StudyInstanceUID"] = labels["StudyInstanceUID"].astype(str)
+    if args.oof:
+        named_paths = [(name, path) for name, path in args.oof]
+    else:
+        named_paths = [("S22_RESNET18_25D", args.s22), ("S24_R3D18_9SLICE", args.s24)]
     members = []
-    for path in (args.s22, args.s24):
+    member_names = []
+    for name, path in named_paths:
         df = pd.read_csv(path)
         df["StudyInstanceUID"] = df["StudyInstanceUID"].astype(str)
         members.append(df.sort_values("StudyInstanceUID").reset_index(drop=True))
-    if list(members[0]["StudyInstanceUID"]) != list(members[1]["StudyInstanceUID"]):
+        member_names.append(name)
+    uids = list(members[0]["StudyInstanceUID"])
+    if any(list(frame["StudyInstanceUID"]) != uids for frame in members[1:]):
         raise SystemExit("OOF UID order mismatch after sort")
     blend = rank_mean(members)
     out = Path(args.out)
@@ -88,17 +97,17 @@ def main() -> None:
     y = np.nan_to_num(y, nan=0.0)
     scores = per_target_auc(y, p, labeled)
     macro = float(np.mean([s for s in scores if s is not None]))
+    key = args.key or ("S25_RANKMEAN_" + "_".join(member_names))
     summary = {
-        "key": "S25_RANKMEAN_S22_S24",
+        "key": key,
         "checked_at_utc": utc_now(),
-        "members": ["S22_RESNET18_25D", "S24_R3D18_9SLICE"],
+        "members": member_names,
         "n": int(len(merged)),
         "oof_macro_auc": macro,
         "oof_per_target_auc": {name: scores[i] for i, name in enumerate(TARGETS)},
         "oof_csv": str(oof_path),
-        "s22_oof": str(args.s22),
-        "s24_oof": str(args.s24),
-        "seed_note": "same-seed 2026 rank-mean; seed 2027 not trained",
+        "oof_paths": {name: path for name, path in named_paths},
+        "seed_note": "same-seed 2026 rank-mean",
     }
     (out / "metrics.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in summary.items()}, indent=2))

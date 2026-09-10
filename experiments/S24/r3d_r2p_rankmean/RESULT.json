@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S24",
+  "variant": "S24_RANKMEAN_R3D_R2P",
+  "hypothesis": "Rank-mean of r3d_18 and r2plus1d_18 9-slice OOF raises locked weak-label AUC above either 3D member.",
+  "only_intended_change": "rank-percentile mean of S24 r3d and r2plus1d OOF, no new training",
+  "parent_graph": "A0",
+  "execution_mode": "local_oof",
+  "status": "local_evaluated",
+  "decision": "defer_submit",
+  "dependencies": ["S24@local_evaluated", "S24_R2PLUS1D@local_evaluated"],
+  "recipe": {
+    "members": ["S24_R3D18_9SLICE", "S24_R2PLUS1D_9SLICE"],
+    "combine": "per_target_rank_percentile_mean",
+    "seed": 2026
+  },
+  "metrics": {
+    "oof_macro_auc": 0.8223432215257809,
+    "delta_vs_r2plus1d_oof_macro_auc": 0.0117321714309746,
+    "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
+    "baseline_s24_r3d_oof_macro_auc": 0.8006410615729171
+  },
+  "run": {
+    "host": "ngpu01",
+    "gpu": "none_cpu",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T1108Z-s24-r3d-r2p-rankmean"
+  },
+  "notes": [
+    "S22+S24+r2plus1d was 0.821, slightly worse than the two 3D members alone.",
+    "Not a Kaggle submit. Hidden graph would need both 3D kernels."
+  ]
+}
