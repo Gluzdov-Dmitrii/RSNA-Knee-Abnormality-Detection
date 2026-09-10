@@ -46,7 +46,12 @@ def set_seed(seed: int) -> None:
     torch.cuda.manual_seed_all(seed)
 
 
-def build_model(n_targets: int = 12, pretrained: bool = True, dropout: float = 0.2):
+def build_model(
+    n_targets: int = 12,
+    pretrained: bool = True,
+    dropout: float = 0.2,
+    fusion_hidden: int = 0,
+):
     import torch
     from torch import nn
     from torchvision.models import ResNet18_Weights, resnet18
@@ -70,11 +75,21 @@ def build_model(n_targets: int = 12, pretrained: bool = True, dropout: float = 0
             return self.trunk(x)
 
     class S22ResNet18(nn.Module):
-        def __init__(self, n_targets: int = 12, dropout: float = 0.2):
+        def __init__(self, n_targets: int = 12, dropout: float = 0.2, fusion_hidden: int = 0):
             super().__init__()
             self.planes = nn.ModuleList([PlaneHead() for _ in range(3)])
             self.dropout = nn.Dropout(dropout)
-            self.fusion = nn.Linear(3 * 512, n_targets)
+            in_dim = 3 * 512
+            hidden = int(fusion_hidden)
+            if hidden > 0:
+                self.fusion = nn.Sequential(
+                    nn.Linear(in_dim, hidden),
+                    nn.GELU(),
+                    nn.Dropout(dropout),
+                    nn.Linear(hidden, n_targets),
+                )
+            else:
+                self.fusion = nn.Linear(in_dim, n_targets)
 
         def forward(self, x, plane_mask):
             feats = []
@@ -83,7 +98,7 @@ def build_model(n_targets: int = 12, pretrained: bool = True, dropout: float = 0
                 feats.append(feat * plane_mask[:, plane].unsqueeze(1))
             return self.fusion(self.dropout(torch.cat(feats, dim=1)))
 
-    return S22ResNet18(n_targets=n_targets, dropout=dropout)
+    return S22ResNet18(n_targets=n_targets, dropout=dropout, fusion_hidden=fusion_hidden)
 
 
 def masked_bce_with_logits(logits, y, labeled, pos_weight=None):
@@ -254,10 +269,14 @@ def run_epoch(model, loader, device, optimizer=None, scaler=None, pos_weight=Non
 
 def make_model(model_fn, args, pretrained: bool):
     dropout = float(getattr(args, "dropout", 0.2))
+    fusion_hidden = int(getattr(args, "fusion_hidden", 0))
     try:
-        return model_fn(pretrained=pretrained, dropout=dropout)
+        return model_fn(pretrained=pretrained, dropout=dropout, fusion_hidden=fusion_hidden)
     except TypeError:
-        return model_fn(pretrained=pretrained)
+        try:
+            return model_fn(pretrained=pretrained, dropout=dropout)
+        except TypeError:
+            return model_fn(pretrained=pretrained)
 
 
 def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -> dict:
@@ -392,6 +411,7 @@ def train_folds(args, model_fn=None, experiment_key: str = "S22_RESNET18_25D") -
         "lr": args.lr,
         "weight_decay": weight_decay,
         "dropout": float(getattr(args, "dropout", 0.2)),
+        "fusion_hidden": int(getattr(args, "fusion_hidden", 0)),
         "mixup": mixup_alpha,
         "backbone_lr_mult": backbone_lr_mult,
         "pretrained": not args.no_pretrained,
@@ -466,6 +486,7 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--patience", type=int, default=5)
     parser.add_argument("--dropout", type=float, default=0.2)
+    parser.add_argument("--fusion-hidden", type=int, default=0)
     parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--mixup", type=float, default=0.0)
     parser.add_argument("--backbone-lr-mult", type=float, default=1.0)

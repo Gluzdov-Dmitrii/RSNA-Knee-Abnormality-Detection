@@ -1,0 +1,23 @@
+{
+  "source": "LABEL_PILKWANG_V1 report_labels_v2.csv",
+  "threshold": 0.5,
+  "n_rows": 4406,
+  "n_train_studies_folds_v1": 4407,
+  "any_positive_study": 3958,
+  "all12_negative": 448,
+  "mean_positive_findings_per_study": 3.6606899682251477,
+  "targets": [
+    {"target": "ACL", "pos": 1226, "neg": 3180, "pos_rate_among_labeled": 0.2782569223785747},
+    {"target": "MCL", "pos": 767, "neg": 3639, "pos_rate_among_labeled": 0.17408079891057648},
+    {"target": "Medial Meniscus", "pos": 2347, "neg": 2059, "pos_rate_among_labeled": 0.5326827054017249},
+    {"target": "Lateral Meniscus", "pos": 1121, "neg": 3285, "pos_rate_among_labeled": 0.2544257830231503},
+    {"target": "Medial OA", "pos": 1619, "neg": 2787, "pos_rate_among_labeled": 0.3674534725374489},
+    {"target": "Lateral OA", "pos": 1087, "neg": 3319, "pos_rate_among_labeled": 0.24670903313663187},
+    {"target": "PF OA", "pos": 1991, "neg": 2415, "pos_rate_among_labeled": 0.4518837948252383},
+    {"target": "Effusion", "pos": 2666, "neg": 1740, "pos_rate_among_labeled": 0.6050839763958239},
+    {"target": "Synovitis", "pos": 580, "neg": 3826, "pos_rate_among_labeled": 0.1316386745347254},
+    {"target": "Baker's", "pos": 1114, "neg": 3292, "pos_rate_among_labeled": 0.2528370403994553},
+    {"target": "Contusion", "pos": 1297, "neg": 3109, "pos_rate_among_labeled": 0.2943713118474807},
+    {"target": "Fracture", "pos": 314, "neg": 4092, "pos_rate_among_labeled": 0.07126645483431684}
+  ]
+}

@@ -8,5 +8,5 @@
 - Visible `submission.csv` SHA-256: `5a2b3fb5894b7be8ae01ea9bbb6a15e7ae376d2713ce2b3cfebc5674a222d471`
 
 Do not resubmit this overlay or retune blend weights from public LB.
-Next local iteration `experiments/S22/reg_v1/` (dropout 0.4 / MixUp 0.4 / wd 1e-3) scored OOF **0.757** and lost to this baseline. Control checkpoints unchanged.
+Next local iterations: `reg_v1/` OOF **0.757** (lost); `head_v1/` OOF **0.769** (tie / +0.0008). Selection stays on locked OOF, not public LB.
 

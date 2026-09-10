@@ -117,12 +117,17 @@
     "delta_vs_a0_public": -0.006
   },
   "followup": {
-    "key": "S22_RESNET18_25D_REG",
+    "key": "S22_RESNET18_25D_HEAD",
     "new_experiment_id": false,
-    "evidence_path": "experiments/S22/reg_v1/RESULT.json",
-    "oof_macro_auc": 0.756817672129717,
-    "delta_vs_s22_oof_macro_auc": -0.0115130757696533,
-    "outcome": "lost_to_s22_baseline"
+    "evidence_path": "experiments/S22/head_v1/RESULT.json",
+    "oof_macro_auc": 0.7691012500602562,
+    "delta_vs_s22_oof_macro_auc": 0.0007705021608859,
+    "outcome": "tie_slightly_higher_point_estimate",
+    "prior_reg": {
+      "key": "S22_RESNET18_25D_REG",
+      "oof_macro_auc": 0.756817672129717,
+      "outcome": "lost_to_s22_baseline"
+    }
   },
   "blocker": "",
   "notes": [
@@ -131,6 +136,7 @@
     "Local OOF 0.768 remains a valid own-model pixel-path control. S22-reg reduced train AUC from ~0.999 to ~0.90 but lost 0.012 OOF.",
     "Kernel v1 failed: _blend_tr has no StudyInstanceUID; v2 reads UIDs from _blend_transformer/_blend_coatnet.",
     "S23 lost pixel-path control (OOF 0.713). S24/S25 not in this kernel.",
-    "S22-reg (dropout 0.4, wd 1e-3, MixUp 0.4, backbone 0.1x LR) OOF 0.757; lost to baseline 0.768. Control unchanged."
+    "S22-reg (dropout 0.4, wd 1e-3, MixUp 0.4, backbone 0.1x LR) OOF 0.757; lost to baseline 0.768. Control unchanged.",
+    "S22-head (MLP 512, milder MixUp 0.2) OOF 0.769; +0.0008 vs 0.768, treat as a tie. No Kaggle submit."
   ]
 }
