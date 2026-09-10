@@ -1,6 +1,6 @@
 # Execution handoff — 2026-09-10
 
-## Latest: submitted once, awaiting leaderboard result
+## Latest: COMPLETE, Public LB 0.875
 
 The earlier run description below is retained as execution history. Both arms
 completed. Pilkwang AUC 0.837165; median 0.826699; delta -0.010466 on 875 fold-0
@@ -23,8 +23,12 @@ Version 2 skips the completed train-data QA; test predictions match v1 exactly.
 
 ONE authorized submit occurred at 2026-09-10 11:04:11.587 UTC, ref 56142857.
 Description: P03 compact CoAtNet Pilkwang full4349 ep4 f658b89d.
-Immediate read-only query confirmed PENDING; 3 daily slots remain. Do not submit
-again. Wait read-only for terminal score. See SUBMISSION_READINESS.md.
+Immediate read-only query confirmed PENDING. Terminal COMPLETE / Public LB 0.875
+was observed at 2026-09-10 11:44:51.720 UTC; the read-only monitor exited normally.
+No second submission occurred. Notebook and weights remain private. This beats
+the separate S22 ResNet-18 score 0.825 but not the existing ensemble score 0.937.
+Do not present it as an improvement over that ensemble. See RESULTS.md and
+SUBMISSION_READINESS.md. Artifact receipt: artifacts/consensus_coatnet/submission_status.json.
 
 ## Earlier execution history
 

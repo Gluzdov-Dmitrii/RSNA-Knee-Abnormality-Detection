@@ -43,7 +43,8 @@ Weights SHA256: f658b89db67997c3c0975a79298f1cbb962c30483ba9a7dec9bbffc4926c6213
 - PASS: exactly one submit, immediately followed only by read-only submissions
   query. Ref 56142857, 2026-09-10 11:04:11.587 UTC, PENDING. Message:
   P03 compact CoAtNet Pilkwang full4349 ep4 f658b89d. No retries.
-- PENDING: terminal status and actual LB score.
+- PASS: terminal COMPLETE, Public LB 0.875, observed 2026-09-10 11:44:51.720 UTC.
+  Scored scriptVersionId 348764510 (notebook version 2). Read-only monitor exited.
 
 Detailed local evidence: artifacts/consensus_coatnet/{verified_pair,full,
 kaggle_output,kaggle_output_v2,kaggle_verified_source_v2}/.
