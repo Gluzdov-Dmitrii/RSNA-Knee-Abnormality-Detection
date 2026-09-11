@@ -4,9 +4,9 @@
   "hypothesis": "torchvision r3d_18 9-slice 3D plane heads on PIXEL_CACHE_V1 can beat S22 ResNet-18 2.5D on locked weak-label OOF.",
   "only_intended_change": "architecture S24 r3d_18 T=9 on the same cache/labels/folds as S22",
   "parent_graph": "A0",
-  "execution_mode": "local_oof",
-  "status": "local_evaluated",
-  "decision": "promote_export",
+  "execution_mode": "unified_hidden_graph",
+  "status": "submitted",
+  "decision": "pending",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
   "recipe": {
     "backbone": "torchvision r3d_18 Kinetics400",
@@ -59,12 +59,35 @@
     "n_params": 99517260,
     "approx_seconds_per_epoch": 90.6
   },
+  "kernel": {
+    "id": "dmitriigluzdov/rsna-s24-r3d18-9slice",
+    "version": 1,
+    "code_file": "rsna-s24-r3d18-9slice.ipynb",
+    "notebook_sha256": "7411fd908c0f83ba124d060326a2a9ab0065a490f2cd658d133b32dfa3bf9972",
+    "cell_sha256": "d87765da15bdb2a27576c0034ea31e2cab68301d559ae3454c348ada0c4dd459",
+    "weights_dataset": "dmitriigluzdov/rsna-s24-r3d18-9slice-folds",
+    "weight_manifest_sha256": "9c88c6362df87dd6d56c5c486b702360876a648d8d8aba0077a5eadb2cedb365"
+  },
+  "submission": {
+    "ref": "56158999",
+    "submitted_at_utc": "2026-09-11T05:12:57Z",
+    "kernel_version": 1,
+    "public_score": null
+  },
+  "validation": {
+    "visible_rows": 3,
+    "present_studies": 3,
+    "visible_seconds": 25.9,
+    "visible_output_sha256": "fa26c029ae24c201c685005b5a52aaf9477cf76daa8a7f86927f975618bd14bc",
+    "hidden_estimate_seconds": 11413.3
+  },
   "notes": [
     "Independent oof.csv recompute equals metrics.json 0.800641.",
-    "New local pixel-path control. Goal 0.80 OOF is met.",
-    "Do not mix into A0. Standalone submit after export + visible gate.",
-    "S25 same-seed rank-mean with S22 is 0.806.",
-    "fp16 export verified on CPU: export/s24-r3d18-9slice-folds, manifest SHA 9c88c6362df87dd6d56c5c486b702360876a648d8d8aba0077a5eadb2cedb365.",
-    "S22 standalone public 0.825 is the own-model LB baseline to beat."
+    "Standalone 5-fold bag, no A0 mix. Own-model LB baseline to beat is S22 public 0.825.",
+    "Visible gate 3/3 studies, 25.9 s, T4. Hidden estimate ~3.2 h from linear scaling.",
+    "Submitted once: ref 56158999 PENDING. Do not retry this kernel version.",
+    "S25 same-seed rank-mean with S22 is 0.806. r2plus1d 0.811 submitted separately as `dmitriigluzdov/rsna-s24-r2plus1d-9slice` v1, ref 56159319.",
+    "fp16 export manifest SHA 9c88c6362df87dd6d56c5c486b702360876a648d8d8aba0077a5eadb2cedb365.",
+    "Kernel stays private."
   ]
 }

@@ -6,7 +6,7 @@
   "only_intended_change": "backbone r2plus1d_18 to swin3d_t, same cache/labels/folds/recipe",
   "parent_graph": "A0",
   "execution_mode": "local_oof",
-  "status": "training",
+  "status": "local_evaluated",
   "decision": "defer_submit",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
   "recipe": {
@@ -19,8 +19,9 @@
     "seed": 2026
   },
   "metrics": {
-    "oof_macro_auc": null,
+    "oof_macro_auc": 0.81067355041603,
     "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
+    "delta_vs_r2plus1d_oof_macro_auc": 0.0000625003212237,
     "goal_oof_macro_auc": 0.85
   },
   "run": {
@@ -33,7 +34,9 @@
   },
   "notes": [
     "A100s were occupied by vLLM; first a100 reservation was released unused.",
-    "Running on Quadro RTX 6000, batch 4. Not a Kaggle submit until full OOF vs 0.811 is known.",
-    "Fold 0 epoch 1: train 0.655, val 0.745, 251 s/epoch. Weights download finished; first epoch JSON present."
+    "Trained on Quadro RTX 6000, batch 4. GPU lease released 2026-09-11 after confirmed process exit.",
+    "Independent oof.csv recompute equals metrics.json 0.810674. Tie with r2plus1d 0.810611; not a new single-model control.",
+    "Rank-mean r2plus1d+Swin 0.8287 and r3d+r2plus1d+Swin 0.8320. No standalone Swin submit this packet.",
+    "GPU lease released 2026-09-11 after confirmed process exit. Checkpoints retained on the remote run."
   ]
 }

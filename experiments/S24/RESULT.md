@@ -1,15 +1,10 @@
 # S24 — r3d_18 9-slice 3D on PIXEL_CACHE_V1
 
-- Status: `local_evaluated` (new pixel-path control)
-- Device: NSU A100 80 GB (`ngpu01`), queue `rsna-s24-20260910T0545Z`
-- Independent recompute from `oof.csv` + Pilkwang V1: **0.800641** (matches `metrics.json`)
-- Fold best val AUC: 0.808 / 0.807 / 0.821 / 0.796 / 0.804
-- vs S22 ResNet-18 2.5D: **+0.032**
-- Weakest targets remain MCL 0.745 and Lateral Meniscus 0.742; Fracture rose to 0.779
+- Status: `submitted` (standalone 5-fold bag, no A0 mix)
+- Local OOF: **0.800641** vs S22 0.768
+- Kernel: `dmitriigluzdov/rsna-s24-r3d18-9slice` v1, private, internet off, T4
+- Visible: 3/3 studies, 25.9 s, submission SHA `fa26c029ae24c201c685005b5a52aaf9477cf76daa8a7f86927f975618bd14bc`
+- Submit once: ref **56158999** at 2026-09-11T05:12:57Z, then read-only poll
+- Do not retry this kernel version. Do not mix into A0.
 
-Same cache/labels/folds as S22. Hidden test still needs a live-decode 3D notebook.
-Promote to a standalone Kaggle submit after fp16 export and a visible runtime gate.
-Do not mix into A0 at 0.40.
-
-Superseded as the single-model control by `r2plus1d_v1/` OOF **0.811**.
-
+Single-model local control remains `r2plus1d_v1/` OOF **0.811**.

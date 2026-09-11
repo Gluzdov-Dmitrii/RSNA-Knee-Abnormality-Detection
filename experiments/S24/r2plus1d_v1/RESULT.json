@@ -5,9 +5,9 @@
   "hypothesis": "torchvision r2plus1d_18 on the same 9-slice volumes can beat locked S24 r3d_18 OOF 0.801.",
   "only_intended_change": "backbone r3d_18 to r2plus1d_18, same cache/labels/folds/recipe",
   "parent_graph": "A0",
-  "execution_mode": "local_oof",
-  "status": "local_evaluated",
-  "decision": "promote_control",
+  "execution_mode": "unified_hidden_graph",
+  "status": "submitted",
+  "decision": "pending",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready", "S24@local_evaluated"],
   "recipe": {
     "backbone": "torchvision r2plus1d_18 Kinetics400",
@@ -55,10 +55,35 @@
     "n_params": 93918819,
     "approx_seconds_per_epoch": 211.4
   },
+  "kernel": {
+    "id": "dmitriigluzdov/rsna-s24-r2plus1d-9slice",
+    "version": 1,
+    "code_file": "rsna-s24-r2plus1d-9slice.ipynb",
+    "notebook_sha256": "35c2e4f1536009b2d35e9bb06c603ae430aac6cebbbad41a4cee619bfef8b517",
+    "cell_sha256": "b3dcbd37f5041863d9f8d805882288e446a47ef32df2fd73db55c62b575ed0e8",
+    "weights_dataset": "dmitriigluzdov/rsna-s24-r2plus1d-9slice-folds",
+    "weight_manifest_sha256": "8310f33cca9509e024a6efd7998ca4f23ec3642637874741556b459368898e7f"
+  },
+  "submission": {
+    "ref": "56159319",
+    "submitted_at_utc": "2026-09-11T05:36:43Z",
+    "kernel_version": 1,
+    "public_score": null
+  },
+  "validation": {
+    "visible_rows": 3,
+    "present_studies": 3,
+    "visible_seconds": 32.1,
+    "visible_output_sha256": "06986e228bf71abaff57ca6ccc10fdc961c53ee55f8d426a20e92074552d71cb",
+    "hidden_estimate_seconds": 14145.4
+  },
   "notes": [
     "Independent oof.csv recompute equals metrics.json 0.810611.",
-    "New single-model pixel-path control. Goal 0.85 not yet met.",
-    "Rank-mean with S24 r3d_18 is 0.822. Complementary despite both being 3D.",
-    "Not a Kaggle submit until a 3D kernel exists."
+    "Standalone 5-fold bag, no A0 mix. Stronger local single-model control than r3d 0.801.",
+    "Visible gate 3/3 studies, 32.1 s, T4. Hidden estimate ~3.9 h from linear scaling.",
+    "Submitted once: ref 56159319 PENDING. Do not retry this kernel version.",
+    "Rank-mean with S24 r3d_18 is 0.822. Ensemble kernel not submitted this packet.",
+    "fp16 export manifest SHA 8310f33cca9509e024a6efd7998ca4f23ec3642637874741556b459368898e7f.",
+    "Kernel stays private."
   ]
 }
