@@ -79,7 +79,7 @@
   },
   "notes": [
     "Independent oof.csv recompute equals metrics.json 0.810611.",
-    "Standalone 5-fold bag, no A0 mix. Stronger local single-model control than r3d 0.801.",
+    "Standalone 5-fold bag, no A0 mix. Stronger local single-model control than r3d OOF 0.801. r3d public is 0.852 (ref 56158999).",
     "Visible gate 3/3 studies, 32.1 s, T4. Hidden estimate ~3.9 h from linear scaling.",
     "Submitted once: ref 56159319 PENDING. Do not retry this kernel version.",
     "Rank-mean with S24 r3d_18 is 0.822. Ensemble kernel not submitted this packet.",

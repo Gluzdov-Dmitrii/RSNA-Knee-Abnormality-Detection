@@ -5,8 +5,8 @@
   "only_intended_change": "architecture S24 r3d_18 T=9 on the same cache/labels/folds as S22",
   "parent_graph": "A0",
   "execution_mode": "unified_hidden_graph",
-  "status": "submitted",
-  "decision": "pending",
+  "status": "scored",
+  "decision": "keep_as_own_3d_lb_baseline",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready"],
   "recipe": {
     "backbone": "torchvision r3d_18 Kinetics400",
@@ -24,8 +24,11 @@
   },
   "metrics": {
     "oof_macro_auc": 0.8006410615729171,
+    "public_score": 0.852,
     "delta_vs_s22_oof_macro_auc": 0.0323103136735468,
+    "delta_vs_s22_public": 0.027,
     "baseline_s22_oof_macro_auc": 0.7683307478993703,
+    "baseline_s22_public": 0.825,
     "oof_per_target_auc": {
       "ACL": 0.833550329855233,
       "MCL": 0.7454216292926872,
@@ -72,7 +75,7 @@
     "ref": "56158999",
     "submitted_at_utc": "2026-09-11T05:12:57Z",
     "kernel_version": 1,
-    "public_score": null
+    "public_score": 0.852
   },
   "validation": {
     "visible_rows": 3,
@@ -85,7 +88,7 @@
     "Independent oof.csv recompute equals metrics.json 0.800641.",
     "Standalone 5-fold bag, no A0 mix. Own-model LB baseline to beat is S22 public 0.825.",
     "Visible gate 3/3 studies, 25.9 s, T4. Hidden estimate ~3.2 h from linear scaling.",
-    "Submitted once: ref 56158999 PENDING. Do not retry this kernel version.",
+    "Scored once: ref 56158999 COMPLETE public 0.852. Beats S22 0.825, below CoAtNet 0.875 and A0 0.937. Do not retry this kernel version.",
     "S25 same-seed rank-mean with S22 is 0.806. r2plus1d 0.811 submitted separately as `dmitriigluzdov/rsna-s24-r2plus1d-9slice` v1, ref 56159319.",
     "fp16 export manifest SHA 9c88c6362df87dd6d56c5c486b702360876a648d8d8aba0077a5eadb2cedb365.",
     "Kernel stays private."
