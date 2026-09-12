@@ -6,8 +6,8 @@
   "only_intended_change": "rank-percentile mean of S24 r3d and r2plus1d OOF, no new training",
   "parent_graph": "A0",
   "execution_mode": "local_oof",
-  "status": "local_evaluated",
-  "decision": "defer_submit",
+  "status": "submitted",
+  "decision": "submitted_as_s25",
   "dependencies": ["S24@local_evaluated", "S24_R2PLUS1D@local_evaluated"],
   "recipe": {
     "members": ["S24_R3D18_9SLICE", "S24_R2PLUS1D_9SLICE"],
@@ -27,6 +27,6 @@
   },
   "notes": [
     "S22+S24+r2plus1d was 0.821, slightly worse than the two 3D members alone.",
-    "Not a Kaggle submit. Hidden graph would need both 3D kernels."
+    "Submitted as S25 kernel `dmitriigluzdov/rsna-s25-r3d-r2p-rankmean` v1, ref 56176352. Do not retry that kernel version.",
   ]
 }

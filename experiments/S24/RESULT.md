@@ -7,4 +7,4 @@
 - Visible: 3/3 studies, 25.9 s
 - Do not retry this kernel version. Do not mix into A0.
 
-Single-model local control remains `r2plus1d_v1/` OOF **0.811** (LB still PENDING).
+Single-model public control is `r2plus1d_v1/` **0.859**. S25 r3d+r2p rank-mean is ref 56176352.

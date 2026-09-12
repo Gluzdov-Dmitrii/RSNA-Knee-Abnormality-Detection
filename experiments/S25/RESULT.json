@@ -1,47 +1,80 @@
 {
   "schema_version": 1,
   "experiment_id": "S25",
-  "hypothesis": "Rank-mean of the two best pixel branches (S22 ResNet-18 2.5D and S24 r3d_18) raises locked weak-label OOF above either member.",
-  "only_intended_change": "rank-percentile mean of S22 and S24 OOF, no new training",
-  "parent_graph": "A0",
-  "execution_mode": "local_oof",
-  "status": "local_evaluated",
-  "decision": "defer_submit",
-  "dependencies": ["S22@local_evaluated", "S24@local_evaluated"],
+  "hypothesis": "Rank-mean of the two best pixel 3D bags (r3d_18 and r2plus1d_18) raises locked weak-label OOF above either member.",
+  "only_intended_change": "per-target rank-percentile mean of S24 r3d and r2plus1d 5-fold bags, shared PIXEL_CACHE_V1 decode, no A0 mix",
+  "parent_graph": "none_local_3d",
+  "execution_mode": "unified_hidden_graph",
+  "status": "submitted",
+  "decision": "pending",
+  "dependencies": ["S24@scored", "S24_R2PLUS1D@scored"],
   "recipe": {
-    "members": ["S22_RESNET18_25D", "S24_R3D18_9SLICE"],
+    "members": ["S24_R3D18_9SLICE", "S24_R2PLUS1D_9SLICE"],
     "combine": "per_target_rank_percentile_mean",
+    "layout": "vol9",
+    "n_slices": 9,
     "seed": 2026
   },
   "metrics": {
-    "oof_macro_auc": 0.8059723703441855,
-    "delta_vs_s24_oof_macro_auc": 0.0053313087712684,
-    "delta_vs_s22_oof_macro_auc": 0.0376416224448152,
-    "baseline_s24_oof_macro_auc": 0.8006410615729171,
-    "baseline_s22_oof_macro_auc": 0.7683307478993703,
+    "oof_macro_auc": 0.8223432215257809,
+    "delta_vs_r2plus1d_oof_macro_auc": 0.0117321714309746,
+    "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
+    "baseline_s24_r3d_oof_macro_auc": 0.8006410615729171,
+    "rejected_s22_r3d_oof_macro_auc": 0.8059723703441855,
     "oof_per_target_auc": {
-      "ACL": 0.8404579242205054,
-      "MCL": 0.7535776946329296,
-      "Medial Meniscus": 0.8151954496176181,
-      "Lateral Meniscus": 0.7520420313999922,
-      "Medial OA": 0.842435196678836,
-      "Lateral OA": 0.7861885223295497,
-      "PF OA": 0.8020284863667041,
-      "Effusion": 0.8366728535582171,
-      "Synovitis": 0.8647443985795915,
-      "Baker's": 0.8277817286234406,
-      "Contusion": 0.774717393455417,
-      "Fracture": 0.7758267646674264
+      "ACL": 0.8495253521704782,
+      "MCL": 0.7706133717982754,
+      "Medial Meniscus": 0.8256504485384606,
+      "Lateral Meniscus": 0.777913419878153,
+      "Medial OA": 0.8569850135844241,
+      "Lateral OA": 0.8065980403869112,
+      "PF OA": 0.8158909710675264,
+      "Effusion": 0.847364427313725,
+      "Synovitis": 0.8699916181480614,
+      "Baker's": 0.8557005885548121,
+      "Contusion": 0.7847415157278357,
+      "Fracture": 0.8071438911407065
     }
   },
   "run": {
     "host": "ngpu01",
-    "gpu": "none_cpu",
-    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T0745Z-s25-rankmean"
+    "gpu": "none_cpu_for_rankmean",
+    "path": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T1108Z-s24-r3d-r2p-rankmean"
+  },
+  "kernel": {
+    "id": "dmitriigluzdov/rsna-s25-r3d-r2p-rankmean",
+    "version": 1,
+    "code_file": "rsna-s25-r3d-r2p-rankmean.ipynb",
+    "notebook_sha256": "ca37a53d3fbe3fde954ee36fe32c1cdef54fff441ee387c108a79f668a2d21df",
+    "cell_sha256": "394811b392303e5cfa3e3b674cd42da35d5803440ff4e77e6c197697410c902b",
+    "weights_datasets": [
+      "dmitriigluzdov/rsna-s24-r3d18-9slice-folds",
+      "dmitriigluzdov/rsna-s24-r2plus1d-9slice-folds"
+    ],
+    "weight_manifest_sha256": {
+      "r3d_18": "9c88c6362df87dd6d56c5c486b702360876a648d8d8aba0077a5eadb2cedb365",
+      "r2plus1d_18": "8310f33cca9509e024a6efd7998ca4f23ec3642637874741556b459368898e7f"
+    }
+  },
+  "submission": {
+    "ref": "56176352",
+    "submitted_at_utc": "2026-09-12T02:05:43Z",
+    "kernel_version": 1,
+    "public_score": null
+  },
+  "validation": {
+    "visible_rows": 3,
+    "present_studies": 3,
+    "visible_seconds": 48.9,
+    "visible_output_sha256": "6311462359dfc6dabcb4cb73b1d0fb40f32771523ac1af804c564ba49034f37e",
+    "hidden_estimate_seconds": 21548.6,
+    "device": "cuda"
   },
   "notes": [
-    "UID-sorted rank-mean of the two OOF tables. n=4406 after dropping the unlabeled row.",
-    "Seed 2027 not trained. Exact per-target numbers are persisted by training/s25_rankmean_oof.py.",
-    "Not a Kaggle submit. Hidden graph would need both S22 and S24 kernels."
+    "Two best exported/scored S21–S24 members. S22+r3d same-seed rank-mean 0.806 lost and was not submitted.",
+    "Standalone rank-mean, no A0 mix. Member public scores: r2plus1d 0.859, r3d 0.852. Own-model LB to beat is r2plus1d 0.859; CoAtNet 0.875 and A0 0.937 remain higher.",
+    "Visible gate 3/3 studies, 48.9 s, T4 CUDA. Hidden estimate ~6.0 h from linear 1322/3 scaling. Not a hidden-runtime claim.",
+    "Submitted once: ref 56176352 PENDING. Do not retry this kernel version.",
+    "Kernel stays private."
   ]
 }

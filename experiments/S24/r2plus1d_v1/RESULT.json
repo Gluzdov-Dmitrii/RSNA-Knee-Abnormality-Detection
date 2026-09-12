@@ -6,8 +6,8 @@
   "only_intended_change": "backbone r3d_18 to r2plus1d_18, same cache/labels/folds/recipe",
   "parent_graph": "A0",
   "execution_mode": "unified_hidden_graph",
-  "status": "submitted",
-  "decision": "pending",
+  "status": "scored",
+  "decision": "keep_as_own_3d_lb_baseline",
   "dependencies": ["PIXEL_CACHE_V1@ready", "FOLDS_V1@ready", "LABEL_PILKWANG_V1@ready", "S24@local_evaluated"],
   "recipe": {
     "backbone": "torchvision r2plus1d_18 Kinetics400",
@@ -20,8 +20,11 @@
   },
   "metrics": {
     "oof_macro_auc": 0.8106110500948063,
+    "public_score": 0.859,
     "delta_vs_s24_r3d_oof_macro_auc": 0.0099699885218891,
+    "delta_vs_s24_r3d_public": 0.007,
     "baseline_s24_oof_macro_auc": 0.8006410615729171,
+    "baseline_s24_r3d_public": 0.852,
     "oof_per_target_auc": {
       "ACL": 0.8336298439471821,
       "MCL": 0.7613584616602769,
@@ -68,7 +71,7 @@
     "ref": "56159319",
     "submitted_at_utc": "2026-09-11T05:36:43Z",
     "kernel_version": 1,
-    "public_score": null
+    "public_score": 0.859
   },
   "validation": {
     "visible_rows": 3,
@@ -79,9 +82,9 @@
   },
   "notes": [
     "Independent oof.csv recompute equals metrics.json 0.810611.",
-    "Standalone 5-fold bag, no A0 mix. Stronger local single-model control than r3d OOF 0.801. r3d public is 0.852 (ref 56158999).",
+    "Standalone 5-fold bag, no A0 mix. Stronger local single-model control than r3d OOF 0.801.",
     "Visible gate 3/3 studies, 32.1 s, T4. Hidden estimate ~3.9 h from linear scaling.",
-    "Submitted once: ref 56159319 PENDING. Do not retry this kernel version.",
+    "Scored once: ref 56159319 COMPLETE public 0.859. Beats r3d 0.852 and S22 0.825, below CoAtNet 0.875 and A0 0.937. Do not retry this kernel version.",
     "Rank-mean with S24 r3d_18 is 0.822. Ensemble kernel not submitted this packet.",
     "fp16 export manifest SHA 8310f33cca9509e024a6efd7998ca4f23ec3642637874741556b459368898e7f.",
     "Kernel stays private."

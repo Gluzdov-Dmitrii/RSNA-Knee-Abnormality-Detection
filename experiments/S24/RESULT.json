@@ -89,7 +89,7 @@
     "Standalone 5-fold bag, no A0 mix. Own-model LB baseline to beat is S22 public 0.825.",
     "Visible gate 3/3 studies, 25.9 s, T4. Hidden estimate ~3.2 h from linear scaling.",
     "Scored once: ref 56158999 COMPLETE public 0.852. Beats S22 0.825, below CoAtNet 0.875 and A0 0.937. Do not retry this kernel version.",
-    "S25 same-seed rank-mean with S22 is 0.806. r2plus1d 0.811 submitted separately as `dmitriigluzdov/rsna-s24-r2plus1d-9slice` v1, ref 56159319.",
+    "S22 same-seed rank-mean is 0.806 (not submitted). r2plus1d public 0.859 (ref 56159319). S25 r3d+r2p rank-mean submitted as `dmitriigluzdov/rsna-s25-r3d-r2p-rankmean` v1, ref 56176352.",
     "fp16 export manifest SHA 9c88c6362df87dd6d56c5c486b702360876a648d8d8aba0077a5eadb2cedb365.",
     "Kernel stays private."
   ]
