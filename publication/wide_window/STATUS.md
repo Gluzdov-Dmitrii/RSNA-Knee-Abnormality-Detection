@@ -1,5 +1,16 @@
 # P04 execution handoff
 
+## Terminal outcome: REJECT
+
+P04 pilot completed successfully in 1,044.61 s supervisor wall time. Four-epoch
+validation AUC 0.8144501961 versus control 0.8371650703; delta -0.0227148742.
+Paired study-bootstrap 95% CI [-0.0306283223, -0.0146819416], 1,000 replicates.
+Six targets declined by >0.02. Every predeclared promotion condition failed.
+No full refit, no new dataset/model publication, no LB submission. Smoke and
+pilot leases both RELEASED after verified process exit and physical GPU check.
+Automation rsna-p04-gpu PAUSED after this measured terminal outcome.
+See RESULTS.md and artifacts/wide_window/comparison.json. Do not relaunch P04.
+
 User requested fresh status and next attempt, September 12 (local date moved
 to September 13 during work). Scope: one window-policy experiment, then at most
 one new LB submit if the predeclared gate and runtime validation pass.
@@ -44,7 +55,7 @@ initialization/window metadata explicitly separated. Seventeen established tests
 PASS against P04 source via run_tests.py. Comparison checks both ordered UID
 tables; they were retrieved for the old control. See PROTOCOL.md for fixed gate.
 
-Remote target (source and complete cache staged and hashed; GPU work not yet started):
+Remote target (source/cache verified; pilot complete):
 - code/coatnet-wide-window-v2 (explicit LF; v1 was never launched)
 - data/rsna-knee-uint8-224-9-c130-w10-90
 - runs/20260912-codex-wide-window/{smoke,pilot,full}
@@ -55,10 +66,11 @@ matches P01 exactly; version 1 remains a small unlaunched diagnostic snapshot.
 Existing immutable ngpu01 py3.11-torch-cu124-v1 environment. Ready-input receipt
 required by manage.py before it allows any GPU reservation. REMOTE_READY.json
 now records READY, all 38 cache hashes, identical row order/masks and original
-initialization. Smoke lease rsna-codex-p04-smoke-20260912 is WAITING_RESOURCE,
-not dispatched. Both A100s currently run Biohub jobs (PIDs 164524 and 166866).
-Our waiting request is first; recheck physical state and common queue before
-dispatch. No GPU held while cache built. Kaggle GPU quota snapshot: 27.91/30h remaining.
+initialization. Smoke completed successfully at ~18:48 UTC, 8 batches, reload
+error 0, peak 5.43 GiB; smoke lease RELEASED after verified exit. Pilot lease
+rsna-codex-p04-pilot-20260912 is RELEASED. Supervisor PID169927, start445799906,
+completed with exit 0; GPU absence verified before release. Do not relaunch.
+No GPU held while cache built. Kaggle quota snapshot: 27.91/30h remaining.
 
 Cleanup script included inactive-process and queue checks for explicit old
 optimizer/smoke duplicates, but auto-review rejected execution as expensive
@@ -66,12 +78,13 @@ destructive work without explicit permission. No files deleted. Do not bypass
 that rejection. Old artifacts (~4.98GB) remain; this does not block the <=16GiB
 new-task budget. Final models and generic initialization were never targets.
 
-Next: await resource -> smoke, fixed fold0 pilot -> compare saved P01. No new
-submit has occurred. Transfers complete and fully verified. New *.direct-part
+Completed: fixed fold0 pilot -> release lease -> compare saved P01. No new
+submit occurred. Transfers complete and fully verified. New *.direct-part
 temporary download duplicates were removed by finish_transfer.py only after
 both temporary and final file hashes matched SPEC. Old checkpoints remain.
 
-Continuation: native thread heartbeat automation `rsna-p04-gpu`, ACTIVE every
+Continuation: native thread heartbeat automation `rsna-p04-gpu`, now PAUSED;
+it ran every
 10 minutes, created after read-only fleet review showed A100 could remain busy
 another ~2 hours. It must resume the existing owned lease, smoke/pilot/gate and
 only conditional single submission, then pause itself at terminal outcome.
