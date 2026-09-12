@@ -70,3 +70,10 @@ Next: await resource -> smoke, fixed fold0 pilot -> compare saved P01. No new
 submit has occurred. Transfers complete and fully verified. New *.direct-part
 temporary download duplicates were removed by finish_transfer.py only after
 both temporary and final file hashes matched SPEC. Old checkpoints remain.
+
+Continuation: native thread heartbeat automation `rsna-p04-gpu`, ACTIVE every
+10 minutes, created after read-only fleet review showed A100 could remain busy
+another ~2 hours. It must resume the existing owned lease, smoke/pilot/gate and
+only conditional single submission, then pause itself at terminal outcome.
+No duplicate training or reservation. Other GPUs require a new matched control
+and were not selected. Latest Kaggle submissions reread: no new results.
