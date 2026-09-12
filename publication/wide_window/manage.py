@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/'artifacts/wide_window'
 PROJECT='/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection'
 RUN=PROJECT+'/runs/20260912-codex-wide-window'
-CODE=PROJECT+'/code/coatnet-wide-window-v1'
+CODE=PROJECT+'/code/coatnet-wide-window-v2'
 QUEUE='/home/scientists/gluz_d_s/kaggle/_control/resource_queue.py'
 PY=PROJECT+'/envs/ngpu01/py3.11-torch-cu124-v1/bin/python'
 

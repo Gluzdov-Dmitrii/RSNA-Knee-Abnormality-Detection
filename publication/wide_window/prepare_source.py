@@ -37,7 +37,7 @@ def build():
             source=source.replace("initialization_sha256=sha256(a.initialization),folds_sha256=sha256(a.folds),",
                 "initialization_sha256=sha256(a.initialization),initialization_geometry=expected_init_geometry,folds_sha256=sha256(a.folds),")
         compile(source,name,'exec')
-        (DEST/name).write_text(source,encoding='utf-8')
+        (DEST/name).write_text(source,encoding='utf-8',newline='\n')
         provenance[name]=dict(base_sha256=hashlib.sha256(original.encode()).hexdigest(),
             p04_sha256=hashlib.sha256(source.encode()).hexdigest(),changed=source!=original)
     for name in ['NOTICE.md','LICENSE-APACHE-2.0.txt']:
@@ -51,8 +51,8 @@ def build():
     remote=remote.replace("RUN/'inputs/gold_uids.csv'","BASE_RUN/'inputs/gold_uids.csv'")
     remote=remote.replace("RUN/'prepared_correctnorm/initialization.pt'","BASE_RUN/'prepared_correctnorm/initialization.pt'")
     compile(remote,'remote_job.py','exec')
-    (DEST/'remote_job.py').write_text(remote,encoding='utf-8')
-    (DEST/'remote_preflight.py').write_bytes(Path(__file__).with_name('remote_preflight.py').read_bytes())
+    (DEST/'remote_job.py').write_text(remote,encoding='utf-8',newline='\n')
+    (DEST/'remote_preflight.py').write_text(Path(__file__).with_name('remote_preflight.py').read_text(encoding='utf-8'),encoding='utf-8',newline='\n')
     manifest={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in DEST.glob('*.py')}
     (DEST/'source_manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
     (DEST/'SOURCE_PROVENANCE.json').write_text(json.dumps(provenance,indent=2),encoding='utf-8')

@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import shlex
 import subprocess
+import time
 from manage import ART,PROJECT,RUN,CODE,PY,ssh
 
 CACHE=PROJECT+'/data/rsna-knee-uint8-224-9-c130-w10-90'
@@ -36,16 +37,23 @@ def stage_source():
     transfer(local,RUN+'/run.json')
     print(json.dumps(dict(status='SOURCE_STAGED',code=CODE,run=RUN)))
 
-def stage_cache(local):
+def stage_cache(local,wait_local=False):
     local=Path(local);spec=json.loads((local/'SPEC.json').read_text())
     if spec['window']!=[.1,.9] or spec['n_studies']!=4407:raise ValueError('Wrong cache')
     remote("import json,sys; from pathlib import Path; p=Path(sys.argv[1]); p.mkdir(parents=True,exist_ok=True); print('{}')",[CACHE])
     for name,digest in spec['sha256'].items():
         if Path(name).name!=name:raise ValueError('Non-local cache filename')
-        f=local/name;h=hashlib.sha256()
-        with f.open('rb') as stream:
-            for b in iter(lambda:stream.read(8<<20),b''):h.update(b)
-        if h.hexdigest()!=digest:raise ValueError(f'Local cache hash differs: {name}')
+        f=local/name;deadline=time.monotonic()+7200
+        expected=next((s['bytes'] for s in spec['shards'] if s['file']==name),None)
+        while True:
+            h=hashlib.sha256()
+            if f.is_file() and (expected is None or f.stat().st_size==expected):
+                with f.open('rb') as stream:
+                    for b in iter(lambda:stream.read(8<<20),b''):h.update(b)
+                if h.hexdigest()==digest:break
+            if not wait_local or time.monotonic()>deadline:
+                raise ValueError(f'Local cache missing/incomplete or hash differs: {name}')
+            time.sleep(15)
         info=remote("import json,sys,hashlib; from pathlib import Path; p=Path(sys.argv[1]); h=hashlib.sha256(); f=p.open('rb') if p.exists() else None; [h.update(b) for b in iter(lambda:f.read(8<<20),b'')] if f else None; print(json.dumps({'exists':f is not None,'sha256':h.hexdigest()}))",[CACHE+'/'+name])
         if info['exists']:
             if info['sha256']!=digest:raise RuntimeError(f'Remote partial/different shard: {name}; inspect before replacement')
@@ -59,6 +67,7 @@ def stage_cache(local):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('action',choices=['source','cache']);p.add_argument('--cache')
+    p.add_argument('--wait-local',action='store_true',help='Wait for verified local shards while download completes')
     a=p.parse_args()
     if a.action=='source':stage_source()
-    else:stage_cache(a.cache)
+    else:stage_cache(a.cache,a.wait_local)
