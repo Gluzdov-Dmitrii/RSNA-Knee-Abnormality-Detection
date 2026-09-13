@@ -5,8 +5,8 @@
   "only_intended_change": "per-target rank-percentile mean of S24 r3d and r2plus1d 5-fold bags, shared PIXEL_CACHE_V1 decode, no A0 mix",
   "parent_graph": "none_local_3d",
   "execution_mode": "unified_hidden_graph",
-  "status": "submitted",
-  "decision": "pending",
+  "status": "scored",
+  "decision": "keep_small_gain_over_r2p",
   "dependencies": ["S24@scored", "S24_R2PLUS1D@scored"],
   "recipe": {
     "members": ["S24_R3D18_9SLICE", "S24_R2PLUS1D_9SLICE"],
@@ -17,6 +17,9 @@
   },
   "metrics": {
     "oof_macro_auc": 0.8223432215257809,
+    "public_score": 0.861,
+    "delta_vs_r2plus1d_public": 0.002,
+    "baseline_r2plus1d_public": 0.859,
     "delta_vs_r2plus1d_oof_macro_auc": 0.0117321714309746,
     "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
     "baseline_s24_r3d_oof_macro_auc": 0.8006410615729171,
@@ -60,7 +63,7 @@
     "ref": "56176352",
     "submitted_at_utc": "2026-09-12T02:05:43Z",
     "kernel_version": 1,
-    "public_score": null
+    "public_score": 0.861
   },
   "validation": {
     "visible_rows": 3,
@@ -74,7 +77,7 @@
     "Two best exported/scored S21–S24 members. S22+r3d same-seed rank-mean 0.806 lost and was not submitted.",
     "Standalone rank-mean, no A0 mix. Member public scores: r2plus1d 0.859, r3d 0.852. Own-model LB to beat is r2plus1d 0.859; CoAtNet 0.875 and A0 0.937 remain higher.",
     "Visible gate 3/3 studies, 48.9 s, T4 CUDA. Hidden estimate ~6.0 h from linear 1322/3 scaling. Not a hidden-runtime claim.",
-    "Submitted once: ref 56176352 PENDING. Do not retry this kernel version.",
+    "Scored once: ref 56176352 COMPLETE public 0.861. Beats r2plus1d 0.859 by 0.002, below CoAtNet 0.875 and A0 0.937. Do not retry this kernel version.",
     "Kernel stays private."
   ]
 }

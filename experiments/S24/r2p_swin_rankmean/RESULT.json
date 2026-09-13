@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S24",
+  "variant": "S24_RANKMEAN_R2P_SWIN",
+  "hypothesis": "Rank-mean of r2plus1d_18 and Swin3D-T is complementary despite a solo OOF tie and beats r3d+r2p 0.822.",
+  "only_intended_change": "per-target rank-percentile mean of r2plus1d and Swin3D-T 5-fold bags, shared PIXEL_CACHE_V1 decode, no A0 mix",
+  "parent_graph": "none_local_3d",
+  "execution_mode": "unified_hidden_graph",
+  "status": "submitted",
+  "decision": "pending",
+  "dependencies": ["S24_R2PLUS1D@scored", "S24_SWIN3D_T@local_evaluated"],
+  "recipe": {
+    "members": ["S24_R2PLUS1D_9SLICE", "S24_SWIN3D_T_9SLICE"],
+    "combine": "per_target_rank_percentile_mean",
+    "layout": "vol9",
+    "n_slices": 9,
+    "seed": 2026
+  },
+  "metrics": {
+    "oof_macro_auc": 0.828676,
+    "baseline_r2plus1d_oof_macro_auc": 0.8106110500948063,
+    "baseline_swin_oof_macro_auc": 0.81067355041603,
+    "baseline_s25_r3d_r2p_oof_macro_auc": 0.8223432215257809,
+    "baseline_r2plus1d_public": 0.859,
+    "baseline_s25_public": 0.861
+  },
+  "kernel": {
+    "id": "dmitriigluzdov/rsna-s24-r2p-swin-rankmean",
+    "version": 2,
+    "code_file": "rsna-s24-r2p-swin-rankmean.ipynb",
+    "notebook_sha256": "83ac503911cd05e9850a2b3aa9cb8a8c04a5a6828b0ce98117a278494c5501e5",
+    "cell_sha256": "f0701deebfe70475b17c6e7c12a54023556f7db21466a4844e18fbcaef044c33",
+    "weights_datasets": [
+      "dmitriigluzdov/rsna-s24-r2plus1d-9slice-folds",
+      "dmitriigluzdov/rsna-s24-swin3d-t-9slice-folds"
+    ],
+    "weight_manifest_sha256": {
+      "r2plus1d_18": "8310f33cca9509e024a6efd7998ca4f23ec3642637874741556b459368898e7f",
+      "swin3d_t": "2063a3a377ab7a6aa61ab53b8b9afe3275f216ebf5aa0f54662e5db4eb91d819"
+    }
+  },
+  "submission": {
+    "ref": "56204398",
+    "submitted_at_utc": "2026-09-13T09:51:58Z",
+    "kernel_version": 2,
+    "public_score": null
+  },
+  "validation": {
+    "visible_rows": 3,
+    "present_studies": 3,
+    "visible_seconds": 53.2,
+    "visible_output_sha256": "ed346672ff62dab587436f65a11d61c40753153ad2563d6dbeaf1ad69adc4ee8",
+    "hidden_estimate_seconds": 23443.5,
+    "device": "cuda",
+    "v1_error": "3-row MCL rank-mean was constant; v2 keeps per-label constant check only for n>=32"
+  },
+  "notes": [
+    "Best remaining 2-member pixel ensemble by locked OOF (0.8287 vs S25 0.822).",
+    "Standalone Swin remains a solo tie and was not submitted. No A0 mix.",
+    "Visible gate 3/3 studies, 53.2 s, T4 CUDA. Hidden estimate ~6.5 h from linear 1322/3 scaling. Not a hidden-runtime claim.",
+    "Submitted once: ref 56204398 PENDING, kernel v2. Do not retry this kernel version.",
+    "Kernel stays private. S11–S15 still blocked on DINO_CACHE_V1."
+  ]
+}

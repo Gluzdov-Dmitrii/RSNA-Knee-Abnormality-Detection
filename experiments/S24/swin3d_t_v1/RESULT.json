@@ -36,7 +36,7 @@
     "A100s were occupied by vLLM; first a100 reservation was released unused.",
     "Trained on Quadro RTX 6000, batch 4. GPU lease released 2026-09-11 after confirmed process exit.",
     "Independent oof.csv recompute equals metrics.json 0.810674. Tie with r2plus1d 0.810611; not a new single-model control.",
-    "Rank-mean r2plus1d+Swin 0.8287 and r3d+r2plus1d+Swin 0.8320. No standalone Swin submit this packet.",
+    "Rank-mean r2plus1d+Swin 0.8287 submitted as `dmitriigluzdov/rsna-s24-r2p-swin-rankmean` v2, ref 56204398. Do not retry that kernel version.",
     "GPU lease released 2026-09-11 after confirmed process exit. Checkpoints retained on the remote run."
   ]
 }

@@ -1,0 +1,71 @@
+{
+  "schema_version": "s24_swin3d_t_9slice_folds_fp16_v1",
+  "experiment_id": "S24",
+  "backbone": "torchvision.swin3d_t",
+  "in_channels": 3,
+  "temporal": 9,
+  "n_targets": 12,
+  "layout": "vol9",
+  "img": 224,
+  "n_slices": 9,
+  "crop_mm": 130,
+  "window": [
+    0.35,
+    0.65
+  ],
+  "dropout": 0.25,
+  "fusion_hidden": 0,
+  "feat_dim": 768,
+  "seed": 2026,
+  "dtype": "float16",
+  "source_run": "/home/scientists/gluz_d_s/kaggle/projects/rsna-knee-abnormality-detection/runs/20260910T1644Z-s24-swin3d-t",
+  "exported_at_utc": "2026-09-13T09:37:04Z",
+  "verify_device": "cpu",
+  "folds": [
+    {
+      "fold": 0,
+      "file": "fold0.pt",
+      "sha256": "e581ac9626998f3e9b8c60254db64ff4ef438f997ed2a8cf3163a60625050f2a",
+      "bytes": 178362254,
+      "src_val_macro_auc": 0.8125801368825462,
+      "src_epoch": 5,
+      "n_tensors": 551
+    },
+    {
+      "fold": 1,
+      "file": "fold1.pt",
+      "sha256": "1dbc76c9091f9f6f45f43d9895c538aa5e67ec779eb4e88f8b2a433c66e0b52a",
+      "bytes": 178362254,
+      "src_val_macro_auc": 0.8134738512205629,
+      "src_epoch": 4,
+      "n_tensors": 551
+    },
+    {
+      "fold": 2,
+      "file": "fold2.pt",
+      "sha256": "30aa5c842a9fd573c6bab2903de220ca6eb63c089ab15ca6c268d9a5aedee25b",
+      "bytes": 178362254,
+      "src_val_macro_auc": 0.8290327223262509,
+      "src_epoch": 4,
+      "n_tensors": 551
+    },
+    {
+      "fold": 3,
+      "file": "fold3.pt",
+      "sha256": "ba069dc623b9f18d49a6226ea7846078fa4e0b8f0e6e032a3516774f9d7c19a1",
+      "bytes": 178362254,
+      "src_val_macro_auc": 0.8147828188252353,
+      "src_epoch": 5,
+      "n_tensors": 551
+    },
+    {
+      "fold": 4,
+      "file": "fold4.pt",
+      "sha256": "e7e9ae36ce4ec5efad235748e0423f3770142b2dd1383a86e05db8b12946e957",
+      "bytes": 178362254,
+      "src_val_macro_auc": 0.8149503444352257,
+      "src_epoch": 5,
+      "n_tensors": 551
+    }
+  ]
+}
