@@ -345,6 +345,22 @@
       "local_selection_state": "scored"
     },
     {
+      "experiment_id": "CF01",
+      "batch": 5,
+      "prepare_backend": "local_export_only",
+      "prepare_kaggle_gpu": false,
+      "submit_backend": "kaggle_inference_only",
+      "submit_priority": 55,
+      "submit_policy": "extra_independent_after_3d_family_plateau",
+      "requires": [
+        "member_public_scores",
+        "offline_export",
+        "kaggle_runtime_gate",
+        "submission_authorization"
+      ],
+      "local_selection_state": "submitted"
+    },
+    {
       "experiment_id": "S26",
       "batch": 6,
       "prepare_backend": "nsu_cpu_oof_then_chosen_gpu_inference",

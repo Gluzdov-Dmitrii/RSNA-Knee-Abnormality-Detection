@@ -7,4 +7,4 @@
 - Visible: 3/3 studies, 25.9 s
 - Do not retry this kernel version. Do not mix into A0.
 
-Single-model public control is `r2plus1d_v1/` **0.859**. S25 is public **0.861**. r2p+Swin rank-mean is ref 56204398.
+Single-model public control is `r2plus1d_v1/` **0.859**. S25 is public **0.861**. r2p+Swin rank-mean is public **0.871** (ref 56204398).

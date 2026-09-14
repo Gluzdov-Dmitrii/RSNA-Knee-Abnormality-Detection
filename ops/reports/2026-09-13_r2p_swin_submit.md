@@ -23,7 +23,7 @@
 | ID | Kernel/version | Ref | Visible | Public | Decision |
 |---|---|---|---:|---|---|
 | S25 r3d+r2p | `dmitriigluzdov/rsna-s25-r3d-r2p-rankmean` v1 | 56176352 | 48.9 s | **0.861** | +0.002 vs r2plus1d 0.859 |
-| S24 r2p+Swin | `dmitriigluzdov/rsna-s24-r2p-swin-rankmean` v2 | 56204398 | 53.2 s | PENDING | poll only |
+| S24 r2p+Swin | `dmitriigluzdov/rsna-s24-r2p-swin-rankmean` v2 | 56204398 | 53.2 s | **0.871** | poll only; scored COMPLETE |
 
 Local OOF: r2p+Swin 0.8287 vs S25 0.822. Hidden estimate ~6.5 h from visible 53.2 s × 1322/3. Kernel private, internet off, T4. Submitted once. v1 visible ERROR was a 3-row MCL rank tie.
 

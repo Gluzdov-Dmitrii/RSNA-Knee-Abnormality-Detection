@@ -6,3 +6,4 @@ named-submission-csv,confirmed_api_rejection,Named submission_Sxx.csv outputs re
 kaggle-training-r2,compute_policy,All preparation train cache OOF and search moved to NSU under R2,LOCAL_COMPUTE_PLAN.md,2026-09-07
 s22-overlay-0.40-resubmit,confirmed_hurt,S22 0.40 transformer mix public 0.931 vs A0 0.937; do not retune blend from public LB,experiments/S22/RESULT.json,2026-09-10
 s22-kernel-publish,not_notable,public 0.931 is not a writeup score; keep dmitriigluzdov/rsna-s22-a0-rank-blend private,experiments/S22/RESULT.json,2026-09-10
+s24-r3d-r2p-swin-three-member,same_family,3D rank-mean family remains below CoAtNet 0.875; next own-model submit is CF01 not a third 3D member,experiments/CF01/ORIGIN.md,2026-09-14

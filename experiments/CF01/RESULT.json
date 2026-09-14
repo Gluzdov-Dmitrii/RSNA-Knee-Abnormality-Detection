@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "experiment_id": "CF01",
+  "variant": "CF01_COATNET_R2P_SWIN",
+  "hypothesis": "Rank-mean of compact CoAtNet P03 and the scored r2p+Swin 3D bag is a new own-model family mix after 3D ensembles stalled below CoAtNet.",
+  "only_intended_change": "per-target rank-percentile mean of independent CoAtNet P03 infer.py and r2plus1d+Swin3D bags; 3D decode first; no A0 mix",
+  "parent_graph": "none_local_cross_family",
+  "execution_mode": "unified_hidden_graph",
+  "status": "submitted",
+  "decision": "pending",
+  "dependencies": ["S24_RANKMEAN_R2P_SWIN@scored", "P03_COMPACT_COATNET@scored"],
+  "recipe": {
+    "members": ["compact_coatnet_p03", "rank_mean_r2p_swin"],
+    "combine": "per_target_rank_percentile_mean",
+    "layout": "coatnet_windows_plus_vol9",
+    "n_slices": 9,
+    "seed": 2026
+  },
+  "metrics": {
+    "oof_macro_auc": null,
+    "baseline_coatnet_public": 0.875,
+    "baseline_r2p_swin_public": 0.871,
+    "baseline_s25_public": 0.861,
+    "baseline_a0_public": 0.937
+  },
+  "kernel": {
+    "id": "dmitriigluzdov/rsna-cf01-coatnet-3d-rankmean",
+    "version": 1,
+    "code_file": "rsna-cf01-coatnet-3d-rankmean.ipynb",
+    "notebook_sha256": "9246397ce9366e493e6527473d4e599d56e21e6a973ccfe46637f03f02c3b2a6",
+    "cell_sha256": "d9d2c23d07ca0dac4369a002c6ded3b9f5269c343755128b4fe63f66472da82a",
+    "weights_datasets": [
+      "dmitriigluzdov/rsna-knee-compact-coatnet",
+      "dmitriigluzdov/rsna-s24-r2plus1d-9slice-folds",
+      "dmitriigluzdov/rsna-s24-swin3d-t-9slice-folds"
+    ],
+    "weight_manifest_sha256": {
+      "r2plus1d_18": "8310f33cca9509e024a6efd7998ca4f23ec3642637874741556b459368898e7f",
+      "swin3d_t": "2063a3a377ab7a6aa61ab53b8b9afe3275f216ebf5aa0f54662e5db4eb91d819"
+    },
+    "coatnet_weights_sha256": "f658b89db67997c3c0975a79298f1cbb962c30483ba9a7dec9bbffc4926c6213"
+  },
+  "submission": {
+    "ref": "56220447",
+    "submitted_at_utc": "2026-09-14T03:35:47Z",
+    "kernel_version": 1,
+    "public_score": null
+  },
+  "validation": {
+    "visible_rows": 3,
+    "present_studies": 3,
+    "visible_seconds": 73.1,
+    "visible_output_sha256": "027fe14bcf14a13daa78c79cab8115f6cd5ad4abc64957bce19f7fe5d6e0671d",
+    "hidden_estimate_seconds": 26173.7,
+    "seconds_3d": 53.0,
+    "seconds_setup": 7.0,
+    "seconds_coatnet": 8.1,
+    "coatnet_median_study_seconds": 2.1248617950000153,
+    "device": "cuda"
+  },
+  "notes": [
+    "No locked pair OOF: CoAtNet P03 is a 4349-study refit, not FOLDS_V1 5-fold.",
+    "Visible gate 3/3 studies, 73.1 s, T4 CUDA. Split hidden estimate ~7.27 h (3D 53.0 s scaled + CoAtNet median 2.12 s/study). Not a hidden-runtime claim.",
+    "Submitted once: ref 56220447 PENDING, kernel v1. Do not retry this kernel version.",
+    "3D-only rank-means are not the next submit. No A0 mix. Kernel stays private."
+  ]
+}
