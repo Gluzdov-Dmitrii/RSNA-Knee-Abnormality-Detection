@@ -1,0 +1,36 @@
+{
+ "n": 64,
+ "seconds": {
+  "raptor384": 133.9,
+  "raptor224": 67.6,
+  "r6": 761.9,
+  "s6": 318.9,
+  "mavit": 82.8,
+  "total": 1394.3
+ },
+ "seconds_per_study": {
+  "raptor384": 2.09,
+  "raptor224": 1.06,
+  "r6": 11.9,
+  "s6": 4.98,
+  "mavit": 1.29
+ },
+ "hours_for_1300_upper_bound": {
+  "raptor384": 0.76,
+  "raptor224": 0.38,
+  "r6": 4.3,
+  "s6": 1.8,
+  "mavit": 0.47
+ },
+ "hours_total_for_1300": 7.71,
+ "note": "stage seconds include fixed setup/compile cost, so the extrapolation is an upper bound",
+ "gold_rows_in_sample": 58,
+ "gold58_mean_auc": {
+  "Raptor384": 0.9229,
+  "Raptor224": 0.916,
+  "R6": 0.9371,
+  "S6": 0.9314,
+  "MaViT": 0.9202,
+  "blend": 0.9376
+ }
+}

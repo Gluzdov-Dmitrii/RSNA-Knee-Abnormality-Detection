@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "experiment_id": "PUB941",
+  "variant": "PUBLIC_0941_CONTROL_PROBE22",
+  "status": "scored",
+  "decision": "new_account_best",
+  "source_ref": "ricecakar/rsna-knee-public-0-941-control",
+  "kernel": {
+    "id": "dmitriigluzdov/rsna-knee-public941-control",
+    "version": 2,
+    "code_file": "rsna-knee-public-0-941-control.ipynb",
+    "notebook_sha256": "bb34d22e97d29f6cb0638bcf5effd1de9237778e420baba3d9b4258485855b91",
+    "metadata_sha256": "1463157d3001e2c8f49075fea5f81f34e2bef68fd76b977fabb3378633455021"
+  },
+  "submission": {
+    "ref": "56243894",
+    "submitted_at_utc": "2026-09-15T03:09:09.290000Z",
+    "kernel_version": 2,
+    "public_score": 0.941,
+    "status": "COMPLETE"
+  },
+  "monitor": {
+    "automation_id": "monitor-rsna-public941-submission",
+    "cadence": "15 minutes",
+    "quiet_while_pending": true,
+    "status": "deleted_after_completion"
+  },
+  "validation": {
+    "visible_rows": 3,
+    "visible_output_sha256": "ff848c73ba6f31e487d175161304d26df307e6e777189c01dfb508a76532ddfc",
+    "receipt_path": "tmp/public941_output_v2/probe22_outer_routing_receipt.json",
+    "receipt_sha256": "20cf9529d4a8c75a29e51c71e7d768b512a66118592fec67982f79e264d6adb2",
+    "receipt_status": "passed",
+    "candidate_id": 22,
+    "candidate_name": "public0939_plus_probe15_outer_map",
+    "parent": "reproduced_public_0.939",
+    "changed_targets": ["ACL", "Medial Meniscus", "Lateral Meniscus", "Lateral OA", "Fracture"]
+  },
+  "oof_comparison": {
+    "our_best_local_oof_macro_auc": 0.832874589670475,
+    "our_best_local_oof_ref": "experiments/LOCAL_OOF_RANKBLEND_REBUILT_global_refine00125/rankblend_report.json",
+    "public_top_solution_oof_macro_auc": null,
+    "public_top_solution_oof_reference": "not_available_in_pulled_public941_notebook",
+    "numeric_delta": null,
+    "note": "Public941 is inference-only. The notebook has no final full-solution OOF artifact, so only LB/public-score comparison is valid."
+  },
+  "notes": [
+    "v1 visible run failed after removing kernel_sources; v2 restored them and completed.",
+    "Local file upload returned HTTP 400; code competition submission succeeded with -k/-v/-f route.",
+    "Scoring was PENDING at first and repeated post-submit polls.",
+    "Score 0.941 verified 2026-09-16; monitor deleted after completion."
+  ]
+}

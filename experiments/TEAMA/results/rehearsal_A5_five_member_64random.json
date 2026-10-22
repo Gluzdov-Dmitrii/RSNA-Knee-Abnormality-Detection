@@ -1,0 +1,28 @@
+{
+ "n": 64,
+ "seconds": {
+  "raptor384": 121.5,
+  "raptor224": 71.0,
+  "r7": 781.3,
+  "r6": 996.0,
+  "s6": 291.4,
+  "total": 2304.7
+ },
+ "seconds_per_study": {
+  "raptor384": 1.9,
+  "raptor224": 1.11,
+  "r7": 12.21,
+  "r6": 15.56,
+  "s6": 4.55
+ },
+ "hours_for_1300_upper_bound": {
+  "raptor384": 0.69,
+  "raptor224": 0.4,
+  "r7": 4.41,
+  "r6": 5.62,
+  "s6": 1.64
+ },
+ "hours_total_for_1300": 12.76,
+ "note": "stage seconds include fixed setup/compile cost, so the extrapolation is an upper bound",
+ "gold_rows_in_sample": 1
+}

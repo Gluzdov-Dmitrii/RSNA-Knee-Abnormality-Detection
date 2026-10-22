@@ -6,8 +6,8 @@
   "only_intended_change": "per-target rank-percentile mean of independent CoAtNet P03 infer.py and r2plus1d+Swin3D bags; 3D decode first; no A0 mix",
   "parent_graph": "none_local_cross_family",
   "execution_mode": "unified_hidden_graph",
-  "status": "submitted",
-  "decision": "pending",
+  "status": "scored",
+  "decision": "keep_evidence_no_retry",
   "dependencies": ["S24_RANKMEAN_R2P_SWIN@scored", "P03_COMPACT_COATNET@scored"],
   "recipe": {
     "members": ["compact_coatnet_p03", "rank_mean_r2p_swin"],
@@ -44,7 +44,8 @@
     "ref": "56220447",
     "submitted_at_utc": "2026-09-14T03:35:47Z",
     "kernel_version": 1,
-    "public_score": null
+    "public_score": 0.886,
+    "status": "COMPLETE"
   },
   "validation": {
     "visible_rows": 3,
@@ -61,7 +62,8 @@
   "notes": [
     "No locked pair OOF: CoAtNet P03 is a 4349-study refit, not FOLDS_V1 5-fold.",
     "Visible gate 3/3 studies, 73.1 s, T4 CUDA. Split hidden estimate ~7.27 h (3D 53.0 s scaled + CoAtNet median 2.12 s/study). Not a hidden-runtime claim.",
-    "Submitted once: ref 56220447 PENDING, kernel v1. Do not retry this kernel version.",
+    "Scored COMPLETE: ref 56220447 public 0.886, kernel v1. Do not retry this kernel version.",
+    "CF01 improved own-model public branch vs compact CoAtNet 0.875 and r2p+Swin 0.871, but remains below A0/public 0.937+.",
     "3D-only rank-means are not the next submit. No A0 mix. Kernel stays private."
   ]
 }

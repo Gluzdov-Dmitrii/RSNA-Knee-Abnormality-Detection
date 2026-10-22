@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "studies": 3,
+  "submission_sha256": "8f0c5e7b2b561538dae55439a4d2e9173141096da3defd9bc0a4bac351eef37a",
+  "author_visible_sha256": "8f0c5e7b2b561538dae55439a4d2e9173141096da3defd9bc0a4bac351eef37a",
+  "author_visible_byte_match": true,
+  "elapsed_seconds": 346.99520802497864,
+  "coats": [
+    "resgated_top3",
+    "global96_top3",
+    "d4_swa3",
+    "repairv1_top3"
+  ],
+  "public_score": null,
+  "full_graph_oof_available": false
+}

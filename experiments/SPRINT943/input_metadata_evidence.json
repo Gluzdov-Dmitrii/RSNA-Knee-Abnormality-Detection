@@ -1,0 +1,277 @@
+{
+  "queried_at_utc": "2026-09-22T12:08:33.393641+00:00",
+  "datasets": [
+    {
+      "slug": "dreaddevelopment/raptor-knee-maxspan",
+      "dataset_version_id": 19120128,
+      "dataset_id": 11745616,
+      "current_version_number": 1,
+      "last_updated": "2026-08-22 20:14:47.093000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-08-22 20:14:47.093000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        ".com/datasets/dreaddevelopment/raptor-knee-maxspan/download?datasetVersionNumber=1\",\"contentSize\":\"271659195 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-08-22T20:14:47.093Z\",\"di"
+      ]
+    },
+    {
+      "slug": "dreaddevelopment/raptor-knee-native384",
+      "dataset_version_id": 19122845,
+      "dataset_id": 11746763,
+      "current_version_number": 1,
+      "last_updated": "2026-08-23 00:35:34.303000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-08-23 00:35:34.303000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "om/datasets/dreaddevelopment/raptor-knee-native384/download?datasetVersionNumber=1\",\"contentSize\":\"271660739 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-08-23T00:35:34.303Z\",\"di"
+      ]
+    },
+    {
+      "slug": "dreaddevelopment/raptor-knee-native384dense",
+      "dataset_version_id": 19134209,
+      "dataset_id": 11752181,
+      "current_version_number": 1,
+      "last_updated": "2026-08-23 13:17:23.333000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-08-23 13:17:23.333000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "tasets/dreaddevelopment/raptor-knee-native384dense/download?datasetVersionNumber=1\",\"contentSize\":\"271657808 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-08-23T13:17:23.333Z\",\"di"
+      ]
+    },
+    {
+      "slug": "mattiaangeli/knee-mri-fold-weights",
+      "dataset_version_id": 18956429,
+      "dataset_id": 11611423,
+      "current_version_number": 2,
+      "last_updated": "2026-08-15 16:02:22.423000",
+      "versions": [
+        {
+          "number": 2,
+          "date": "2026-08-15 16:02:22.423000",
+          "notes": "Update 2026-08-15"
+        },
+        {
+          "number": 1,
+          "date": "2026-08-11 18:15:56.383000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "le.com/datasets/mattiaangeli/knee-mri-fold-weights/download?datasetVersionNumber=2\",\"contentSize\":\"439183537 bytes\"}],\"commentCount\":1,\"dateModified\":\"2026-08-15T16:02:22.423Z\",\"di"
+      ]
+    },
+    {
+      "slug": "mattiaangeli/opencv-python-headless-4120088-x86",
+      "dataset_version_id": 19395055,
+      "dataset_id": 11887453,
+      "current_version_number": 1,
+      "last_updated": "2026-09-03 15:09:48.663000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-09-03 15:09:48.663000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "ts/mattiaangeli/opencv-python-headless-4120088-x86/download?datasetVersionNumber=1\",\"contentSize\":\"53707377 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-09-03T15:09:48.663Z\",\"dis"
+      ]
+    },
+    {
+      "slug": "marwanmath/resnet-50-radimagenet-marwan",
+      "dataset_version_id": 18229736,
+      "dataset_id": 11290369,
+      "current_version_number": 1,
+      "last_updated": "2026-07-21 14:26:57.200000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-07-21 14:26:57.200000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "m/datasets/marwanmath/resnet-50-radimagenet-marwan/download?datasetVersionNumber=1\",\"contentSize\":\"87446837 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-07-21T14:26:57.2Z\",\"discu"
+      ]
+    },
+    {
+      "slug": "mattiaangeli/rsna-knee-coat-resgated-ep10-top3",
+      "dataset_version_id": 19395706,
+      "dataset_id": 11887000,
+      "current_version_number": 3,
+      "last_updated": "2026-09-03 15:47:01.507000",
+      "versions": [
+        {
+          "number": 3,
+          "date": "2026-09-03 15:47:01.507000",
+          "notes": "v3: corrected x86 geometry plus full Gold58 T4 rank portability audit; pin OpenCV 4.12"
+        },
+        {
+          "number": 2,
+          "date": "2026-09-03 14:28:49.227000",
+          "notes": "v2 audit-only fix: preserve float64 rank arrays in visible bitwise parity gate"
+        },
+        {
+          "number": 1,
+          "date": "2026-09-03 14:22:21.737000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "ets/mattiaangeli/rsna-knee-coat-resgated-ep10-top3/download?datasetVersionNumber=3\",\"contentSize\":\"818330860 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-09-03T15:47:01.507Z\",\"di"
+      ]
+    },
+    {
+      "slug": "mattiaangeli/rsna-knee-coatnet-d4-depthzone-swa3-b2",
+      "dataset_version_id": 19862359,
+      "dataset_id": 11970384,
+      "current_version_number": 2,
+      "last_updated": "2026-09-21 18:34:04.307000",
+      "versions": [
+        {
+          "number": 2,
+          "date": "2026-09-21 18:34:04.307000",
+          "notes": "v2: adds Repair-v1 top-3 (public .929, epochs 12/7/11) in repairv1/ as the fourth Speedy Raptors CoAt-family member; D4 files unchanged"
+        },
+        {
+          "number": 1,
+          "date": "2026-09-10 10:44:02.907000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "attiaangeli/rsna-knee-coatnet-d4-depthzone-swa3-b2/download?datasetVersionNumber=2\",\"contentSize\":\"1098712582 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-09-21T18:34:04.307Z\",\"d"
+      ]
+    },
+    {
+      "slug": "mattiaangeli/rsna-knee-coatnet-global96-top3",
+      "dataset_version_id": 19459763,
+      "dataset_id": 11920427,
+      "current_version_number": 1,
+      "last_updated": "2026-09-06 13:13:46.887000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-09-06 13:13:46.887000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "asets/mattiaangeli/rsna-knee-coatnet-global96-top3/download?datasetVersionNumber=1\",\"contentSize\":\"838503690 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-09-06T13:13:46.887Z\",\"di"
+      ]
+    },
+    {
+      "slug": "antoinegg1/rsna-knee-e11-diverse-heads-v20",
+      "dataset_version_id": 18842180,
+      "dataset_id": 11610725,
+      "current_version_number": 1,
+      "last_updated": "2026-08-11 17:20:10.690000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-08-11 17:20:10.690000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "atasets/antoinegg1/rsna-knee-e11-diverse-heads-v20/download?datasetVersionNumber=1\",\"contentSize\":\"58918610 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-08-11T17:20:10.69Z\",\"disc"
+      ]
+    },
+    {
+      "slug": "antoinegg1/rsna-knee-e9-radimagenet-heads-v15",
+      "dataset_version_id": 18839182,
+      "dataset_id": 11608090,
+      "current_version_number": 3,
+      "last_updated": "2026-08-11 15:14:09.957000",
+      "versions": [
+        {
+          "number": 3,
+          "date": "2026-08-11 15:14:09.957000",
+          "notes": "E10 contract v2: adds held-out nested weight selection and per-configuration descriptive macro"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "sets/antoinegg1/rsna-knee-e9-radimagenet-heads-v15/download?datasetVersionNumber=3\",\"contentSize\":\"58895880 bytes\"}],\"commentCount\":1,\"dateModified\":\"2026-08-11T15:14:09.957Z\",\"dis"
+      ]
+    },
+    {
+      "slug": "pilkwang/rsna-knee-llm-labels",
+      "dataset_version_id": 18673450,
+      "dataset_id": 11529209,
+      "current_version_number": 1,
+      "last_updated": "2026-08-06 10:31:34.133000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-08-06 10:31:34.133000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        ".kaggle.com/datasets/pilkwang/rsna-knee-llm-labels/download?datasetVersionNumber=1\",\"contentSize\":\"145577 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-08-06T10:31:34.133Z\",\"discu"
+      ]
+    },
+    {
+      "slug": "prvsiyan/rsna-knee-v52-radimagenet-heads-20260812",
+      "dataset_version_id": 18879001,
+      "dataset_id": 11628770,
+      "current_version_number": 1,
+      "last_updated": "2026-08-12 20:46:25.603000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-08-12 20:46:25.603000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "/prvsiyan/rsna-knee-v52-radimagenet-heads-20260812/download?datasetVersionNumber=1\",\"contentSize\":\"58531930 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-08-12T20:46:25.603Z\",\"dis"
+      ]
+    },
+    {
+      "slug": "pilkwang/rsna-knee-weights",
+      "dataset_version_id": 18716507,
+      "dataset_id": 11552334,
+      "current_version_number": 1,
+      "last_updated": "2026-08-08 02:49:55.307000",
+      "versions": [
+        {
+          "number": 1,
+          "date": "2026-08-08 02:49:55.307000",
+          "notes": "Initial release"
+        }
+      ],
+      "html_status": 200,
+      "html_version_evidence": [
+        "www.kaggle.com/datasets/pilkwang/rsna-knee-weights/download?datasetVersionNumber=1\",\"contentSize\":\"1657083403 bytes\"}],\"commentCount\":0,\"dateModified\":\"2026-08-08T02:49:55.307Z\",\"d"
+      ]
+    }
+  ]
+}

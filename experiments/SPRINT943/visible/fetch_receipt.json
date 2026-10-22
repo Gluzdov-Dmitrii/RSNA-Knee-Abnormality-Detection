@@ -1,0 +1,102 @@
+{
+  "kernel_version": 1,
+  "kernel_version_id": 351861109,
+  "files": [
+    {
+      "file": "submission.csv",
+      "status": "OK",
+      "bytes": 830,
+      "sha256": "8f0c5e7b2b561538dae55439a4d2e9173141096da3defd9bc0a4bac351eef37a",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "btkd_v559_complete.json",
+      "status": "OK",
+      "bytes": 13996,
+      "sha256": "b75cee4bc28ac53384729c737248656387910fd1c873812c009e37fe310e4257",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "sprint943_run_manifest.json",
+      "status": "OK",
+      "bytes": 935,
+      "sha256": "be05965342e586662c95607c3191b7a648344063a41ae254e1bc78d5ea35d6e2",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "_coat_raptor_blend_receipt.json",
+      "status": "OK",
+      "bytes": 494,
+      "sha256": "8786e8384b711ffc7ee69a8dc1238ec90f12361b777def27cc0406a41eac691a",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "_coat_arm_receipt.json",
+      "status": "OK",
+      "bytes": 3753,
+      "sha256": "2f619d29117ed0eadb5f2b87daab350d5f6c46594e9a7f10dd3510e81518b3b8",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "_coat_g96_receipt.json",
+      "status": "OK",
+      "bytes": 4436,
+      "sha256": "33bd4d3e8f927e5582a5b0c95fc3cff92ab2d30196cb54644cbd7304e5843572",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "_coat_repairv1_receipt.json",
+      "status": "OK",
+      "bytes": 4144,
+      "sha256": "91ae256bbad71c4d878a8a32a57d7e8774138e86aa23adc38cd965b86090ae6f",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "d4_input/d4.receipt.json",
+      "status": "OK",
+      "bytes": 6266,
+      "sha256": "3afcdf59872539518d2679738eb7b496a9d49ee3b50601ee9fbd18279cbead35",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "diagnostics/a5_metadata_applicability.json",
+      "status": "OK",
+      "bytes": 148,
+      "sha256": "1103e3b6db6bea572147e035ada6d9beb65d020f05723ec8d57cc430279f23f1",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "diagnostics/a5_applicability.json",
+      "status": "OK",
+      "bytes": 177,
+      "sha256": "9dbde6333272a7b9f20deb069d50f995b63fa4f89f129f8c0b6a2e22a649b977",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "raptor_raw.npz",
+      "status": "OK",
+      "bytes": 1146,
+      "sha256": "046ba15f8969828b7e2b50b8856547d3124906c96d4740475e80589dabc51ef8",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "residual_coat_runtime.log",
+      "status": "ERROR",
+      "error_type": "HTTPError"
+    },
+    {
+      "file": "global96_runtime.log",
+      "status": "OK",
+      "bytes": 5458,
+      "sha256": "7084c536447d1ded93a523de59eb61422e4e56201f30f764a316ae18e3c51b60",
+      "kernel_version_id": 351861109
+    },
+    {
+      "file": "repairv1_runtime.log",
+      "status": "OK",
+      "bytes": 5019,
+      "sha256": "62732e7e6d9605b6d5b93b4459ab137466e2580cb8fe74c58fb211f4022e8b91",
+      "kernel_version_id": 351861109
+    }
+  ]
+}

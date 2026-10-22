@@ -1,0 +1,77 @@
+{
+  "checked_at_utc": "2026-09-22T12:20:44.899146+00:00",
+  "source_kernel_version_id": 351665011,
+  "strict_helpers_sha256": "4c04eac16375664aa51af9ff18090f184e476a40e49b5308c801ac50a183d5ff",
+  "studies": 3,
+  "events": 27,
+  "d4_input_receipts_present": 0,
+  "result": {
+    "status": "VERIFIED",
+    "coats": {
+      "resgated_top3": {
+        "models": 3,
+        "fallback_studies": 0,
+        "receipt": "_coat_arm_receipt.json",
+        "epochs": [
+          4,
+          6,
+          8
+        ]
+      },
+      "global96_top3": {
+        "models": 3,
+        "fallback_studies": 0,
+        "receipt": "_coat_g96_receipt.json",
+        "epochs": [
+          16,
+          23,
+          18
+        ]
+      },
+      "d4_swa3": {
+        "models": 1,
+        "fallback_studies": 0,
+        "receipt": "d4_input/d4.receipt.json",
+        "epochs": null
+      },
+      "repairv1_top3": {
+        "models": 3,
+        "fallback_studies": 0,
+        "receipt": "_coat_repairv1_receipt.json",
+        "epochs": [
+          12,
+          7,
+          11
+        ]
+      }
+    },
+    "family": {
+      "contract": "public_raptor_private_residual_coat_v32_no_inner_rerank_v1",
+      "family_reduction": "rank_of_member_probability_mean",
+      "finding_specific_weights": false,
+      "inner_rerank": false,
+      "members": [
+        "resgated_top3",
+        "global96_top3",
+        "d4_swa3",
+        "repairv1_top3"
+      ],
+      "private_alpha": 0.4,
+      "public_raptor_alpha": 0.6,
+      "study_count": 3,
+      "within_coat": {
+        "d4_swa3": 0.25,
+        "global96_top3": 0.25,
+        "repairv1_top3": 0.25,
+        "resgated_top3": 0.25
+      }
+    },
+    "acquisition_absence_checked": true,
+    "raw_raptor_checked": true
+  },
+  "status": "PASS",
+  "limitations": [
+    "D4 per-process input_*.jsonl receipts were not fetched: versioned listing API returned 404 and receipt names contain unknown process IDs. D4 receipt reports input_coverage.studies=3, zero fallback_studies and zero shard preparation_warnings; JSONL grid checks were not exercised.",
+    "Author artifacts validate schema compatibility only; this is not our GPU smoke run or private-data validation."
+  ]
+}

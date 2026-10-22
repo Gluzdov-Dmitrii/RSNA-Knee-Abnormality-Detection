@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "artifacts": [
+    {
+      "path": "coat_resgated_ep10_top3_predictions.npz",
+      "receipt_sha256_match": true,
+      "raw_shape": [
+        3,
+        3,
+        12
+      ],
+      "probability_payload_gate": "PASS"
+    },
+    {
+      "path": "coatnet_global96_top3_predictions.npz",
+      "receipt_sha256_match": true,
+      "raw_shape": [
+        3,
+        3,
+        12
+      ],
+      "probability_payload_gate": "PASS"
+    },
+    {
+      "path": "coatnet_repairv1_top3_predictions.npz",
+      "receipt_sha256_match": true,
+      "raw_shape": [
+        3,
+        3,
+        12
+      ],
+      "probability_payload_gate": "PASS"
+    },
+    {
+      "path": "d4_input/coatnet_d4_depthzone_swa3_predictions.npz",
+      "receipt_sha256_match": true,
+      "raw_shape": [
+        1,
+        3,
+        12
+      ],
+      "probability_payload_gate": "PASS"
+    }
+  ],
+  "limitations": [
+    "D4 per-process input_*.jsonl receipts were not fetched: versioned listing API returned 404 and receipt names contain unknown process IDs. D4 receipt reports input_coverage.studies=3, zero fallback_studies and zero shard preparation_warnings; JSONL grid checks were not exercised.",
+    "Author artifacts validate schema compatibility only; this is not our GPU smoke run or private-data validation."
+  ]
+}

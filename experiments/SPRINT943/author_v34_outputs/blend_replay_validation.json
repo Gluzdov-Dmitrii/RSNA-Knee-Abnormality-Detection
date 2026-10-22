@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "studies": 3,
+  "max_abs_error_vs_parsed_csv": 0.0,
+  "byte_identical_to_author": true,
+  "sha256": "8f0c5e7b2b561538dae55439a4d2e9173141096da3defd9bc0a4bac351eef37a",
+  "four_coat_members": true,
+  "new_gpu_inference": false,
+  "full_graph_oof": false,
+  "fitted_parameters": 0
+}

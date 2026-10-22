@@ -1,0 +1,66 @@
+{
+  "status": "timed_out_waiting_gpu_slot",
+  "attempts": [
+    {
+      "time_utc": "2026-09-22T12:18:14.024746+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:20:22.879700+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:22:32.644035+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:24:55.519563+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:27:02.416537+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:29:06.202616+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:31:13.917590+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:33:17.719552+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:35:21.436254+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:37:30.029091+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:39:33.856226+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    },
+    {
+      "time_utc": "2026-09-22T12:41:37.452128+00:00",
+      "quota_busy": true,
+      "exit_code": 0
+    }
+  ],
+  "last_message": "Kernel push error: Maximum batch GPU session count of 2 reached."
+}

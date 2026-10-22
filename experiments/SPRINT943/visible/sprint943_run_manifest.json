@@ -1,0 +1,39 @@
+{
+  "elapsed_seconds": 346.99520802497864,
+  "full_graph_oof_available": false,
+  "gpu_names": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "libraries": {
+    "numpy": "2.0.2",
+    "opencv-python-headless": "4.13.0.92",
+    "pandas": "2.3.3",
+    "pydicom": "3.0.2",
+    "timm": "1.0.26",
+    "torch": "2.10.0+cu128",
+    "torchvision": "0.25.0+cu128",
+    "transformers": "5.0.0"
+  },
+  "outer_weights": {
+    "ACL": 0.75,
+    "Baker's": 0.6,
+    "Contusion": 0.6,
+    "Effusion": 0.6,
+    "Fracture": 0.75,
+    "Lateral Meniscus": 1.0,
+    "Lateral OA": 0.75,
+    "MCL": 0.6,
+    "Medial Meniscus": 0.8,
+    "Medial OA": 0.6,
+    "PF OA": 0.6,
+    "Synovitis": 0.6
+  },
+  "source": {
+    "script_version_id": 351665011,
+    "sha256": "a025fcd5aa25373ac380f60746ba5ca17e70e97f714fdc17e01ce414ec2163b5",
+    "version": 34
+  },
+  "submission_sha256": "8f0c5e7b2b561538dae55439a4d2e9173141096da3defd9bc0a4bac351eef37a",
+  "test_studies": 3
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "coat_resgated_ep10_top3_predictions.npz",
+    "status": "OK",
+    "bytes": 1616,
+    "sha256": "fd70dd41c6b7088591c26f3b2f1cd350b7257004f5a18969b7ce14efb611f719",
+    "kernel_version_id": 351665011
+  },
+  {
+    "name": "coatnet_global96_top3_predictions.npz",
+    "status": "OK",
+    "bytes": 2222,
+    "sha256": "612fe40a26f4c4e902da60f90b0297d07f374852ab1123d988621eecb3c148f5",
+    "kernel_version_id": 351665011
+  },
+  {
+    "name": "coatnet_repairv1_top3_predictions.npz",
+    "status": "OK",
+    "bytes": 2258,
+    "sha256": "134ef5b842b2be968ec99c406fb93ef4d2d16c74f4049482589ebb870a5632d5",
+    "kernel_version_id": 351665011
+  },
+  {
+    "name": "d4_input/coatnet_d4_depthzone_swa3_predictions.npz",
+    "status": "OK",
+    "bytes": 1897,
+    "sha256": "c2d36dc58e087ccbed84e74ba4bc2911074f7d023aed1fae8bedad57aabbeba5",
+    "kernel_version_id": 351665011
+  }
+]

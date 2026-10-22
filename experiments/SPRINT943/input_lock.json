@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-09-22T12:08:33.393641+00:00",
+  "source": {
+    "ref": "mattiaangeli/bend-the-knee-to-speedy-raptors-the-original",
+    "version_number": 34,
+    "kernel_version_id": 351665011,
+    "sha256": "a025fcd5aa25373ac380f60746ba5ca17e70e97f714fdc17e01ce414ec2163b5"
+  },
+  "datasets": [
+    {
+      "ref": "dreaddevelopment/raptor-knee-maxspan",
+      "version_number": 1,
+      "dataset_version_id": 19120128,
+      "pinned_ref": "dreaddevelopment/raptor-knee-maxspan/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "dreaddevelopment/raptor-knee-native384",
+      "version_number": 1,
+      "dataset_version_id": 19122845,
+      "pinned_ref": "dreaddevelopment/raptor-knee-native384/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "dreaddevelopment/raptor-knee-native384dense",
+      "version_number": 1,
+      "dataset_version_id": 19134209,
+      "pinned_ref": "dreaddevelopment/raptor-knee-native384dense/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "mattiaangeli/knee-mri-fold-weights",
+      "version_number": 2,
+      "dataset_version_id": 18956429,
+      "pinned_ref": "mattiaangeli/knee-mri-fold-weights/2",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "mattiaangeli/opencv-python-headless-4120088-x86",
+      "version_number": 1,
+      "dataset_version_id": 19395055,
+      "pinned_ref": "mattiaangeli/opencv-python-headless-4120088-x86/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "marwanmath/resnet-50-radimagenet-marwan",
+      "version_number": 1,
+      "dataset_version_id": 18229736,
+      "pinned_ref": "marwanmath/resnet-50-radimagenet-marwan/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "mattiaangeli/rsna-knee-coat-resgated-ep10-top3",
+      "version_number": 3,
+      "dataset_version_id": 19395706,
+      "pinned_ref": "mattiaangeli/rsna-knee-coat-resgated-ep10-top3/3",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "mattiaangeli/rsna-knee-coatnet-d4-depthzone-swa3-b2",
+      "version_number": 2,
+      "dataset_version_id": 19862359,
+      "pinned_ref": "mattiaangeli/rsna-knee-coatnet-d4-depthzone-swa3-b2/2",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "mattiaangeli/rsna-knee-coatnet-global96-top3",
+      "version_number": 1,
+      "dataset_version_id": 19459763,
+      "pinned_ref": "mattiaangeli/rsna-knee-coatnet-global96-top3/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "antoinegg1/rsna-knee-e11-diverse-heads-v20",
+      "version_number": 1,
+      "dataset_version_id": 18842180,
+      "pinned_ref": "antoinegg1/rsna-knee-e11-diverse-heads-v20/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "antoinegg1/rsna-knee-e9-radimagenet-heads-v15",
+      "version_number": 3,
+      "dataset_version_id": 18839182,
+      "pinned_ref": "antoinegg1/rsna-knee-e9-radimagenet-heads-v15/3",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "pilkwang/rsna-knee-llm-labels",
+      "version_number": 1,
+      "dataset_version_id": 18673450,
+      "pinned_ref": "pilkwang/rsna-knee-llm-labels/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "prvsiyan/rsna-knee-v52-radimagenet-heads-20260812",
+      "version_number": 1,
+      "dataset_version_id": 18879001,
+      "pinned_ref": "prvsiyan/rsna-knee-v52-radimagenet-heads-20260812/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    },
+    {
+      "ref": "pilkwang/rsna-knee-weights",
+      "version_number": 1,
+      "dataset_version_id": 18716507,
+      "pinned_ref": "pilkwang/rsna-knee-weights/1",
+      "verification": "Kaggle download redirect embeds exact datasetVersionId; archive not downloaded"
+    }
+  ],
+  "kernels": [
+    {
+      "ref": "sofiaanjenje/rsna-knee-e11-train",
+      "kernel_version_id": 342671664,
+      "version_number": 2,
+      "pinned_ref": "sofiaanjenje/rsna-knee-e11-train/2",
+      "current_version_number_at_audit": 2,
+      "historical_source_sha256": "711bdc448354e196f9b1a41dea2fa808aea7a6830b18d317e8072141887c69e4",
+      "current_cell_sources_match_historical": true,
+      "verification": "SDK DownloadKernelOutput(version_number) returned redirect /kf/<exact kernelVersionId>/; output bytes not downloaded"
+    },
+    {
+      "ref": "sofiaanjenje/rsna-knee-e13-train",
+      "kernel_version_id": 342849430,
+      "version_number": 1,
+      "pinned_ref": "sofiaanjenje/rsna-knee-e13-train/1",
+      "current_version_number_at_audit": 1,
+      "historical_source_sha256": "e225fd94754f85430155102469d1a8a6cc4bcb7bc04eb029178dc3df508fbacd",
+      "current_cell_sources_match_historical": true,
+      "verification": "Only version 1 exists and its cell sources match exact historical source ID"
+    }
+  ],
+  "models": [
+    {
+      "ref": "metaresearch/dinov2/PyTorch/small/1",
+      "model_instance_version_id": 4533
+    }
+  ],
+  "competition": {
+    "ref": "rsna-knee-abnormality-detection",
+    "source_id": 154281
+  },
+  "metadata_overrides": {
+    "dataset_sources": [
+      "dreaddevelopment/raptor-knee-maxspan/1",
+      "dreaddevelopment/raptor-knee-native384/1",
+      "dreaddevelopment/raptor-knee-native384dense/1",
+      "mattiaangeli/knee-mri-fold-weights/2",
+      "mattiaangeli/opencv-python-headless-4120088-x86/1",
+      "marwanmath/resnet-50-radimagenet-marwan/1",
+      "mattiaangeli/rsna-knee-coat-resgated-ep10-top3/3",
+      "mattiaangeli/rsna-knee-coatnet-d4-depthzone-swa3-b2/2",
+      "mattiaangeli/rsna-knee-coatnet-global96-top3/1",
+      "antoinegg1/rsna-knee-e11-diverse-heads-v20/1",
+      "antoinegg1/rsna-knee-e9-radimagenet-heads-v15/3",
+      "pilkwang/rsna-knee-llm-labels/1",
+      "prvsiyan/rsna-knee-v52-radimagenet-heads-20260812/1",
+      "pilkwang/rsna-knee-weights/1"
+    ],
+    "kernel_sources": [
+      "sofiaanjenje/rsna-knee-e11-train/2",
+      "sofiaanjenje/rsna-knee-e13-train/1"
+    ],
+    "model_sources": [
+      "metaresearch/dinov2/PyTorch/small/1"
+    ]
+  },
+  "cli_version_syntax_verified": true,
+  "cli_evidence": {
+    "module": "kaggle/api/kaggle_api_extended.py",
+    "validate_dataset_string_lines": "8764-8782: owner/slug/version-number accepted",
+    "validate_kernel_string_lines": "8955-8992: owner/slug/version accepted",
+    "kernels_push_lines": "6395-6401 validation; 6440-6443 arrays sent unchanged"
+  },
+  "limitations": [],
+  "evidence_files": [
+    "input_metadata_evidence.json",
+    "input_version_evidence.json",
+    "kernel_output_redirect_evidence.json"
+  ]
+}

@@ -1,5 +1,28 @@
 # RSNA Knee Abnormality Detection
 
+## Итог проекта (закрыт 2026-10-22)
+
+Команда **Kneerds** (dmitriigluzdov + arsgorynich). Финальные сабмиты выбирает команда в интерфейсе Kaggle;
+основной кандидат — **A**. Private LB на момент закрытия неизвестен.
+
+| Сабмит | Public | Что это |
+|---|---:|---|
+| **A** `rsna-team-a-ensemble` v1 (57267685) | **0.957** | Raptor CoAtNet-384/224 (nartaa) 0.5 + R6 с flip TTA (heliosli) и S6 all-data (nartaa) 0.5; веса заданы правилом до запуска, без подбора по LB; защиты от сбоев. [experiments/TEAMA](experiments/TEAMA/README.md) |
+| B `rsna-team-b-ensemble` v1 (57294542) | 0.956 | A с R6 без TTA (−2 ч) + MaViT-288 (hengck23) с весом 0.15; MaViT оказался похож на Raptor (Spearman 0.945) |
+| C `rsna-team-c-goldmedal-noprobe` v1 (57359803) | 0.941 | Форк линии lavinwins/Mattia без LB-проб; 0.958 у источника был лучшим скором другой версии. [experiments/TEAMC](experiments/TEAMC/README.md) |
+| 079 (arsgorynich, 57228091) | 0.957 | Копия публичного heliosli 0.9576 (R6-TTA + Raptor 384/224) |
+| Наши собственные модели (CF01) | 0.886 | CoAtNet + 3D-CNN на 224-px кэше |
+
+Главные выводы:
+- Всё на 0.956–0.958 — одна линия публичных чекпойнтов (Raptor nartaa + compact ConvNeXt heliosli); разница внутри — шум public LB (~±0.001 между близкими сабмитами).
+- 58 экспертных исследований не различают ансамбли (95% ДИ ±0.025) и использованы почти всеми публичными моделями для отбора; метки из отчётов расходятся с экспертными систематически (синовит, выпот) — см. [experiments/META/FINDINGS.md](experiments/META/FINDINGS.md).
+- Перед сабмитом тяжёлого графа нужна репетиция на train-исследованиях через подменённый test root: видимые 3 исследования не ловят ни время, ни редкие сбои.
+- При форке публичного ноутбука проверять score именно форкаемой версии, а не bestPublicScore ноутбука.
+
+Данные соревнования, производные от них таблицы и приватный код тиммейта в репозиторий не выкладываются.
+
+---
+
 **Текущий план R2, 2026-09-07:** [LOCAL_COMPUTE_PLAN.md](LOCAL_COMPUTE_PLAN.md).
 Подготовка/обучение/OOF — на RTX 3080 и A100 НГУ (быстрый цикл); Quadro 6000 для
 DINO/24 GB; локальная RTX 2060 только smoke. Kaggle — финальные

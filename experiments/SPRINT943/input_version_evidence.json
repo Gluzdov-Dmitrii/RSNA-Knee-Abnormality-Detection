@@ -1,0 +1,256 @@
+{
+  "datasets": [
+    {
+      "slug": "dreaddevelopment/raptor-knee-maxspan",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11745616/19120128/bundle/archive.zip"
+    },
+    {
+      "slug": "dreaddevelopment/raptor-knee-native384",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11746763/19122845/bundle/archive.zip"
+    },
+    {
+      "slug": "dreaddevelopment/raptor-knee-native384dense",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11752181/19134209/bundle/archive.zip"
+    },
+    {
+      "slug": "mattiaangeli/knee-mri-fold-weights",
+      "version": 2,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11611423/18956429/bundle/archive.zip"
+    },
+    {
+      "slug": "mattiaangeli/opencv-python-headless-4120088-x86",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11887453/19395055/bundle/archive.zip"
+    },
+    {
+      "slug": "marwanmath/resnet-50-radimagenet-marwan",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11290369/18229736/bundle/archive.zip"
+    },
+    {
+      "slug": "mattiaangeli/rsna-knee-coat-resgated-ep10-top3",
+      "version": 3,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11887000/19395706/bundle/archive.zip"
+    },
+    {
+      "slug": "mattiaangeli/rsna-knee-coatnet-d4-depthzone-swa3-b2",
+      "version": 2,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11970384/19862359/bundle/archive.zip"
+    },
+    {
+      "slug": "mattiaangeli/rsna-knee-coatnet-global96-top3",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11920427/19459763/bundle/archive.zip"
+    },
+    {
+      "slug": "antoinegg1/rsna-knee-e11-diverse-heads-v20",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11610725/18842180/bundle/archive.zip"
+    },
+    {
+      "slug": "antoinegg1/rsna-knee-e9-radimagenet-heads-v15",
+      "version": 3,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11608090/18839182/bundle/archive.zip"
+    },
+    {
+      "slug": "pilkwang/rsna-knee-llm-labels",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11529209/18673450/bundle/archive.zip"
+    },
+    {
+      "slug": "prvsiyan/rsna-knee-v52-radimagenet-heads-20260812",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11628770/18879001/bundle/archive.zip"
+    },
+    {
+      "slug": "pilkwang/rsna-knee-weights",
+      "version": 1,
+      "status": 302,
+      "location_without_query": "https://storage.googleapis.com:443/kaggle-data-sets/11552334/18716507/bundle/archive.zip"
+    }
+  ],
+  "kernels": [
+    {
+      "slug": "sofiaanjenje/rsna-knee-e11-train",
+      "kernel_version_id": 342671664,
+      "current_version_number": 2,
+      "source_content_exact_match": false,
+      "source_content_json_match": false,
+      "cell_source_match": true,
+      "exact_metadata": {
+        "papermill": {
+          "default_parameters": {},
+          "duration": 2027.78105,
+          "end_time": "2026-08-16T03:02:23.964984+00:00",
+          "environment_variables": {},
+          "exception": null,
+          "input_path": "__notebook__.ipynb",
+          "output_path": "__notebook__.ipynb",
+          "parameters": {},
+          "start_time": "2026-08-16T02:28:36.183934+00:00",
+          "version": "2.7.0"
+        },
+        "kaggle": {
+          "accelerator": "nvidiaTeslaT4",
+          "dataSources": [
+            {
+              "sourceType": "competition",
+              "sourceId": 154281
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18956429
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18229736
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18839182
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18757740
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18715672
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18673450
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18875869
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18716507
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18706996
+            },
+            {
+              "sourceType": "modelInstanceVersion",
+              "sourceId": 4533
+            },
+            {
+              "sourceType": "modelInstanceVersion",
+              "sourceId": 4534
+            }
+          ],
+          "isInternetEnabled": false,
+          "language": "python",
+          "sourceType": "notebook",
+          "isGpuEnabled": false
+        }
+      },
+      "exact_sha256": "711bdc448354e196f9b1a41dea2fa808aea7a6830b18d317e8072141887c69e4",
+      "sdk_source_sha256": "cd37c4747ba32a9c2725007436aa639ab14557d7e4cda60f409bfff555efd264",
+      "last_run_time": "2026-09-19 12:10:54.567000",
+      "source_download": "https://www.kaggle.com/kernels/scriptcontent/342671664/download"
+    },
+    {
+      "slug": "sofiaanjenje/rsna-knee-e13-train",
+      "kernel_version_id": 342849430,
+      "current_version_number": 1,
+      "source_content_exact_match": false,
+      "source_content_json_match": false,
+      "cell_source_match": true,
+      "exact_metadata": {
+        "papermill": {
+          "default_parameters": {},
+          "duration": 2944.529861,
+          "end_time": "2026-08-16T21:47:27.63247+00:00",
+          "environment_variables": {},
+          "exception": null,
+          "input_path": "__notebook__.ipynb",
+          "output_path": "__notebook__.ipynb",
+          "parameters": {},
+          "start_time": "2026-08-16T20:58:23.102609+00:00",
+          "version": "2.7.0"
+        },
+        "kaggle": {
+          "accelerator": "nvidiaTeslaT4",
+          "dataSources": [
+            {
+              "sourceType": "competition",
+              "sourceId": 154281
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18956429
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18229736
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18839182
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18757740
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18715672
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18673450
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18875869
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18716507
+            },
+            {
+              "sourceType": "datasetVersion",
+              "sourceId": 18706996
+            },
+            {
+              "sourceType": "modelInstanceVersion",
+              "sourceId": 4533
+            },
+            {
+              "sourceType": "modelInstanceVersion",
+              "sourceId": 4534
+            }
+          ],
+          "isInternetEnabled": false,
+          "language": "python",
+          "sourceType": "notebook",
+          "isGpuEnabled": false
+        }
+      },
+      "exact_sha256": "e225fd94754f85430155102469d1a8a6cc4bcb7bc04eb029178dc3df508fbacd",
+      "sdk_source_sha256": "5d882688f0ca96782f0e8aebbcc82d78cf79e9ac9d7ccc8b55f66b17689c054f",
+      "last_run_time": "2026-09-19 12:10:54.789000",
+      "source_download": "https://www.kaggle.com/kernels/scriptcontent/342849430/download"
+    }
+  ]
+}

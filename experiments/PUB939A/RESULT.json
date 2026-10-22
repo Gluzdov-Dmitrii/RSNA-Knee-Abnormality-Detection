@@ -1,0 +1,14 @@
+{
+  "experiment_id": "PUB939A",
+  "status": "submitted",
+  "decision": "pending_score",
+  "kernel": {"id": "dmitriigluzdov/rsna-pub939-global060-ablation", "version": 1},
+  "submission": {"ref": "56275828", "submitted_at_utc": "2026-09-16T09:58:04.273000Z", "status": "PENDING", "public_score": null},
+  "hypothesis": "Measure the joint contribution of target-specific outer weights against uniform 0.60 using identical inference arms.",
+  "reference": {"experiment_id": "PUB941", "public_score": 0.941, "submission_ref": "56243894"},
+  "visible_output_sha256": "7d3b8bd4e76b309171e2c44a58301e71da26104d1049cc9f8c445c17eee3c770",
+  "validation": "Completed kernel output matches original parent hash; schema, UID order, finite values and [0,1] range passed.",
+  "our_local_oof": 0.832874589670475,
+  "public_graph_oof": null,
+  "oof_delta": null
+}

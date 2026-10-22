@@ -1,0 +1,76 @@
+{
+  "source": "mattiaangeli/bend-the-knee-to-speedy-raptors-the-original/34",
+  "queried_at_utc": "2026-09-22T12:19:36.459447+00:00",
+  "files": [
+    {
+      "name": "submission.csv",
+      "status": "OK",
+      "bytes": 830,
+      "sha256": "8f0c5e7b2b561538dae55439a4d2e9173141096da3defd9bc0a4bac351eef37a",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "btkd_v559_complete.json",
+      "status": "OK",
+      "bytes": 11993,
+      "sha256": "d723d71bc17c7a8b8f9b97256891bca64f0ac2ce5995de71d6e58d7d00cb8eec",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "_coat_raptor_blend_receipt.json",
+      "status": "OK",
+      "bytes": 494,
+      "sha256": "8786e8384b711ffc7ee69a8dc1238ec90f12361b777def27cc0406a41eac691a",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "_coat_arm_receipt.json",
+      "status": "OK",
+      "bytes": 3752,
+      "sha256": "93cdd0f105e6f489ded8f671b9e0a45c5c437b277f12c70f52bc52206c9fce11",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "_coat_g96_receipt.json",
+      "status": "OK",
+      "bytes": 4435,
+      "sha256": "89ede66459eaf41b11fe473a1dd123726e6c3fad4f49c51a7cf2f18a7dd8670f",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "_coat_repairv1_receipt.json",
+      "status": "OK",
+      "bytes": 4149,
+      "sha256": "c33c3efda191987ce015a53e4c0ae7e73e7ed6048684521d565933aa3d19ac75",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "d4_input/d4.receipt.json",
+      "status": "OK",
+      "bytes": 6265,
+      "sha256": "9266c03083b6d0e6e264c07d70ec65702fcfa828de10729744b202fbaae40576",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "diagnostics/a5_metadata_applicability.json",
+      "status": "OK",
+      "bytes": 148,
+      "sha256": "1103e3b6db6bea572147e035ada6d9beb65d020f05723ec8d57cc430279f23f1",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "diagnostics/a5_applicability.json",
+      "status": "OK",
+      "bytes": 177,
+      "sha256": "9dbde6333272a7b9f20deb069d50f995b63fa4f89f129f8c0b6a2e22a649b977",
+      "kernel_version_id": 351665011
+    },
+    {
+      "name": "raptor_raw.npz",
+      "status": "OK",
+      "bytes": 1146,
+      "sha256": "046ba15f8969828b7e2b50b8856547d3124906c96d4740475e80589dabc51ef8",
+      "kernel_version_id": 351665011
+    }
+  ]
+}

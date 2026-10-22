@@ -1,0 +1,16 @@
+[
+  {
+    "name": "btk_v32_rest_input.npz",
+    "status": "OK",
+    "bytes": 907,
+    "sha256": "b3b4dbf5fcba21a07e44c68ce39802173f796d7b62bf196938ddb527c0724290",
+    "kernel_version_id": 351665011
+  },
+  {
+    "name": "_raptor_public.csv",
+    "status": "OK",
+    "bytes": 470,
+    "sha256": "00b09b491302033f82ef1b9607c651d3d37bc4399fe67c8df04cdf3f81088b6b",
+    "kernel_version_id": 351665011
+  }
+]

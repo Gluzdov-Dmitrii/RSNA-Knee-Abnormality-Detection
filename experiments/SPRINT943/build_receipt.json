@@ -1,0 +1,32 @@
+{
+  "notebook": "C:\\Users\\Dmitry\\Desktop\\Kaggle\\RSNA Knee Abnormality Detection\\experiments\\SPRINT943\\kaggle\\rsna-knee-v34-documented-strict.ipynb",
+  "notebook_sha256": "368b0c22de67daeb11507a6e42571d8d0ecc6f129de0c07f79104078248fd2e8",
+  "source_sha256": "a025fcd5aa25373ac380f60746ba5ca17e70e97f714fdc17e01ce414ec2163b5",
+  "code_cells": 25,
+  "markdown_cells": 25,
+  "runtime_sha256": {
+    "01_artifact_contracts.py": "c40e9e8da40a3dc7cabb664a520e760362547ec2cbb5ae8017e85c1269db174b",
+    "02_dense_sampling.py": "5815eed58685ad17392c9c5b13dfb0fb43fb54ec32b7834f4c2c66439cd3ea5a",
+    "03_environment_and_audit.py": "49a1683ca15f5f15990c83145c810f5d6c6c3bb52601d568ad4201a01de470e3",
+    "04_input_paths.py": "61f911b3b024f870718f1eb123e051f2cd9f3718b4473a62d4b211fd151ea555",
+    "05_dicom_metadata.py": "a773890aca786656f025af0f008fd97bcd0736eb143698d71cd16448bb8fce76",
+    "06_slot_routing.py": "a554f7d0f44a197e371a0ce3ce734466c2658bae27c09d6ffd7855cb4210f1a5",
+    "07_dicom_decode.py": "0d2a6d71963ae849b3e39ea27ee739a769e33d1e0779b4ff2be9b0e7f50821fa",
+    "08_laterality.py": "ba17bd3298fc57f07ef581794ee274b5d4990b62a999086881ed6f57bcd882aa",
+    "09_pixel_cache.py": "a1334e4b2174f1512d3dcd7f46ba257d698b83a6e399b8c1e6c2fa0901f29b8a",
+    "10_dino_slot_head.py": "6878773f8ffa7883670b9bfceed886f80465514cea3ab30057c7378406531507",
+    "11_dino_model.py": "17434f44700a37e344f33040cf12618806370b438c0f2b2f8fe3caa8b42af065",
+    "12_dino_factory.py": "0cee81943e6bfbb987380cf9c88b2ed961acde926d96211154c4b2946f6e849e",
+    "13_dino_ensemble.py": "c7073738bd10b35b15d17c9ba037f9f50ef8005dc17feb910e972db3b4f7432d",
+    "14_dino_submission_contract.py": "9006955666c6c5f89bd87d606b83d5fba2d446c42168e223491e11b8b8f95102",
+    "15_run_dino.py": "cd7a8762ef90ccf507eaf4588e350402a4f8b1f0f58b7f6687b135eee684d357",
+    "16_a5_configuration.py": "6fffd33cf27daf23afcae0616f5fac9ffc7e869e08cd7827f3d4f141276f2611",
+    "17_a5_decode.py": "f1fa6aa2130ce82d2efb84793f47c50c97b71e3e61c68ffc5840c4431e7a5f5e",
+    "18_a5_model.py": "a0f7ec9a6a26310a246fef4d3349a1af1e853e99cd2ecbc2b819d96aa9071a1e",
+    "19_run_a5.py": "d7b85abf1dbb044f4e277263a4a69612be52d1590dafbabc07a6b01b9380b7d8",
+    "20_blend_a5.py": "5c31acb1019dd9de97103d9a68cb0fc0db6aa1032fb00af5b483b3a67ed1b08b",
+    "21_radimagenet.py": "ec9bbfca40459df3c27ee2eb073bc822c631a8d06afee027dce0b9a88233e743",
+    "22_raptor_coat_and_blend.py": "f86b45f7e552103dff6405b9dc679e720dd11e9156d61e847ebed2abc07f4071",
+    "23_release.py": "93aa9a1652d70fb4c158f33866bf6fa0b0e983e9bcc13b92f487e7d7edb3cb44"
+  }
+}

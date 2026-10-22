@@ -1,0 +1,45 @@
+{
+ "variant": "A",
+ "members": [
+  "Raptor384",
+  "Raptor224",
+  "R6",
+  "S6"
+ ],
+ "rehearsal_n": 0,
+ "rows": 3,
+ "weights": {
+  "family": 0.5,
+  "raptor": {
+   "Raptor384": 0.65,
+   "Raptor224": 0.35
+  },
+  "compact": {
+   "R6": 0.5,
+   "S6": 0.5
+  }
+ },
+ "failed": {
+  "Raptor384": 0,
+  "Raptor224": 0,
+  "R6": 0,
+  "S6": 0
+ },
+ "mirror224_failed": 0,
+ "gates_vs_R6": {
+  "S6": null
+ },
+ "mean_spearman_member_vs_blend": {
+  "Raptor384": null,
+  "Raptor224": null,
+  "R6": null,
+  "S6": null
+ },
+ "seconds": {
+  "raptor384": 48.1,
+  "raptor224": 29.2,
+  "r6": 360.2,
+  "s6": 105.7,
+  "total": 566.8
+ }
+}

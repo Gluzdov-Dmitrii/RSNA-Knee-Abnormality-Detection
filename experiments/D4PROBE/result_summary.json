@@ -1,0 +1,10 @@
+{
+ "rc": 0,
+ "seconds": 767.7,
+ "studies": 401,
+ "receipts": 401,
+ "dense_fallback_lines": 0,
+ "studies_with_fallback_slot": 0,
+ "studies_failing_window_gate": 0,
+ "note": "Teammate's 093 D4 package run unchanged on 400 seeded + 1 few-series TRAIN studies; none of its final gates would fire. Package code not published (teammate's private work)."
+}

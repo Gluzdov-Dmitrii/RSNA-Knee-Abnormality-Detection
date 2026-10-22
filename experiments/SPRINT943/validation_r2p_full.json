@@ -1,0 +1,1056 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-22T12:05:55.002907+00:00",
+  "prediction_kind_declared": "fold-out",
+  "provenance_declared": "Existing S24 R(2+1)D18 predictions rebuilt 2026-09-14 from per-fold checkpoints on FOLDS_V1. No training performed in this sprint. Validation-epoch checkpoint selection on the same folds; see ops/reports/2026-09-22_solution_review_and_plan.md.",
+  "training_exclusion_independently_verified": false,
+  "patient_independence_verified": false,
+  "inputs": {
+    "predictions": {
+      "path": "tmp/rebuilt_oof/r2p_full/oof.csv",
+      "sha256": "e054f4df1dfb95521a85e701d883fe37c81357f20a83c967614ae97afbbe68c0"
+    },
+    "labels": {
+      "path": "data/labels/pilkwang/report_labels_v2.csv",
+      "sha256": "6f704a7bdb2f894cc49445b19ba7c4378c3f548d3449e00361e10044bee40920"
+    },
+    "folds": {
+      "path": "ops/assets/FOLDS_V1/folds.csv",
+      "sha256": "3086df3341333f44adb883292da386857c3230eaa2d501514ddf827a2da11b1a"
+    },
+    "evaluator": {
+      "path": "experiments/SPRINT943/evaluate_oof.py",
+      "sha256": "9afaaab18b6d0e3be5bf1ef2a73587ddb829de57e0acbd04c5f75bf0d1e20bed"
+    }
+  },
+  "protocol": {
+    "target_order": [
+      "ACL",
+      "MCL",
+      "Medial Meniscus",
+      "Lateral Meniscus",
+      "Medial OA",
+      "Lateral OA",
+      "PF OA",
+      "Effusion",
+      "Synovitis",
+      "Baker's",
+      "Contusion",
+      "Fracture"
+    ],
+    "legacy_positive_threshold": 0.5,
+    "known_only_positive_verdict": "YES",
+    "known_only_negative_verdict": "NO",
+    "known_only_excluded_verdict": "UNK",
+    "macro_weighting": "equal weight per target; null if any target AUC is undefined",
+    "fold_aggregation": "pooled study AUC is primary; per-fold AUC is diagnostic, not averaged",
+    "score_type": "probability",
+    "blend_weights_optimized": false
+  },
+  "integrity": {
+    "fold_studies": 4407,
+    "prediction_studies": 4407,
+    "labeled_studies": 4406,
+    "full_fold_coverage": true,
+    "missing_prediction_uids": [],
+    "excluded_unlabeled_uids": [
+      "1.2.826.0.1.3680043.8.498.73527530686853911124431549317032662220"
+    ],
+    "allowed_unlabeled_uids": [
+      "1.2.826.0.1.3680043.8.498.73527530686853911124431549317032662220"
+    ],
+    "label_studies_outside_folds": 0,
+    "ignored_prediction_columns": [],
+    "uid_uniqueness": "passed for predictions, labels and folds",
+    "fold_match": "passed",
+    "finite_values": "passed for every prediction and numeric label"
+  },
+  "pooled": {
+    "labeled_studies": 4406,
+    "legacy": {
+      "macro_auc": 0.8106031300948309,
+      "macro_auc_defined_targets_only": 0.8106031300948309,
+      "defined_targets": 12,
+      "total_targets": 12
+    },
+    "known_only": {
+      "macro_auc": 0.8389554742634043,
+      "macro_auc_defined_targets_only": 0.8389554742634043,
+      "defined_targets": 12,
+      "total_targets": 12
+    },
+    "per_target": {
+      "ACL": {
+        "legacy_auc": 0.8336143258743985,
+        "legacy_n": 4406,
+        "legacy_positives": 1226,
+        "legacy_negatives": 3180,
+        "known_only_auc": 0.8458269933159134,
+        "known_n": 4051,
+        "known_positives": 1226,
+        "known_negatives": 2825,
+        "unknown_n": 355,
+        "known_coverage": 0.9194280526554698
+      },
+      "MCL": {
+        "legacy_auc": 0.7613511169200243,
+        "legacy_n": 4406,
+        "legacy_positives": 767,
+        "legacy_negatives": 3639,
+        "known_only_auc": 0.7887828113808012,
+        "known_n": 3976,
+        "known_positives": 767,
+        "known_negatives": 3209,
+        "unknown_n": 430,
+        "known_coverage": 0.9024058102587381
+      },
+      "Medial Meniscus": {
+        "legacy_auc": 0.8174769936634928,
+        "legacy_n": 4406,
+        "legacy_positives": 2347,
+        "legacy_negatives": 2059,
+        "known_only_auc": 0.8223065894783997,
+        "known_n": 4156,
+        "known_positives": 2347,
+        "known_negatives": 1809,
+        "unknown_n": 250,
+        "known_coverage": 0.9432591920108943
+      },
+      "Lateral Meniscus": {
+        "legacy_auc": 0.7622356913877449,
+        "legacy_n": 4406,
+        "legacy_positives": 1121,
+        "legacy_negatives": 3285,
+        "known_only_auc": 0.7830414656026367,
+        "known_n": 3964,
+        "known_positives": 1121,
+        "known_negatives": 2843,
+        "unknown_n": 442,
+        "known_coverage": 0.899682251475261
+      },
+      "Medial OA": {
+        "legacy_auc": 0.8407142887220358,
+        "legacy_n": 4406,
+        "legacy_positives": 1619,
+        "legacy_negatives": 2787,
+        "known_only_auc": 0.8761347089949449,
+        "known_n": 3281,
+        "known_positives": 1619,
+        "known_negatives": 1662,
+        "unknown_n": 1125,
+        "known_coverage": 0.7446663640490241
+      },
+      "Lateral OA": {
+        "legacy_auc": 0.7971637747927866,
+        "legacy_n": 4406,
+        "legacy_positives": 1087,
+        "legacy_negatives": 3319,
+        "known_only_auc": 0.8525000568183503,
+        "known_n": 2949,
+        "known_positives": 1087,
+        "known_negatives": 1862,
+        "unknown_n": 1457,
+        "known_coverage": 0.6693145710394917
+      },
+      "PF OA": {
+        "legacy_auc": 0.7960306888243472,
+        "legacy_n": 4406,
+        "legacy_positives": 1991,
+        "legacy_negatives": 2415,
+        "known_only_auc": 0.828856573329985,
+        "known_n": 3591,
+        "known_positives": 1991,
+        "known_negatives": 1600,
+        "unknown_n": 815,
+        "known_coverage": 0.8150249659555152
+      },
+      "Effusion": {
+        "legacy_auc": 0.8404609773132938,
+        "legacy_n": 4406,
+        "legacy_positives": 2666,
+        "legacy_negatives": 1740,
+        "known_only_auc": 0.8629435785439469,
+        "known_n": 3972,
+        "known_positives": 2666,
+        "known_negatives": 1306,
+        "unknown_n": 434,
+        "known_coverage": 0.9014979573309124
+      },
+      "Synovitis": {
+        "legacy_auc": 0.8537191088198713,
+        "legacy_n": 4406,
+        "legacy_positives": 580,
+        "legacy_negatives": 3826,
+        "known_only_auc": 0.8491228070175438,
+        "known_n": 694,
+        "known_positives": 580,
+        "known_negatives": 114,
+        "unknown_n": 3712,
+        "known_coverage": 0.1575124829777576
+      },
+      "Baker's": {
+        "legacy_auc": 0.8536235768775182,
+        "legacy_n": 4406,
+        "legacy_positives": 1114,
+        "legacy_negatives": 3292,
+        "known_only_auc": 0.8919214298143975,
+        "known_n": 2383,
+        "known_positives": 1114,
+        "known_negatives": 1269,
+        "unknown_n": 2023,
+        "known_coverage": 0.5408533817521561
+      },
+      "Contusion": {
+        "legacy_auc": 0.7758248058897329,
+        "legacy_n": 4406,
+        "legacy_positives": 1297,
+        "legacy_negatives": 3109,
+        "known_only_auc": 0.804359458724947,
+        "known_n": 3490,
+        "known_positives": 1297,
+        "known_negatives": 2193,
+        "unknown_n": 916,
+        "known_coverage": 0.7921016795279164
+      },
+      "Fracture": {
+        "legacy_auc": 0.7950222120527236,
+        "legacy_n": 4406,
+        "legacy_positives": 314,
+        "legacy_negatives": 4092,
+        "known_only_auc": 0.8616692181389852,
+        "known_n": 1920,
+        "known_positives": 314,
+        "known_negatives": 1606,
+        "unknown_n": 2486,
+        "known_coverage": 0.4357694053563323
+      }
+    }
+  },
+  "folds": {
+    "0": {
+      "labeled_studies": 882,
+      "legacy": {
+        "macro_auc": 0.8141823759779404,
+        "macro_auc_defined_targets_only": 0.8141823759779404,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "known_only": {
+        "macro_auc": 0.8386178595657706,
+        "macro_auc_defined_targets_only": 0.8386178595657706,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "per_target": {
+        "ACL": {
+          "legacy_auc": 0.8060231313875629,
+          "legacy_n": 882,
+          "legacy_positives": 245,
+          "legacy_negatives": 637,
+          "known_only_auc": 0.8163375027430327,
+          "known_n": 803,
+          "known_positives": 245,
+          "known_negatives": 558,
+          "unknown_n": 79,
+          "known_coverage": 0.9104308390022676
+        },
+        "MCL": {
+          "legacy_auc": 0.7950276589831177,
+          "legacy_n": 882,
+          "legacy_positives": 153,
+          "legacy_negatives": 729,
+          "known_only_auc": 0.8161867472355818,
+          "known_n": 789,
+          "known_positives": 153,
+          "known_negatives": 636,
+          "unknown_n": 93,
+          "known_coverage": 0.8945578231292517
+        },
+        "Medial Meniscus": {
+          "legacy_auc": 0.7940159114493255,
+          "legacy_n": 882,
+          "legacy_positives": 469,
+          "legacy_negatives": 413,
+          "known_only_auc": 0.8008820866314221,
+          "known_n": 834,
+          "known_positives": 469,
+          "known_negatives": 365,
+          "unknown_n": 48,
+          "known_coverage": 0.9455782312925171
+        },
+        "Lateral Meniscus": {
+          "legacy_auc": 0.7555498263135041,
+          "legacy_n": 882,
+          "legacy_positives": 224,
+          "legacy_negatives": 658,
+          "known_only_auc": 0.7787427691146881,
+          "known_n": 792,
+          "known_positives": 224,
+          "known_negatives": 568,
+          "unknown_n": 90,
+          "known_coverage": 0.8979591836734694
+        },
+        "Medial OA": {
+          "legacy_auc": 0.8372439045975486,
+          "legacy_n": 882,
+          "legacy_positives": 324,
+          "legacy_negatives": 558,
+          "known_only_auc": 0.8652857518105745,
+          "known_n": 653,
+          "known_positives": 324,
+          "known_negatives": 329,
+          "unknown_n": 229,
+          "known_coverage": 0.7403628117913832
+        },
+        "Lateral OA": {
+          "legacy_auc": 0.8160839887737777,
+          "legacy_n": 882,
+          "legacy_positives": 217,
+          "legacy_negatives": 665,
+          "known_only_auc": 0.8549647177419355,
+          "known_n": 601,
+          "known_positives": 217,
+          "known_negatives": 384,
+          "unknown_n": 281,
+          "known_coverage": 0.68140589569161
+        },
+        "PF OA": {
+          "legacy_auc": 0.8335972216454172,
+          "legacy_n": 882,
+          "legacy_positives": 398,
+          "legacy_negatives": 484,
+          "known_only_auc": 0.8559147940962675,
+          "known_n": 716,
+          "known_positives": 398,
+          "known_negatives": 318,
+          "unknown_n": 166,
+          "known_coverage": 0.8117913832199547
+        },
+        "Effusion": {
+          "legacy_auc": 0.8390872877210147,
+          "legacy_n": 882,
+          "legacy_positives": 533,
+          "legacy_negatives": 349,
+          "known_only_auc": 0.8540808622919205,
+          "known_n": 784,
+          "known_positives": 533,
+          "known_negatives": 251,
+          "unknown_n": 98,
+          "known_coverage": 0.8888888888888888
+        },
+        "Synovitis": {
+          "legacy_auc": 0.8879704240569011,
+          "legacy_n": 882,
+          "legacy_positives": 116,
+          "legacy_negatives": 766,
+          "known_only_auc": 0.8802339901477833,
+          "known_n": 144,
+          "known_positives": 116,
+          "known_negatives": 28,
+          "unknown_n": 738,
+          "known_coverage": 0.16326530612244897
+        },
+        "Baker's": {
+          "legacy_auc": 0.8175963036806685,
+          "legacy_n": 882,
+          "legacy_positives": 223,
+          "legacy_negatives": 659,
+          "known_only_auc": 0.8770985435274061,
+          "known_n": 465,
+          "known_positives": 223,
+          "known_negatives": 242,
+          "unknown_n": 417,
+          "known_coverage": 0.5272108843537415
+        },
+        "Contusion": {
+          "legacy_auc": 0.7586229285184269,
+          "legacy_n": 882,
+          "legacy_positives": 260,
+          "legacy_negatives": 622,
+          "known_only_auc": 0.7829271534916696,
+          "known_n": 694,
+          "known_positives": 260,
+          "known_negatives": 434,
+          "unknown_n": 188,
+          "known_coverage": 0.7868480725623582
+        },
+        "Fracture": {
+          "legacy_auc": 0.8293699246080198,
+          "legacy_n": 882,
+          "legacy_positives": 63,
+          "legacy_negatives": 819,
+          "known_only_auc": 0.8807593959569644,
+          "known_n": 392,
+          "known_positives": 63,
+          "known_negatives": 329,
+          "unknown_n": 490,
+          "known_coverage": 0.4444444444444444
+        }
+      },
+      "expected_studies": 882,
+      "predicted_studies": 882
+    },
+    "1": {
+      "labeled_studies": 881,
+      "legacy": {
+        "macro_auc": 0.8137853452733713,
+        "macro_auc_defined_targets_only": 0.8137853452733713,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "known_only": {
+        "macro_auc": 0.8439924144760687,
+        "macro_auc_defined_targets_only": 0.8439924144760687,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "per_target": {
+        "ACL": {
+          "legacy_auc": 0.8308882043383391,
+          "legacy_n": 881,
+          "legacy_positives": 245,
+          "legacy_negatives": 636,
+          "known_only_auc": 0.8485664422837198,
+          "known_n": 818,
+          "known_positives": 245,
+          "known_negatives": 573,
+          "unknown_n": 63,
+          "known_coverage": 0.9284903518728718
+        },
+        "MCL": {
+          "legacy_auc": 0.7470058536235007,
+          "legacy_n": 881,
+          "legacy_positives": 153,
+          "legacy_negatives": 728,
+          "known_only_auc": 0.7785669479350048,
+          "known_n": 799,
+          "known_positives": 153,
+          "known_negatives": 646,
+          "unknown_n": 82,
+          "known_coverage": 0.9069239500567536
+        },
+        "Medial Meniscus": {
+          "legacy_auc": 0.8308355334679298,
+          "legacy_n": 881,
+          "legacy_positives": 470,
+          "legacy_negatives": 411,
+          "known_only_auc": 0.8344096901017576,
+          "known_n": 838,
+          "known_positives": 470,
+          "known_negatives": 368,
+          "unknown_n": 43,
+          "known_coverage": 0.9511918274687855
+        },
+        "Lateral Meniscus": {
+          "legacy_auc": 0.7516361788617886,
+          "legacy_n": 881,
+          "legacy_positives": 225,
+          "legacy_negatives": 656,
+          "known_only_auc": 0.7650067868916036,
+          "known_n": 798,
+          "known_positives": 225,
+          "known_negatives": 573,
+          "unknown_n": 83,
+          "known_coverage": 0.905788876276958
+        },
+        "Medial OA": {
+          "legacy_auc": 0.8164303072672193,
+          "legacy_n": 881,
+          "legacy_positives": 323,
+          "legacy_negatives": 558,
+          "known_only_auc": 0.867500503782952,
+          "known_n": 661,
+          "known_positives": 323,
+          "known_negatives": 338,
+          "unknown_n": 220,
+          "known_coverage": 0.7502837684449489
+        },
+        "Lateral OA": {
+          "legacy_auc": 0.7825287324412858,
+          "legacy_n": 881,
+          "legacy_positives": 217,
+          "legacy_negatives": 664,
+          "known_only_auc": 0.849452312591985,
+          "known_n": 599,
+          "known_positives": 217,
+          "known_negatives": 382,
+          "unknown_n": 282,
+          "known_coverage": 0.6799091940976163
+        },
+        "PF OA": {
+          "legacy_auc": 0.8177169491349084,
+          "legacy_n": 881,
+          "legacy_positives": 398,
+          "legacy_negatives": 483,
+          "known_only_auc": 0.858588396528095,
+          "known_n": 728,
+          "known_positives": 398,
+          "known_negatives": 330,
+          "unknown_n": 153,
+          "known_coverage": 0.8263337116912599
+        },
+        "Effusion": {
+          "legacy_auc": 0.8415388928425094,
+          "legacy_n": 881,
+          "legacy_positives": 533,
+          "legacy_negatives": 348,
+          "known_only_auc": 0.8627278580478113,
+          "known_n": 804,
+          "known_positives": 533,
+          "known_negatives": 271,
+          "unknown_n": 77,
+          "known_coverage": 0.9125993189557321
+        },
+        "Synovitis": {
+          "legacy_auc": 0.8863815641199009,
+          "legacy_n": 881,
+          "legacy_positives": 116,
+          "legacy_negatives": 765,
+          "known_only_auc": 0.8729474548440066,
+          "known_n": 137,
+          "known_positives": 116,
+          "known_negatives": 21,
+          "unknown_n": 744,
+          "known_coverage": 0.15550510783200908
+        },
+        "Baker's": {
+          "legacy_auc": 0.8757570165005674,
+          "legacy_n": 881,
+          "legacy_positives": 222,
+          "legacy_negatives": 659,
+          "known_only_auc": 0.9142351694254809,
+          "known_n": 511,
+          "known_positives": 222,
+          "known_negatives": 289,
+          "unknown_n": 370,
+          "known_coverage": 0.5800227014755959
+        },
+        "Contusion": {
+          "legacy_auc": 0.7728277197730574,
+          "legacy_n": 881,
+          "legacy_positives": 259,
+          "legacy_negatives": 622,
+          "known_only_auc": 0.7983277679223625,
+          "known_n": 703,
+          "known_positives": 259,
+          "known_negatives": 444,
+          "unknown_n": 178,
+          "known_coverage": 0.7979568671963677
+        },
+        "Fracture": {
+          "legacy_auc": 0.811877190909449,
+          "legacy_n": 881,
+          "legacy_positives": 62,
+          "legacy_negatives": 819,
+          "known_only_auc": 0.8775796433580445,
+          "known_n": 384,
+          "known_positives": 62,
+          "known_negatives": 322,
+          "unknown_n": 497,
+          "known_coverage": 0.4358683314415437
+        }
+      },
+      "expected_studies": 881,
+      "predicted_studies": 881
+    },
+    "2": {
+      "labeled_studies": 880,
+      "legacy": {
+        "macro_auc": 0.8280246702968873,
+        "macro_auc_defined_targets_only": 0.8280246702968873,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "known_only": {
+        "macro_auc": 0.8532774181637858,
+        "macro_auc_defined_targets_only": 0.8532774181637858,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "per_target": {
+        "ACL": {
+          "legacy_auc": 0.8396271894584606,
+          "legacy_n": 880,
+          "legacy_positives": 245,
+          "legacy_negatives": 635,
+          "known_only_auc": 0.8521023302938197,
+          "known_n": 809,
+          "known_positives": 245,
+          "known_negatives": 564,
+          "unknown_n": 71,
+          "known_coverage": 0.9193181818181818
+        },
+        "MCL": {
+          "legacy_auc": 0.8058949393604301,
+          "legacy_n": 880,
+          "legacy_positives": 153,
+          "legacy_negatives": 727,
+          "known_only_auc": 0.8227607761692424,
+          "known_n": 795,
+          "known_positives": 153,
+          "known_negatives": 642,
+          "unknown_n": 85,
+          "known_coverage": 0.9034090909090909
+        },
+        "Medial Meniscus": {
+          "legacy_auc": 0.8330358069538142,
+          "legacy_n": 880,
+          "legacy_positives": 470,
+          "legacy_negatives": 410,
+          "known_only_auc": 0.8324989570296204,
+          "known_n": 827,
+          "known_positives": 470,
+          "known_negatives": 357,
+          "unknown_n": 53,
+          "known_coverage": 0.9397727272727273
+        },
+        "Lateral Meniscus": {
+          "legacy_auc": 0.7726140570557491,
+          "legacy_n": 880,
+          "legacy_positives": 224,
+          "legacy_negatives": 656,
+          "known_only_auc": 0.7985212053571429,
+          "known_n": 784,
+          "known_positives": 224,
+          "known_negatives": 560,
+          "unknown_n": 96,
+          "known_coverage": 0.8909090909090909
+        },
+        "Medial OA": {
+          "legacy_auc": 0.890151767474909,
+          "legacy_n": 880,
+          "legacy_positives": 324,
+          "legacy_negatives": 556,
+          "known_only_auc": 0.9116468000567618,
+          "known_n": 672,
+          "known_positives": 324,
+          "known_negatives": 348,
+          "unknown_n": 208,
+          "known_coverage": 0.7636363636363637
+        },
+        "Lateral OA": {
+          "legacy_auc": 0.8197774328556778,
+          "legacy_n": 880,
+          "legacy_positives": 218,
+          "legacy_negatives": 662,
+          "known_only_auc": 0.8730164463387031,
+          "known_n": 599,
+          "known_positives": 218,
+          "known_negatives": 381,
+          "unknown_n": 281,
+          "known_coverage": 0.6806818181818182
+        },
+        "PF OA": {
+          "legacy_auc": 0.815375236427868,
+          "legacy_n": 880,
+          "legacy_positives": 399,
+          "legacy_negatives": 481,
+          "known_only_auc": 0.8480471695957218,
+          "known_n": 728,
+          "known_positives": 399,
+          "known_negatives": 329,
+          "unknown_n": 152,
+          "known_coverage": 0.8272727272727273
+        },
+        "Effusion": {
+          "legacy_auc": 0.8497569872918966,
+          "legacy_n": 880,
+          "legacy_positives": 534,
+          "legacy_negatives": 346,
+          "known_only_auc": 0.8676114443411901,
+          "known_n": 800,
+          "known_positives": 534,
+          "known_negatives": 266,
+          "unknown_n": 80,
+          "known_coverage": 0.9090909090909091
+        },
+        "Synovitis": {
+          "legacy_auc": 0.8370418848167539,
+          "legacy_n": 880,
+          "legacy_positives": 116,
+          "legacy_negatives": 764,
+          "known_only_auc": 0.8393762677484787,
+          "known_n": 150,
+          "known_positives": 116,
+          "known_negatives": 34,
+          "unknown_n": 730,
+          "known_coverage": 0.17045454545454544
+        },
+        "Baker's": {
+          "legacy_auc": 0.8665731583294087,
+          "legacy_n": 880,
+          "legacy_positives": 223,
+          "legacy_negatives": 657,
+          "known_only_auc": 0.8933068322008342,
+          "known_n": 452,
+          "known_positives": 223,
+          "known_negatives": 229,
+          "unknown_n": 428,
+          "known_coverage": 0.5136363636363637
+        },
+        "Contusion": {
+          "legacy_auc": 0.8030048682222595,
+          "legacy_n": 880,
+          "legacy_positives": 259,
+          "legacy_negatives": 621,
+          "known_only_auc": 0.8325617353720398,
+          "known_n": 686,
+          "known_positives": 259,
+          "known_negatives": 427,
+          "unknown_n": 194,
+          "known_coverage": 0.7795454545454545
+        },
+        "Fracture": {
+          "legacy_auc": 0.8034427153154203,
+          "legacy_n": 880,
+          "legacy_positives": 63,
+          "legacy_negatives": 817,
+          "known_only_auc": 0.8678790534618755,
+          "known_n": 389,
+          "known_positives": 63,
+          "known_negatives": 326,
+          "unknown_n": 491,
+          "known_coverage": 0.4420454545454545
+        }
+      },
+      "expected_studies": 881,
+      "predicted_studies": 881
+    },
+    "3": {
+      "labeled_studies": 881,
+      "legacy": {
+        "macro_auc": 0.8098267008814922,
+        "macro_auc_defined_targets_only": 0.8098267008814922,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "known_only": {
+        "macro_auc": 0.843720802868272,
+        "macro_auc_defined_targets_only": 0.843720802868272,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "per_target": {
+        "ACL": {
+          "legacy_auc": 0.8664388396868181,
+          "legacy_n": 881,
+          "legacy_positives": 245,
+          "legacy_negatives": 636,
+          "known_only_auc": 0.8742088664950882,
+          "known_n": 808,
+          "known_positives": 245,
+          "known_negatives": 563,
+          "unknown_n": 73,
+          "known_coverage": 0.9171396140749148
+        },
+        "MCL": {
+          "legacy_auc": 0.7451321031100948,
+          "legacy_n": 881,
+          "legacy_positives": 154,
+          "legacy_negatives": 727,
+          "known_only_auc": 0.7829313543599258,
+          "known_n": 791,
+          "known_positives": 154,
+          "known_negatives": 637,
+          "unknown_n": 90,
+          "known_coverage": 0.8978433598183881
+        },
+        "Medial Meniscus": {
+          "legacy_auc": 0.8320119237377606,
+          "legacy_n": 881,
+          "legacy_positives": 469,
+          "legacy_negatives": 412,
+          "known_only_auc": 0.8324058181040678,
+          "known_n": 828,
+          "known_positives": 469,
+          "known_negatives": 359,
+          "unknown_n": 53,
+          "known_coverage": 0.9398410896708286
+        },
+        "Lateral Meniscus": {
+          "legacy_auc": 0.7649624918460535,
+          "legacy_n": 881,
+          "legacy_positives": 224,
+          "legacy_negatives": 657,
+          "known_only_auc": 0.7910761526832956,
+          "known_n": 791,
+          "known_positives": 224,
+          "known_negatives": 567,
+          "unknown_n": 90,
+          "known_coverage": 0.8978433598183881
+        },
+        "Medial OA": {
+          "legacy_auc": 0.8518906398918368,
+          "legacy_n": 881,
+          "legacy_positives": 324,
+          "legacy_negatives": 557,
+          "known_only_auc": 0.8944010127892363,
+          "known_n": 658,
+          "known_positives": 324,
+          "known_negatives": 334,
+          "unknown_n": 223,
+          "known_coverage": 0.7468785471055619
+        },
+        "Lateral OA": {
+          "legacy_auc": 0.7852388817944589,
+          "legacy_n": 881,
+          "legacy_positives": 217,
+          "legacy_negatives": 664,
+          "known_only_auc": 0.858678955453149,
+          "known_n": 583,
+          "known_positives": 217,
+          "known_negatives": 366,
+          "unknown_n": 298,
+          "known_coverage": 0.6617480136208853
+        },
+        "PF OA": {
+          "legacy_auc": 0.7833239697452063,
+          "legacy_n": 881,
+          "legacy_positives": 398,
+          "legacy_negatives": 483,
+          "known_only_auc": 0.8233620177565142,
+          "known_n": 711,
+          "known_positives": 398,
+          "known_negatives": 313,
+          "unknown_n": 170,
+          "known_coverage": 0.8070374574347332
+        },
+        "Effusion": {
+          "legacy_auc": 0.8420133272950767,
+          "legacy_n": 881,
+          "legacy_positives": 533,
+          "legacy_negatives": 348,
+          "known_only_auc": 0.8663058834082058,
+          "known_n": 784,
+          "known_positives": 533,
+          "known_negatives": 251,
+          "unknown_n": 97,
+          "known_coverage": 0.8898978433598184
+        },
+        "Synovitis": {
+          "legacy_auc": 0.8379648411088574,
+          "legacy_n": 881,
+          "legacy_positives": 116,
+          "legacy_negatives": 765,
+          "known_only_auc": 0.853448275862069,
+          "known_n": 131,
+          "known_positives": 116,
+          "known_negatives": 15,
+          "unknown_n": 750,
+          "known_coverage": 0.14869466515323496
+        },
+        "Baker's": {
+          "legacy_auc": 0.8754514972671638,
+          "legacy_n": 881,
+          "legacy_positives": 223,
+          "legacy_negatives": 658,
+          "known_only_auc": 0.9048063919140152,
+          "known_n": 475,
+          "known_positives": 223,
+          "known_negatives": 252,
+          "unknown_n": 406,
+          "known_coverage": 0.5391600454029511
+        },
+        "Contusion": {
+          "legacy_auc": 0.7977349191175558,
+          "legacy_n": 881,
+          "legacy_positives": 259,
+          "legacy_negatives": 622,
+          "known_only_auc": 0.8281400112386028,
+          "known_n": 685,
+          "known_positives": 259,
+          "known_negatives": 426,
+          "unknown_n": 196,
+          "known_coverage": 0.7775255391600454
+        },
+        "Fracture": {
+          "legacy_auc": 0.7357569759770248,
+          "legacy_n": 881,
+          "legacy_positives": 63,
+          "legacy_negatives": 818,
+          "known_only_auc": 0.814884894355093,
+          "known_n": 365,
+          "known_positives": 63,
+          "known_negatives": 302,
+          "unknown_n": 516,
+          "known_coverage": 0.41430192962542567
+        }
+      },
+      "expected_studies": 881,
+      "predicted_studies": 881
+    },
+    "4": {
+      "labeled_studies": 882,
+      "legacy": {
+        "macro_auc": 0.8210887789602056,
+        "macro_auc_defined_targets_only": 0.8210887789602056,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "known_only": {
+        "macro_auc": 0.8505055284720798,
+        "macro_auc_defined_targets_only": 0.8505055284720798,
+        "defined_targets": 12,
+        "total_targets": 12
+      },
+      "per_target": {
+        "ACL": {
+          "legacy_auc": 0.8385935982001329,
+          "legacy_n": 882,
+          "legacy_positives": 246,
+          "legacy_negatives": 636,
+          "known_only_auc": 0.8529917838860929,
+          "known_n": 813,
+          "known_positives": 246,
+          "known_negatives": 567,
+          "unknown_n": 69,
+          "known_coverage": 0.9217687074829932
+        },
+        "MCL": {
+          "legacy_auc": 0.7452279862994149,
+          "legacy_n": 882,
+          "legacy_positives": 154,
+          "legacy_negatives": 728,
+          "known_only_auc": 0.7749318582651916,
+          "known_n": 802,
+          "known_positives": 154,
+          "known_negatives": 648,
+          "unknown_n": 80,
+          "known_coverage": 0.909297052154195
+        },
+        "Medial Meniscus": {
+          "legacy_auc": 0.8235801277252616,
+          "legacy_n": 882,
+          "legacy_positives": 469,
+          "legacy_negatives": 413,
+          "known_only_auc": 0.835412224591329,
+          "known_n": 829,
+          "known_positives": 469,
+          "known_negatives": 360,
+          "unknown_n": 53,
+          "known_coverage": 0.9399092970521542
+        },
+        "Lateral Meniscus": {
+          "legacy_auc": 0.8088804005644811,
+          "legacy_n": 882,
+          "legacy_positives": 224,
+          "legacy_negatives": 658,
+          "known_only_auc": 0.8226436335403726,
+          "known_n": 799,
+          "known_positives": 224,
+          "known_negatives": 575,
+          "unknown_n": 83,
+          "known_coverage": 0.9058956916099773
+        },
+        "Medial OA": {
+          "legacy_auc": 0.8666008451701402,
+          "legacy_n": 882,
+          "legacy_positives": 324,
+          "legacy_negatives": 558,
+          "known_only_auc": 0.8967873624423145,
+          "known_n": 637,
+          "known_positives": 324,
+          "known_negatives": 313,
+          "unknown_n": 245,
+          "known_coverage": 0.7222222222222222
+        },
+        "Lateral OA": {
+          "legacy_auc": 0.8053256604399248,
+          "legacy_n": 882,
+          "legacy_positives": 218,
+          "legacy_negatives": 664,
+          "known_only_auc": 0.8555111590126443,
+          "known_n": 567,
+          "known_positives": 218,
+          "known_negatives": 349,
+          "unknown_n": 315,
+          "known_coverage": 0.6428571428571429
+        },
+        "PF OA": {
+          "legacy_auc": 0.8106908509489597,
+          "legacy_n": 882,
+          "legacy_positives": 398,
+          "legacy_negatives": 484,
+          "known_only_auc": 0.8425595720538175,
+          "known_n": 708,
+          "known_positives": 398,
+          "known_negatives": 310,
+          "unknown_n": 174,
+          "known_coverage": 0.8027210884353742
+        },
+        "Effusion": {
+          "legacy_auc": 0.8403694286006118,
+          "legacy_n": 882,
+          "legacy_positives": 533,
+          "legacy_negatives": 349,
+          "known_only_auc": 0.8730315998060586,
+          "known_n": 800,
+          "known_positives": 533,
+          "known_negatives": 267,
+          "unknown_n": 82,
+          "known_coverage": 0.9070294784580499
+        },
+        "Synovitis": {
+          "legacy_auc": 0.8621983884037093,
+          "legacy_n": 882,
+          "legacy_positives": 116,
+          "legacy_negatives": 766,
+          "known_only_auc": 0.8658405172413793,
+          "known_n": 132,
+          "known_positives": 116,
+          "known_negatives": 16,
+          "unknown_n": 750,
+          "known_coverage": 0.14965986394557823
+        },
+        "Baker's": {
+          "legacy_auc": 0.869849683921147,
+          "legacy_n": 882,
+          "legacy_positives": 223,
+          "legacy_negatives": 659,
+          "known_only_auc": 0.9124339132103785,
+          "known_n": 480,
+          "known_positives": 223,
+          "known_negatives": 257,
+          "unknown_n": 402,
+          "known_coverage": 0.54421768707483
+        },
+        "Contusion": {
+          "legacy_auc": 0.7724183774424932,
+          "legacy_n": 882,
+          "legacy_positives": 260,
+          "legacy_negatives": 622,
+          "known_only_auc": 0.8027514152514152,
+          "known_n": 722,
+          "known_positives": 260,
+          "known_negatives": 462,
+          "unknown_n": 160,
+          "known_coverage": 0.81859410430839
+        },
+        "Fracture": {
+          "legacy_auc": 0.8093299998061902,
+          "legacy_n": 882,
+          "legacy_positives": 63,
+          "legacy_negatives": 819,
+          "known_only_auc": 0.8711713023639629,
+          "known_n": 390,
+          "known_positives": 63,
+          "known_negatives": 327,
+          "unknown_n": 492,
+          "known_coverage": 0.4421768707482993
+        }
+      },
+      "expected_studies": 882,
+      "predicted_studies": 882
+    }
+  },
+  "warnings": [
+    "These scores use Pilkwang weak labels, not hidden competition ground truth; they are not LB estimates.",
+    "This evaluator checks file consistency, not whether each checkpoint excluded the evaluated studies during training.",
+    "FOLDS_V1 separates StudyInstanceUID; patient and site independence have not been demonstrated.",
+    "Legacy AUC thresholds soft labels at >=0.5, thereby treating UNK=0.28 as negative.",
+    "Known-only AUC uses only YES/NO verdicts; this changes case mix. Compare it together with target coverage.",
+    "Existing S22/S24 fold checkpoints were selected by validation epoch on the same fold; this may add selection optimism.",
+    "Existing rebuilt_oof files are not OOF predictions of the SPRINT943 public ensemble or CF01.",
+    "Public competition checkpoints evaluated on train studies must not be called OOF without fold-specific exclusion evidence."
+  ]
+}

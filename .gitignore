@@ -19,3 +19,23 @@ ops/runtime/
 /tmp/cache_budget_deps/
 /tmp/cache_budget_remote_before/
 /experiments/cache_budget/recheck/private_kernel/
+
+# Final wrap-up 2026-10-22: never publish competition-derived data or other people's private code
+*.csv
+!ops/experiment_ledger.csv
+!ops/baseline_submissions_2026-09-05.csv
+*.npz
+tmp/
+output/
+RSNA_experience_2026-10-16/
+experiments/META/out/
+experiments/D4PROBE/kaggle/
+experiments/D4PROBE/out/*.log
+experiments/TEAMA/source/
+experiments/TEAMA/kaggle/rehearsal*/
+experiments/TEAMA/*_out/
+experiments/TEAMC/source/
+experiments/TEAMC/kaggle/*.ipynb
+experiments/TEAMC/visible_out/
+*.bak_a
+experiments/D4PROBE/out/
